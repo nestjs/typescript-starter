@@ -1,11 +1,12 @@
 import { Subject } from 'rxjs/Subject';
-import { SocketGateway, GatewayServer, SubscribeMessage } from 'nest.js/socket';
+import { WebSocketGateway, WebSocketServer, SubscribeMessage } from 'nest.js/websockets';
 
-@SocketGateway({ port: 2000 })
+@WebSocketGateway({ port: 2000 })
 export class ChatGateway {
     private msg$ = new Subject<any>();
 
-    @GatewayServer server;
+    @WebSocketServer()
+    server;
 
     get msgStream() {
         return this.msg$.asObservable();
