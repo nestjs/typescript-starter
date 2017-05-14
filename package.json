@@ -2,12 +2,19 @@
   "name": "nest-typescript-starter",
   "version": "1.0.0",
   "description": "Nest TypeScript starter repository",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "nest.js": "*",
+    "@nestjs/common": "*",
+    "@nestjs/core": "*",
+    "@nestjs/microservices": "*",
+    "@nestjs/testing": "*",
+    "@nestjs/websockets": "*",
+    "redis": "^2.7.1",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0",
     "typescript": "^2.2.1"
   },
   "devDependencies": {

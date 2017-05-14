@@ -1,4 +1,4 @@
-import { NestFactory } from 'nest.js';
+import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './modules/app.module';
 
 const app = NestFactory.create(ApplicationModule);
