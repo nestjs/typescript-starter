@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "@types/node": "^7.0.5",
-    "ts-node": "^2.1.0"
+    "ts-node": "^3.2.0"
   }
 }
