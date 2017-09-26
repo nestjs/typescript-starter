@@ -8,8 +8,10 @@
     "start:watch": "nodemon",
     "prestart:prod": "tsc",
     "start:prod": "node dist/server.js",
-    "check": "yarn-or-npm run prettier:check",
-    "check:fix": "yarn-or-npm run prettier:fix",
+    "lint:check": "tslint ./src/**/*",
+    "lint:fix": "yarn-or-npm run lint:check -- --fix",
+    "check": "yarn-or-npm run lint:check && yarn-or-npm run prettier:check",
+    "check:fix": "yarn-or-npm run lint:fix; yarn-or-npm run prettier:fix",
     "prettier:base": "yarn-or-npm run prettier -- --single-quote --trailing-comma es5",
     "prettier:base-files": "yarn-or-npm run prettier:base -- './**/*.{js,ts,json}'",
     "prettier:fix": "yarn-or-npm run prettier:base-files -- --write",
@@ -31,6 +33,8 @@
     "nodemon": "^1.12.1",
     "prettier": "^1.7.0",
     "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.5.0",
     "yarn-or-npm": "^2.0.4"
   }
 }
