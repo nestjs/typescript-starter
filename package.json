@@ -12,10 +12,20 @@
     "lint:fix": "yarn-or-npm run lint:check -- --fix",
     "check": "yarn-or-npm run lint:check && yarn-or-npm run prettier:check",
     "check:fix": "yarn-or-npm run lint:fix; yarn-or-npm run prettier:fix",
-    "prettier:base": "yarn-or-npm run prettier -- --single-quote --trailing-comma es5",
-    "prettier:base-files": "yarn-or-npm run prettier:base -- './**/*.{js,ts,json}'",
+    "prettier:base":
+      "yarn-or-npm run prettier -- --single-quote --trailing-comma es5",
+    "prettier:base-files":
+      "yarn-or-npm run prettier:base -- './**/*.{js,ts,json}'",
     "prettier:fix": "yarn-or-npm run prettier:base-files -- --write",
-    "prettier:check": "yarn-or-npm run prettier:base-files -- -l"
+    "prettier:check": "yarn-or-npm run prettier:base-files -- -l",
+    "precommit": "lint-staged",
+    "prepush": "yarn-or-npm run lint:check"
+  },
+  "lint-staged": {
+    "gitDir": "./",
+    "linters": {
+      "*.{js,ts,json}": ["yarn-or-npm run prettier:base -- -l"]
+    }
   },
   "dependencies": {
     "@nestjs/common": "^4.0.0",
@@ -30,6 +40,8 @@
   },
   "devDependencies": {
     "@types/node": "^8.0.28",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.2.3",
     "nodemon": "^1.12.1",
     "prettier": "^1.7.0",
     "ts-node": "^3.3.0",
