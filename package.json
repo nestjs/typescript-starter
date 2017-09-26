@@ -7,7 +7,13 @@
     "start": "node index.js",
     "start:watch": "nodemon",
     "prestart:prod": "tsc",
-    "start:prod": "node dist/server.js"
+    "start:prod": "node dist/server.js",
+    "check": "yarn-or-npm run prettier:check",
+    "check:fix": "yarn-or-npm run prettier:fix",
+    "prettier:base": "yarn-or-npm run prettier -- --single-quote --trailing-comma es5",
+    "prettier:base-files": "yarn-or-npm run prettier:base -- './**/*.{js,ts,json}'",
+    "prettier:fix": "yarn-or-npm run prettier:base-files -- --write",
+    "prettier:check": "yarn-or-npm run prettier:base-files -- -l"
   },
   "dependencies": {
     "@nestjs/common": "^4.0.0",
@@ -23,7 +29,8 @@
   "devDependencies": {
     "@types/node": "^8.0.28",
     "nodemon": "^1.12.1",
+    "prettier": "^1.7.0",
     "ts-node": "^3.3.0",
-    "yarn-or-npm": "2.0.4"
+    "yarn-or-npm": "^2.0.4"
   }
 }
