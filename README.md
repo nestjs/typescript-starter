@@ -1,4 +1,4 @@
-[![Nest Logo](http://kamilmysliwiec.com/public/nest-logo.png)](http://nestjs.com/)
+[![Nest Logo](https://kamilmysliwiec.com/public/nest-logo.png)](https://nestjs.com/)
 
 [Nest](https://github.com/kamilmysliwiec/nest) framework starter repository. 
 
