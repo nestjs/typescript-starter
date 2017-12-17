@@ -6,7 +6,7 @@
 [travis-url]: https://travis-ci.org/nestjs/nest
 [linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
 [linux-url]: https://travis-ci.org/nestjs/nest
-  
+
  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable web applications. </p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/cqrs.svg" alt="NPM Version" /></a>
@@ -24,8 +24,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework **TypeScript** starter repository. 
-  
+[Nest](https://github.com/nestjs/nest) framework **TypeScript** starter repository.
+
 ## Installation
 
 ```bash
@@ -36,6 +36,12 @@ $ npm install
 
 ```
 $ npm run start
+```
+
+## Test
+
+```
+$ npm run test
 ```
 
 ## People
