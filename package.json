@@ -10,19 +10,19 @@
     "start:prod": "node dist/main.js"
   },
   "dependencies": {
-    "@nestjs/common": "^4.5.0",
-    "@nestjs/core": "^4.5.0",
-    "@nestjs/microservices": "^4.5.0",
-    "@nestjs/testing": "^4.5.0",
-    "@nestjs/websockets": "^4.5.0",
+    "@nestjs/common": "^4.5.9",
+    "@nestjs/core": "^4.5.10",
+    "@nestjs/microservices": "^4.5.8",
+    "@nestjs/testing": "^4.5.5",
+    "@nestjs/websockets": "^4.5.8",
     "redis": "^2.7.1",
-    "reflect-metadata": "^0.1.10",
-    "rxjs": "^5.4.0",
-    "typescript": "^2.5.2"
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^5.5.6",
+    "typescript": "^2.6.2"
   },
   "devDependencies": {
     "@types/node": "^9.3.0",
-    "nodemon": "^1.12.1",
+    "nodemon": "^1.14.1",
     "ts-node": "^4.1.0"
   }
 }
