@@ -38,6 +38,13 @@ $ npm install
 $ npm run start
 ```
 
+
+## Tests with code coverage
+
+```
+$ npm run test
+```
+
 ## People
 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
