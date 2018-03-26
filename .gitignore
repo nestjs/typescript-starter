@@ -389,3 +389,4 @@ Temporary Items
 # Local
 dokcer-compose.yml
 .env
+dist

@@ -9,9 +9,11 @@
     "start:dev": "nodemon",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
+    "start:hmr": "node dist/server",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "@nestjs/common": "^4.5.9",
@@ -19,6 +21,7 @@
     "@nestjs/microservices": "^4.5.8",
     "@nestjs/testing": "^4.5.5",
     "@nestjs/websockets": "^4.5.8",
+    "deprecate": "^1.0.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.6",
     "typescript": "^2.6.2"
@@ -33,12 +36,20 @@
     "prettier": "^1.11.1",
     "supertest": "^3.0.0",
     "ts-jest": "^21.2.4",
+    "ts-loader": "^4.1.0",
     "ts-node": "^4.1.0",
     "tsconfig-paths": "^3.1.1",
-    "tslint": "5.3.2"
+    "tslint": "5.3.2",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13",
+    "webpack-node-externals": "^1.6.0"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {
