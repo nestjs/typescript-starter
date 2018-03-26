@@ -10,6 +10,7 @@
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
 <a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
@@ -27,8 +28,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework **TypeScript** starter repository. 
-  
+[Nest](https://github.com/nestjs/nest) framework **TypeScript** starter repository.
+
 ## Installation
 
 ```bash
@@ -41,10 +42,15 @@ $ npm install
 $ npm run start
 ```
 
+## Test
+
+```
+$ npm run test
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://opencollective.com/nest).
-
 
 ## Stay in touch
 
