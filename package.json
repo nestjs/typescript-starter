@@ -4,11 +4,14 @@
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "start:watch": "nodemon",
-    "prestart:prod": "tsc",
-    "start:prod": "node dist/server.js",
-    "test": "jest"
+    "format": "prettier --write \"**/*.ts\"",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "nodemon",
+    "prestart:prod": "rm -rf dist && tsc",
+    "start:prod": "node dist/main.js",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^4.5.9",
@@ -27,21 +30,20 @@
     "@types/supertest": "^2.0.4",
     "jest": "^21.2.1",
     "nodemon": "^1.14.1",
+    "prettier": "^1.11.1",
     "supertest": "^3.0.0",
-    "tslint": "5.3.2",
     "ts-jest": "^21.2.4",
     "ts-node": "^4.1.0",
-    "tsconfig-paths": "^3.1.1"
+    "tsconfig-paths": "^3.1.1",
+    "tslint": "5.3.2"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
+    "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
-    }
+    },
+    "coverageDirectory": "../coverage"
   }
 }
