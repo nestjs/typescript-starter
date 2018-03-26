@@ -23,6 +23,7 @@
     "@types/node": "^9.3.0",
     "nodemon": "^1.14.1",
     "tslint": "5.3.2",
-    "ts-node": "^4.1.0"
+    "ts-node": "^4.1.0",
+    "tsconfig-paths": "^3.1.1"
   }
 }
