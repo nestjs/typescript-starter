@@ -387,5 +387,5 @@ Temporary Items
 
 =======
 # Local
-dokcer-compose.yml
+docker-compose.yml
 .env
