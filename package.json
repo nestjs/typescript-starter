@@ -39,7 +39,7 @@
     "ts-jest": "^21.2.4",
     "ts-loader": "^4.1.0",
     "ts-node": "^6.0.0",
-    "tsconfig-paths": "^3.1.1",
+    "tsconfig-paths": "^3.3.1",
     "tslint": "5.3.2",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.13",
