@@ -37,3 +37,16 @@ imports [
 
 - Enables TypeORM to use the NestJS logging service
 - Adapted from [SimpleConsoleLogger](https://github.com/typeorm/typeorm/blob/master/src/logger/SimpleConsoleLogger.ts)
+
+## ormconfig.js (in root)
+
+- Configures the TypeORM cli - used for migrations
+- TypeORM doesn't like typed entities, but ts-node can fix that!
+
+### package.json
+
+```yaml
+scripts: {
+ "typeorm": "ts-node ./node_modules/.bin/typeorm"
+}
+```
