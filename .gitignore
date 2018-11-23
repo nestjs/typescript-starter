@@ -390,3 +390,5 @@ Temporary Items
 docker-compose.yml
 .env
 dist
+
+sqlite.db
