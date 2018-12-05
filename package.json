@@ -13,6 +13,7 @@
     "start:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
+    "cpd": "jscpd src test -r html,console --silent",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json"
@@ -33,6 +34,7 @@
     "@types/jest": "^23.3.1",
     "@types/supertest": "^2.0.5",
     "jest": "^23.5.0",
+    "jscpd": "^1.1.0",
     "nodemon": "^1.18.3",
     "prettier": "^1.14.2",
     "supertest": "^3.1.0",
