@@ -9,7 +9,7 @@
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
-    "prestart:prod": "rimraf dist && tsc",
+    "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
