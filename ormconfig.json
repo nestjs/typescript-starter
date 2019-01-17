@@ -1,0 +1,12 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "",
+  "database": "shop",
+  "entities": ["src/**/*.entity.ts", "dist/**/*.entity.js"],
+  "synchronize": true,
+  "dropSchema": false,
+  "logging": false
+}
