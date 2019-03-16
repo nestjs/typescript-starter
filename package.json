@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
@@ -29,6 +29,7 @@
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
+    "@nestjs/testing": "^5.4.0",
     "@types/express": "^4.16.0",
     "@types/jest": "^23.3.13",
     "@types/node": "^10.12.18",
