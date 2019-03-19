@@ -42,7 +42,7 @@
     "ts-node": "8.0.3",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.14.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   },
   "jest": {
     "moduleFileExtensions": [
