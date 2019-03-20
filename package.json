@@ -23,7 +23,7 @@
     "@nestjs/core": "6.0.2",
     "@nestjs/microservices": "6.0.2",
     "@nestjs/platform-express": "6.0.2",
-    "@nestjs/websockets": "6.0.1",
+    "@nestjs/websockets": "6.0.2",
     "reflect-metadata": "0.1.13",
     "rimraf": "2.6.3",
     "rxjs": "6.4.0"
