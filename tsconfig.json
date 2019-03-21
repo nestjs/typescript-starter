@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -7,8 +8,8 @@
     "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./"
+    "outDir": "./dist"
   },
-  "exclude": ["node_modules"]
+  "include": ["./src"],
+  "exclude": ["node_modules", "tests", "**/*.spec.ts"]
 }
