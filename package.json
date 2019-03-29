@@ -7,8 +7,8 @@
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon",
-    "start:debug": "nodemon --config nodemon-debug.json",
+    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
+    "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
     "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
@@ -35,7 +35,6 @@
     "@types/node": "11.12.0",
     "@types/supertest": "2.0.7",
     "jest": "24.5.0",
-    "nodemon": "1.18.10",
     "prettier": "1.16.4",
     "supertest": "4.0.2",
     "ts-jest": "24.0.0",
@@ -43,7 +42,7 @@
     "tsc-watch": "^2.1.2",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.14.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.1"
   },
   "jest": {
     "moduleFileExtensions": [
