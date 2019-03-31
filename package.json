@@ -32,17 +32,17 @@
     "@nestjs/testing": "6.0.4",
     "@types/express": "4.16.1",
     "@types/jest": "24.0.11",
-    "@types/node": "11.12.0",
+    "@types/node": "11.12.2",
     "@types/supertest": "2.0.7",
     "jest": "24.5.0",
     "prettier": "1.16.4",
     "supertest": "4.0.2",
-    "ts-jest": "24.0.0",
+    "ts-jest": "24.0.1",
     "ts-node": "8.0.3",
     "tsc-watch": "^2.1.2",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.14.0",
-    "typescript": "^3.4.1"
+    "typescript": "3.4.1"
   },
   "jest": {
     "moduleFileExtensions": [
