@@ -34,7 +34,7 @@
     "@types/node": "11.12.2",
     "@types/supertest": "2.0.7",
     "@nestjs/testing": "6.0.4",
-    "jest": "24.5.0",
+    "jest": "24.7.0",
     "nodemon": "1.18.10",
     "prettier": "1.16.4",
     "supertest": "4.0.2",
