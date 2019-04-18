@@ -10,7 +10,6 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
   },
   "exclude": ["node_modules", "dist"]
 }
