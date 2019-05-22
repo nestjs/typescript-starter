@@ -390,3 +390,4 @@ Temporary Items
 docker-compose.yml
 .env
 dist
+tsconfig.build.tsbuildinfo
