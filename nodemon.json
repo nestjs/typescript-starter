@@ -1,5 +1,5 @@
 {
   "watch": ["dist"],
   "ext": "js",
-  "exec": "node dist/main"
+  "exec": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/main"
 }
