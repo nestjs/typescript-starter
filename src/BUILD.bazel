@@ -33,31 +33,3 @@ nodejs_binary(
     ],
     templated_args = ["--node_options=--expose-gc"],
 )
-
-# Note it will not cross-compile on Mac OS to linux:
-# https://github.com/bazelbuild/rules_nodejs/issues/396
-# https://github.com/bazelbuild/rules_nodejs/pull/827
-load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
-
-# bazel build //src:docker
-nodejs_image(
-    name = "docker",
-    entry_point = ":main.ts",
-    # This will be put into its own layer.
-    node_modules = "@npm//:node_modules",
-    data = [
-        ":app",
-    ],
-)
-
-load("@io_bazel_rules_docker//container:container.bzl", "container_push")
-
-# bazel run --define push_tag=${IMAGE_TAG} --define push_repository=${REPOSITORY} //src:push_container
-container_push(
-   name = "push_container",
-   image = ":docker",
-   format = "Docker",
-   registry = "gcr.io",
-   repository = "$(push_repository)",
-   tag = "$(push_tag)",
-)
