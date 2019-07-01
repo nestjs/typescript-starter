@@ -390,3 +390,7 @@ Temporary Items
 docker-compose.yml
 .env
 dist
+
+# Bazel
+bazel-*
+.bazelrc.user

@@ -1,0 +1,63 @@
+package(default_visibility = ["//visibility:public"])
+
+# TS compile
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+# bazel build //src:app
+ts_library(
+    name = "app",
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = ["**/*spec.ts"],
+    ),
+    deps = [
+        "@npm//rxjs",
+        "@npm//@nestjs",
+        "@npm//@types",
+        "@npm//tslib",
+    ],
+)
+
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+# bazel run //src:server
+nodejs_binary(
+    name = "server",
+    node_modules = "@npm//:node_modules",
+    # entry_point defined as label:
+    # https://github.com/bazelbuild/rules_nodejs/releases/tag/0.31.1
+    entry_point = ":main.ts",
+    data = [
+        ":app",
+    ],
+    templated_args = ["--node_options=--expose-gc"],
+)
+
+# Note it will not cross-compile on Mac OS to linux:
+# https://github.com/bazelbuild/rules_nodejs/issues/396
+# https://github.com/bazelbuild/rules_nodejs/pull/827
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+
+# bazel build //src:docker
+nodejs_image(
+    name = "docker",
+    entry_point = ":main.ts",
+    # This will be put into its own layer.
+    node_modules = "@npm//:node_modules",
+    data = [
+        ":app",
+    ],
+)
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
+
+# bazel run --define push_tag=${IMAGE_TAG} --define push_repository=${REPOSITORY} //src:push_container
+container_push(
+   name = "push_container",
+   image = ":docker",
+   format = "Docker",
+   registry = "gcr.io",
+   repository = "$(push_repository)",
+   tag = "$(push_tag)",
+)
