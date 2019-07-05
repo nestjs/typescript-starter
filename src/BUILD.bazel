@@ -31,5 +31,4 @@ nodejs_binary(
     data = [
         ":app",
     ],
-    templated_args = ["--node_options=--expose-gc"],
 )

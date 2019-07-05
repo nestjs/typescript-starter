@@ -32,8 +32,6 @@
   },
   "devDependencies": {
     "@bazel/bazel": "latest",
-    "@bazel/buildifier": "latest",
-    "@bazel/hide-bazel-files": "0.32.2",
     "@bazel/ibazel": "latest",
     "@bazel/typescript": "0.32.2",
     "@nestjs/testing": "6.1.1",
