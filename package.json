@@ -11,7 +11,7 @@
     "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
     "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
     "start:prod": "node dist/main.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint": "",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -41,7 +41,6 @@
     "ts-node": "8.3.0",
     "tsc-watch": "2.4.0",
     "tsconfig-paths": "3.8.0",
-    "tslint": "5.18.0",
     "typescript": "3.5.3"
   },
   "jest": {
