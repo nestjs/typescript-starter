@@ -1,0 +1,21 @@
+{
+  "files.defaultLanguage": "typescript",
+
+  /* Linter configuration */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": false,
+    "source.fixAll": false,
+    "source.fixAll.eslint": true
+  },
+
+  /* Prevent conflicts with other formatters and linters */
+  "prettier.enable": false,
+  "tslint.enable": false,
+  "eslint.enable": true,
+  "typescript.format.enable": false,
+
+  /* Use Typescript SDK from this workspace */
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
