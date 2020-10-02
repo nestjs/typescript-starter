@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "nestjs-starter",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -65,5 +65,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "keywords": []
 }
