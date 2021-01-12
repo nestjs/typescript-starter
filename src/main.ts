@@ -24,10 +24,11 @@ async function bootstrap() {
     .setTitle('API Specification')
     .setDescription('The API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  await app.listen(PORT);
+  await app.listen(PORT,'0.0.0.0');
   const url = await app.getUrl()
   console.log('Running on : ', url)
 }

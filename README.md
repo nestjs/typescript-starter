@@ -45,6 +45,12 @@ $ npm run start
 $ npm run start:prod
 ```
 
+## Running on Docker
+```bash
+# development
+$ docker-compose -f docker-compose.yml up --build
+```
+
 ## Test
 
 ```bash

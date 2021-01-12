@@ -1,0 +1,27 @@
+FROM node:10.23.1-alpine3.9
+RUN apk update
+RUN apk --no-cache add curl
+WORKDIR /app
+
+ENV DB_URL=host.docker.internal
+ENV DB_USERNAME=root
+ENV DB_PASSWORD=root
+ENV DB_NAME=nest
+ENV DB_PORT=5432
+ENV DB_TYPE=postgres
+
+ENV SMTP_SENDER=scgid@scg.com
+ENV SMTP_SENDERNAME=SCGID
+ENV SMTP_USERNAME=AKIAQNDCMWVKFYFD3HXE
+ENV SMTP_PASSWORD=BKczPOQkKAUGqHNzqKUc22WECKQHz8POXPD1KIGdrFwM
+ENV SMTP_HOST=email-smtp.ap-southeast-1.amazonaws.com
+ENV SMTP_PORT=587
+
+ENV PORT=4000
+ENV JWT_SECRET=HTHDGSFATRHDFG
+ENV NODE_ENV=development
+
+COPY . /app
+
+RUN npm install
+CMD ["npm","run","dev"]
