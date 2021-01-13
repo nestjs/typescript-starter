@@ -1,0 +1,1714 @@
+openapi: 3.0.2
+info:
+  title: SCGID Server APIs
+  version: 0.0.2
+  description: All API's available in SCGID server
+paths:
+  /{scgid}:
+    get:
+      "summary": Get user profile by SCGID
+      tags:
+        - Resource Server APIs
+      description: |-
+        This endpoint returns a message with scgid user details. The content depends on the SCOPE associated with the given access_token.
+        IMPORTANT: The API will fail if no active id_token is available for the associated user.
+      operationId: Get_userinfo
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'A valid access_token (e.g.: authorization: Bearer access-token-value). The access_token must have the ''openid'' scope. Other valid scope values are ''identifiers'', and ''source systems''.'
+          schema:
+            type: string
+        - name: scgid
+          in: path
+          required: true
+          description: The id of the SCGID to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON message containing details about the user. The content depends on the scope associated with the access_token.
+          content:
+            application/json:
+              schema:
+                properties:
+                  scgid:
+                    type: string
+                    example: '248289761001'
+                  fname:
+                    type: string
+                    example: Cement
+                  lname:
+                    type: string
+                    example: Thai
+                  location:
+                    type: string
+                    example: Online | BranchCode
+                  status:
+                    type: string
+                    example: Active | Inactive | Migrate
+                  identifiers:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - type: citizenid
+                        id: 1234567890123
+                      - type: mobile
+                        id: 0123456789
+                      - type: email
+                        id: email@emailprovider.com
+                  source_systems:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - source_system: SCGHOME
+                        id: SCGHOME00001
+                      - source_system: NOCNOC
+                        id: NOCNOC00001
+                      - source_system: SCGXP
+                        id: SCGXP00001
+                      - source_system: FACEBOOK
+                        id: FB00001
+                      - source_system: GOOGLE
+                        id: GG00001
+        '400':
+          description: A CORS request failed.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 134'
+              schema:
+                type: string
+                default: '134'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: The request did not match CORS requirements
+        '401':
+          description: 'The given token is not valid. The error code may be 990, 991, 992, 993.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 990'
+              schema:
+                type: string
+                default: '990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: Validation error
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 203'
+              schema:
+                type: string
+                default: '203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: SSL is required
+        '405':
+          description: 'HTTP method is not valid. The Allow header is required by [RFC 2616](https://tools.ietf.org/html/rfc2616).'
+          headers:
+            Allow:
+              description: Comma-separated list of allowed HTTP methods.
+              schema:
+                type: string
+                default: 'POST,GET'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: 'Unknown error. This also occurs if the user does not have an active session, id_token, on the server.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 000'
+              schema:
+                type: string
+                default: '000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+    patch:
+      "summary": Update user profile by SCGID
+      tags:
+        - Resource Server APIs
+      description: |-
+        This endpoint for updaet scgid user details. The content depends on the SCOPE associated with the given access_token.
+        IMPORTANT: The API will fail if no active id_token is available for the associated user.
+      operationId: PATCH_userinfo
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'A valid access_token (e.g.: authorization: Bearer access-token-value). The access_token must have the ''openid'' scope. Other valid scope values are ''identifiers'', and ''source systems''.'
+          schema:
+            type: string
+        - name: scgid
+          in: path
+          required: true
+          description: The id of the SCGID for update
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                fname:
+                  type: string
+                lname:
+                  type: string
+                location:
+                  type: string
+                identifiers:
+                  type: array
+                  items:
+                    type: object
+                source_systems:
+                  type: array
+                  items:
+                    type: object
+              example:   # Sample object
+                fname: Cement
+                lname: Thai
+                location: Online | BranchCode
+                identifiers: [{"type": "citizenid", "id": 1234567890123}, {"type": "mobile", "id": 0123456789}, {"type": "email", "id": "email@emailprovider.com"}]
+                source_systems: [{"source_system": "SCGHOME", "id": "SCGHOME00001"}, {"source_system": "NOCNOC", "id": "NOCNOC00001"}, {"source_system": "SCGXP", "id": "SCGXP00001"}]
+      responses:
+        '200':
+          description: A JSON message containing details about the user. The content depends on the scope associated with the access_token.
+          content:
+            application/json:
+              schema:
+                properties:
+                  scgid:
+                    type: string
+                    example: '248289761001'
+                  fname:
+                    type: string
+                    example: Cement
+                  lname:
+                    type: string
+                    example: Thai
+                  location:
+                    type: string
+                    example: Online | BranchCode
+                  identifiers:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - type: citizenid
+                        id: 1234567890123
+                      - type: mobile
+                        id: 0123456789
+                      - type: email
+                        id: email@emailprovider.com
+                  source_systems:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - source_system: SCGHOME
+                        id: SCGHOME00001
+                      - source_system: NOCNOC
+                        id: NOCNOC00001
+                      - source_system: SCGXP
+                        id: SCGXP00001
+                      - source_system: FACEBOOK
+                        id: FB00001
+                      - source_system: GOOGLE
+                        id: GG00001
+        '400':
+          description: A CORS request failed.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 134'
+              schema:
+                type: string
+                default: '134'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: The request did not match CORS requirements
+        '401':
+          description: 'The given token is not valid. The error code may be 990, 991, 992, 993.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 990'
+              schema:
+                type: string
+                default: '990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: Validation error
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 203'
+              schema:
+                type: string
+                default: '203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: SSL is required
+        '405':
+          description: 'HTTP method is not valid. The Allow header is required by [RFC 2616](https://tools.ietf.org/html/rfc2616).'
+          headers:
+            Allow:
+              description: Comma-separated list of allowed HTTP methods.
+              schema:
+                type: string
+                default: 'POST,GET'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: 'Unknown error. This also occurs if the user does not have an active session, id_token, on the server.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 000'
+              schema:
+                type: string
+                default: '000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /search:
+    post:
+      tags:
+        - Resource Server APIs
+      "summary": Lookup SCGID by identifiers
+      description: |-
+        This endpoint returns a message with scgid user details by identifiers. The content depends on the SCOPE associated with the given access_token.
+        IMPORTANT: The API will fail if no active id_token is available for the associated user.
+      operationId: POST_usersearch
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'A valid access_token (e.g.: authorization: Bearer access-token-value). The access_token must have the ''openid'' scope. Other valid scope values are ''identifiers'', and ''source systems''.'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                mobile:
+                  type: integer
+                email:
+                  type: string
+                citizenid:
+                  type: integer
+              example:   # Sample object
+                source_system: SCGHOME
+                customer_id: SCGHOME00001
+                fname: Cement
+                lname: Thai
+                mobile: 0123456789
+                email: example@emailprovider.com
+                citizenid: 01234567890123
+      responses:
+        '200':
+          description: A JSON message containing lists the user. The content depends on the scope associated with the access_token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scgid:
+                    type: string
+                    example: '248289761001'
+                  fname:
+                    type: string
+                    example: Cement
+                  lname:
+                    type: string
+                    example: Thai
+                  location:
+                    type: string
+                    example: Online | Branch
+                  identifiers:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - type: citizenid
+                        id: 1234567890123
+                      - type: mobile
+                        id: 0123456789
+                      - type: email
+                        id: email@emailprovider.com
+                  source_systems:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - source_system: SCGHOME
+                        id: SCGHOME00001
+                      - source_system: NOCNOC
+                        id: NOCNOC00001
+                      - source_system: SCGXP
+                        id: SCGXP00001
+                      - source_system: FACEBOOK
+                        id: FB00001
+                      - source_system: GOOGLE
+                        id: GG00001
+        '400':
+          description: A CORS request failed.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 134'
+              schema:
+                type: string
+                default: '134'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: The request did not match CORS requirements
+        '401':
+          description: 'The given token is not valid. The error code may be 990, 991, 992, 993.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 990'
+              schema:
+                type: string
+                default: '990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: Validation error
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 203'
+              schema:
+                type: string
+                default: '203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: SSL is required
+        '405':
+          description: 'HTTP method is not valid. The Allow header is required by [RFC 2616](https://tools.ietf.org/html/rfc2616).'
+          headers:
+            Allow:
+              description: Comma-separated list of allowed HTTP methods.
+              schema:
+                type: string
+                default: 'POST,GET'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: 'Unknown error. This also occurs if the user does not have an active session, id_token, on the server.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 000'
+              schema:
+                type: string
+                default: '000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /add:
+    post:
+      tags:
+        - Resource Server APIs
+      "summary": Create SCGID user
+      description: |-
+        This endpoint create scgid user details. The content depends on the SCOPE associated with the given access_token.
+        IMPORTANT: The API will fail if no active id_token is available for the associated user.
+      operationId: POST_useradd
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'A valid access_token (e.g.: authorization: Bearer access-token-value). The access_token must have the ''openid'' scope. Other valid scope values are ''identifiers'', and ''source systems''.'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                fname:
+                  type: string
+                lname:
+                  type: string
+                identifiers:
+                  type: array
+                  items:
+                    type: object
+                source_systems:
+                  type: array
+                  items:
+                    type: object
+              example:   # Sample object
+                fname: Cement
+                lname: Thai
+                location: Online | Branch
+                identifiers: [{"type": "citizenid", "id": 1234567890123}, {"type": "mobile", "id": 0123456789}, {"type": "email", "id": "email@emailprovider.com"}]
+                source_systems: [{"source_system": "SCGHOME", "id": "SCGHOME00001"}, {"source_system": "NOCNOC", "id": "NOCNOC00001"}, {"source_system": "SCGXP", "id": "SCGXP00001"}, {"source_system": "FACEBOOK", "id": "FB00001"}, {"source_system": "GOOGLE", "id": "GG00001"}]
+      responses:
+        '200':
+          description: A JSON message containing lists the user. The content depends on the scope associated with the access_token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scgid:
+                    type: string
+                    example: '248289761001'
+                  fname:
+                    type: string
+                    example: Jane
+                  lname:
+                    type: string
+                    example: Doe
+                  location:
+                    type: string
+                    example: Online | Branch
+                  identifiers:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - type: citizenid
+                        id: 1234567890123
+                      - type: mobile
+                        id: 0123456789
+                      - type: email
+                        id: email@emailprovider.com
+                  source_systems:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - source_system: SCGHOME
+                        id: SCGHOME00001
+                      - source_system: NOCNOC
+                        id: NOCNOC00001
+                      - source_system: SCGXP
+                        id: SCGXP00001
+                      - source_system: FACEBOOK
+                        id: FB00001
+                      - source_system: GOOGLE
+                        id: GG00001
+        '400':
+          description: A CORS request failed.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 134'
+              schema:
+                type: string
+                default: '134'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: The request did not match CORS requirements
+        '401':
+          description: 'The given token is not valid. The error code may be 990, 991, 992, 993.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 990'
+              schema:
+                type: string
+                default: '990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: Validation error
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 203'
+              schema:
+                type: string
+                default: '203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: SSL is required
+        '405':
+          description: 'HTTP method is not valid. The Allow header is required by [RFC 2616](https://tools.ietf.org/html/rfc2616).'
+          headers:
+            Allow:
+              description: Comma-separated list of allowed HTTP methods.
+              schema:
+                type: string
+                default: 'POST,GET'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: 'Unknown error. This also occurs if the user does not have an active session, id_token, on the server.'
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 000'
+              schema:
+                type: string
+                default: '000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /auth/oauth/v2/token:
+    post:
+      tags:
+        - Authorization Server APIs
+      "summary": Log in by SCGID
+      description: 'Request access_token or refresh_token using OAuth 2.0 grant_type: password authorization_code refresh_token client_credentials urn:ietf:params:oauth:grant-type:jwt-bearer urn:ietf:params:oauth:grant-type:saml2-bearer. See RFC 6749 for more details.'
+      operationId: Create_request_token
+      parameters:
+        - name: authorization
+          in: header
+          required: false
+          x-is-map: false
+          description: 'The HTTP basic authorization header containing the client credentials as base64 encoded string (authorization: Basic base64(client_id:client_secret)). This can only be used INSTEAD of the parameters ''client_id'', ''client_secret''.'
+          schema:
+            type: string
+        - name: client_id
+          in: query
+          required: false
+          x-is-map: false
+          description: The client_id. This can only be used INSTEAD of using the authorization header. Maximum 255 characters.
+          schema:
+            type: string
+        - name: client_secret
+          in: query
+          required: false
+          x-is-map: false
+          description: The client_secret. This can only be used INSTEAD of using the authorization header.
+          schema:
+            type: string
+        - name: grant_type
+          in: query
+          required: true
+          x-is-map: false
+          description: 'For grant_type=password either authorization or client_id AND client_secret, username and password must be provided. For grant_type=client_credentials, either authorization or client_id AND client_secret must be provided. For grant_type=authorization_code: client_id, client_secret, code, and redirect_uri are required. For grant_type=refresh_token: client_id and refresh_token are required. For grant_type=jwt or saml2-bearer: client_id and assertion are required'
+          schema:
+            type: string
+            enum:
+              - password
+              - refresh_token
+              - authorization_code
+              - client_credentials
+              - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+              - 'urn:ietf:params:oauth:grant-type:saml2-bearer'
+            default: password
+        - name: redirect_uri
+          in: query
+          required: false
+          x-is-map: false
+          description: Required if grant_type is authorization_code.  Must contain a valid auth code
+          schema:
+            type: string
+        - name: scope
+          in: query
+          required: false
+          x-is-map: false
+          description: 'Only SCOPE values that were registered for this client will be granted. If only non-matching SCOPE values are requested, the request will fail.'
+          schema:
+            type: string
+        - name: username
+          in: query
+          required: false
+          x-is-map: false
+          description: 'If grant_type is password or client_credentials, this parameter must contain a valid username '
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          x-is-map: false
+          description: 'If grant_type is password or client_credentials, this parameter must contain a valid password'
+          schema:
+            type: string
+            format: password
+      responses:
+        '200':
+          $ref: '#/components/responses/authToken200'
+        '204':
+          description: 'No Content, applicable to OPTIONS request with preflight configuration'
+          headers:
+            Access-Control-Allow-Methods:
+              description: 'Allowable Methods, POST'
+              schema:
+                type: string
+                default: POST
+        '400':
+          description: 'Bad Request, see x-ca-err for possible error codes'
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values: 3003103 (missing or duplicate parameters), 3003107 (invalid mag-identifier), 3003113 (invalid grant), 3003115 (no registered scope value for client), 3003119 (grant type not supported), 3003134 (request did not match CORS requirements), 3003135 (token limit reached), 3003201 (client credentials not valid),'
+              schema:
+                type: string
+                default: '3003107'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The client could not be authenticated.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values: 3003201 (Invalid or Missing credentials), 3003202 (Resource owner could not be authenticated)'
+              schema:
+                type: string
+                default: '3003202'
+            WWW-Authenticate:
+              description: This header is required by RFC 7235 if an authentication scheme has been used. It contains the used authentication scheme and an error message.
+              schema:
+                type: string
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values:  3003203 (SSL is required)'
+              schema:
+                type: string
+                default: '3003203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values:  3003000 (Request failed due to unknown reason)'
+              schema:
+                type: string
+                default: '3003000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /connect/session/logout:
+    post:
+      tags:
+        - Authorization Server APIs
+      "summary": Log out by SCGID
+      description: The resource owner deletes his active session on the OAuth server.
+      operationId: Create_resource_owner_logout_
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'The HTTP basic authorization header containing the client credentials as base64 encoded string (authorization: Basic base64(client_id:client_secret)).'
+          schema:
+            type: string
+        - name: id_token
+          in: query
+          required: true
+          description: "The id_token that represents the authenticated user.\r\n[MAG]: Mobile clients may omit this parameter; mag-identifier will be used instead."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resource owner successfully logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_status:
+                    type: string
+                    example: logged out
+        '204':
+          description: 'No Content, applicable to OPTIONS request with preflight configuration'
+          headers:
+            Access-Control-Allow-Methods:
+              description: 'Allowable Methods, POST'
+              schema:
+                type: string
+                default: POST
+        '400':
+          description: Bad Request
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values:  3006103 (missing or duplicate parameters), 3006107 (mag-identifier invalid), 3006134 (request did not match CORS requirements) '
+              schema:
+                type: string
+                default: '3006103'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The client could not be authenticated.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values:  3006201 (client credentials invalid)'
+              schema:
+                type: string
+                default: '3006201'
+            WWW-Authenticate:
+              description: This header is required by RFC 7235 if an authentication scheme has been used. It contains the used authentication scheme and an error message.
+              schema:
+                type: string
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3006203 (SSL required)'
+              schema:
+                type: string
+                default: '3004203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: Custom error extension
+              schema:
+                type: string
+                default: '3006000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /connect/session/status:
+    get:
+      tags:
+        - Authorization Server APIs
+      "summary": Check session SCGID status
+      description: The client requests the session status by passing in the id_token of the authenticated user.  This informs the client if the resource owner is logged in and has a valid session. The session may be active or not existing.
+      operationId: Get_resource_owner_session_status_
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          description: 'A valid access_token (e.g.: authorization: Bearer access-token-value)'
+          schema:
+            type: string
+        - name: id_token
+          in: query
+          required: true
+          description: The id_token of the resource owner
+          schema:
+            type: string
+        - name: id_token_type
+          in: query
+          required: false
+          description: The id_token_type to be invalidated. Required if not default type.
+          schema:
+            type: string
+            default: 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: string
+                    description: Session is active
+                    example: active
+                  session_status:
+                    type: string
+                    description: Session does not exist
+                    example: none
+        '204':
+          description: 'No Content, applicable to OPTIONS request with preflight configuration'
+          headers:
+            Access-Control-Allow-Methods:
+              description: 'Allowable Methods, POST or GET'
+              schema:
+                type: string
+                default: GET
+        '400':
+          description: Bad Request
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3007103 (missing or duplicate parameters), 3007134 (request did not match CORS requirements)'
+              schema:
+                type: string
+                default: '3007103'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: 'The given token is not valid. The error code may be 1003990, 1003991, 1003992, 1003993'
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values: 3007990 (validation error), '
+              schema:
+                type: string
+                default: '3007990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values:  3007203 (SSL required)'
+              schema:
+                type: string
+                default: '3007203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: Custom error extension
+              schema:
+                type: string
+                default: '3002203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+servers:
+  - url: https://www.scgid.com/scgid
+components:
+  responses:
+    export200:
+      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportData'
+    auth302:
+      description: 'Will contain either: A success response including the redirect location header to the server that handles the authentication.  The redirect parameter ''sessionData''s structure looks like the model schema shown OR ''invalid mag-identifier'' OR ''invalid scope'' OR ''unsupported response type'' OR ''unauthorized client''. The non-successful conditions may include redirect query params as follows: ''error'', string with default value:  invalid_request ''error_description'', string with description of error ''state'', string with no default value.  It is opaque to the server and returned as received. ''x-ca-err'', string with default 3000108'
+      headers:
+        location:
+          description: 'Location (URL) includes these required parameters: action=(display or login depending on ''prompt'' and ''id_token_hint'') and sessionID and sessionData (a JWT containing a JSON message holding session data)'
+          schema:
+            type: string
+        Pragma:
+          description: Pragma directive
+          schema:
+            type: string
+            default: no-cache
+        Cache-Control:
+          description: Cache control directive
+          schema:
+            type: string
+            default: no-store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SessionData'
+    authToken200:
+      description: 'A success response that includes the issued token, expire and other details from the OAuth Server'
+      headers:
+        Pragma:
+          description: Pragma browser directive
+          schema:
+            type: string
+            default: no-cache
+        Cache-Control:
+          description: Cache-Control browser directive
+          schema:
+            type: string
+            default: no-store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenData'
+  securitySchemes:
+    BasicAuth:
+      type: http 
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://www.scgid.com/scgid/.well-known/openid-configuration
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://www.scgid.com/scgid/auth/oauth/v2/authorize
+          tokenUrl: https://www.scgid.com/scgid/auth/oauth/v2/token
+          scopes:
+            openid: For access to OpenId endpoints
+            email: Example data access
+            profile: Example data access
+            phone: Example data access
+            address: Example data access
+  schemas:
+    TokenData:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The Access Token for the given token request
+        token_type:
+          type: string
+          description: The Token Type issued
+          example: Bearer
+        expires_in:
+          type: string
+          description: 'The expiry time, in seconds'
+          example: '3600'
+        refresh_token:
+          type: string
+          description: 'The refresh token, if applicable'
+        scope:
+          type: string
+          description: The issued scope
+          example: oob
+        id_token:
+          type: string
+          description: 'If the requested SCOPE included ''msso'' or ''openid'', response includes an id_token'
+        id_token_type:
+          type: string
+          description: 'If the requested SCOPE included ''msso'' or ''openid'', response includes an id_token_type'
+      title: TokenData
+    SessionData:
+      required:
+        - session
+        - request_consent
+        - request_parameters
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionObject'
+        request_consent:
+          $ref: '#/components/schemas/RequestConsentObject'
+        request_parameters:
+          $ref: '#/components/schemas/RequestParametersObject'
+      title: ServiceProviderConfigurationData
+    ExportData:
+      type: object
+      properties:
+        server:
+          $ref: '#/components/schemas/ServerObject'
+        oauth:
+          $ref: '#/components/schemas/OAuthObject'
+        custom:
+          $ref: '#/components/schemas/CustomObject'
+      title: ExportData
+    CustomObject:
+      type: object
+      properties:
+        mag_demo_products_endpoint_path:
+          type: string
+          description: MAG API demo endpoint
+          example: /protected/resource/products
+        oauth_demo_protected_api_endpoint_path:
+          type: string
+          description: OAuth API demo endpoint
+          example: /oauth/v2/protectedapi/foo
+      title: CustomObject
+    ServerObject:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The hostname of the server
+        port:
+          type: string
+          description: The port of the server
+        prefix:
+          type: string
+          description: URL prefix
+          example: /urlprefix
+        server_certs:
+          type: string
+          description: The server certificate(s)
+      title: ServerObject
+    OAuthObject:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientObject'
+        system_endpoints:
+          $ref: '#/components/schemas/SystemEndpointsObject'
+        oauth_protected_endpoints:
+          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
+      title: OAuthObject
+    SystemEndpointsObject:
+      type: object
+      properties:
+        authorization_endpoint_path:
+          type: string
+          description: Authorization endpoint
+          example: /auth/oauth/v2/authorize
+        token_endpoint_path:
+          type: string
+          description: Token endpoint
+          example: /auth/oauth/v2/token
+        token_revocation_endpoint_path:
+          type: string
+          description: Token revocation endpoint
+          example: /auth/oauth/v2/token/revoke
+        usersession_logout_endpoint_path:
+          type: string
+          description: User logout endpoint
+          example: /connect/session/logout
+      title: SystemEndpointsObject
+    OAuthProtectedEndpointsObject:
+      type: object
+      properties:
+        userinfo_endpoint_path:
+          type: string
+          description: UserInfo endpoint
+          example: /openid/connect/v1/userinfo
+        usersession_status_endpoint_path:
+          type: string
+          description: User Session status endpoint
+          example: /connect/session/status
+      title: OAuthProtectedEndpointsObject
+    ClientObject:
+      type: object
+      properties:
+        organization:
+          type: string
+          description: 'A session ID, matching the sessionID'
+        description:
+          type: string
+          description: expiry
+        client_name:
+          type: string
+          description: current_username
+        client_type:
+          type: string
+          description: current_user_consent
+        registered_by:
+          type: string
+          description: current_user_role
+        client_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientIdObject'
+      title: ClientObject
+    ClientIdObject:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: A client id
+          example: 84695 ... b39770c3d
+        client_secret:
+          type: string
+          description: A client secret
+          example: abcde ... ldjjakkC
+        scope:
+          type: string
+          description: The scopes available for the client
+          example: openid email profile
+        redirect_uri:
+          type: string
+          description: The registered redirect_uri for the client
+          example: 'https://example.com/client/consent?state=23n23n...13k1j4'
+        environment:
+          type: string
+          description: ''
+          example: ALL
+        status:
+          type: string
+          description: ''
+          example: ENABLED
+        registered_by:
+          type: string
+          description: The id of the entity that registered the client
+      title: ClientIdObject
+    SessionObject:
+      type: object
+      properties:
+        sessionID:
+          type: string
+          description: 'A session ID, matching the sessionID'
+        exp:
+          type: string
+          description: expiry
+        current_username:
+          type: string
+          description: current_username
+        current_user_consent:
+          type: string
+          description: current_user_consent
+        current_user_role:
+          type: string
+          description: current_user_role
+        current_user_acr:
+          type: string
+          description: current_user_acr
+        current_user_authTime:
+          type: string
+          description: current_user_authTime
+        salt:
+          type: string
+          description: salt
+        third_party_sso_token:
+          type: string
+          description: third_party_sso_token
+        third_party_sso_token_type:
+          type: string
+          description: third_party_sso_token_type
+      title: SessionObject
+    RequestConsentObject:
+      type: object
+      properties:
+        client_name:
+          type: string
+          description: Client Name
+        scope_verified:
+          type: string
+          description: Valid scope for this client
+      title: RequestConsentObject
+    RequestParametersObject:
+      type: object
+      properties:
+        display:
+          type: string
+          description: Display Value
+        prompt:
+          type: string
+          description: Prompt Value
+        id_token_hint:
+          type: string
+          description: Id Token For Authenticated User
+        acr_values:
+          type: string
+          description: A List of ACR Values
+        client_id:
+          type: string
+          description: A Client ID
+        nonce:
+          type: string
+          description: A nonce
+        scope:
+          type: string
+          description: Requested Scope
+      title: RequestParametersObject
+    OpenIDDiscovery:
+      required:
+        - authorization_endpoint
+        - id_token_signing_alg_values_supported
+        - issuer
+        - jwks_uri
+        - response_types_supported
+        - subject_types_supported
+        - token_endpoint
+      type: object
+      properties:
+        userinfo_endpoint:
+          type: string
+          example: 'https://example.com:8443/openid/connect/v1/userinfo'
+          description: URL of the user info endpoint
+        jwks_uri:
+          type: string
+          example: 'https://example.com/openid/connect/jwks.json'
+          description: URL of JSON Web Key Set document
+        scopes_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - openid
+          description: list of the OAuth 2.0 scope values that this server supports
+        subject_types_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - pairwise
+          description: list of the Subject Identifier types that this OP supports
+        token_endpoint:
+          type: string
+          example: 'https://example.com:8443/auth/oauth/v2/token'
+          description: URL of the OAuth 2.0 token endpoint
+        id_token_signing_alg_values_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - RS256
+            - HS256
+          description: list of the JWS signing algorithms (alg values) supported by the OP for the ID Token to encode the Claims in a JWT
+        response_types_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - code
+            - token_id_token
+          description: ist of the OAuth 2.0 response_type values that this OP supports
+        claims_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - sub
+            - iss
+            - auth_time
+            - acr
+          description: list of the Claim Names of the Claims that the OpenID Provider MAY be able to supply values for
+        authorization_endpoint:
+          type: string
+          example: 'https://example.com:8443/auth/oauth/v2/authorize'
+          description: URL of the OAuth 2.0 authorization endpoint
+        issuer:
+          type: string
+          example: 'https://example.com'
+          description: the identifier of the token's issuer. This is identical to the 'iss' Claim value in ID Tokens
+        grant_types_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - authorization_code
+            - implicit
+          description: list of the OAuth 2.0 Grant Type values that this OP supports
+        acr_values_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - 'urn:mace:incommon:iap:silver'
+          description: list of the Authentication Context Class References that this OP supports
+        token_endpoint_auth_methods_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - client_secret_basic
+          description: list of Client Authentication methods supported by this Token Endpoint
+        token_endpoint_auth_signing_alg_values_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - RS256
+          description: list of the JWS signing algorithms (alg values) supported by the Token Endpoint for the signature on the JWT used to authenticate the Client at the Token Endpoint for the private_key_jwt and client_secret_jwt authentication methods. Servers SHOULD support RS256. The value none MUST NOT be used.
+        display_values_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - page
+            - popup
+          description: list of the display parameter values that the OpenID Provider supports
+        claim_types_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - normal
+          description: list of the Claim Types that the OpenID Provider supports
+        service_documentation:
+          type: string
+          example: 'http://masdemo12.dev.ca.com:8443/openid/connect/v1/service_documentation.html'
+          description: URL of a page containing human-readable information that developers might want or need to know when using the OpenID Provider
+        ui_locales_supported:
+          items:
+            type: string
+          type: array
+          example:
+            - en-US
+            - en-GB
+          description: Languages and scripts supported for the user interface
+      description: 'The OpenID configuration document as defined by the specification: http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata'

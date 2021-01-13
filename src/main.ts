@@ -5,6 +5,7 @@ import { FastifyAdapter, NestFastifyApplication, } from '@nestjs/platform-fastif
 import * as helmet from 'fastify-helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as morgan from 'morgan';
+import { fastifySwagger } from 'fastify-swagger'
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), { logger: true });
   const configService = app.get(ConfigService);
@@ -26,9 +27,19 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
+
+  app.register(fastifySwagger, {
+    routePrefix: '/scg-id',
+    mode: 'static',
+    specification: {
+      path: './openAPIDoc/apiSCGID.yaml',
+      baseDir: '/',
+    },
+    exposeRoute: true
+  })
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
-  await app.listen(PORT,'0.0.0.0');
+  SwaggerModule.setup('api-doc', app, document);
+  await app.listen(PORT, '0.0.0.0');
   const url = await app.getUrl()
   console.log('Running on : ', url)
 }

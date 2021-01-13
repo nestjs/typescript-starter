@@ -6,10 +6,11 @@ import {
 	HttpStatus,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AuthGuard } from '@nestjs/passport';
 import * as jwt from 'jsonwebtoken';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class JWTAuthGuard implements CanActivate {
 	configService: ConfigService
 	constructor() {
 		this.configService = new ConfigService()
@@ -40,3 +41,6 @@ export class AuthGuard implements CanActivate {
 		}
 	}
 }
+
+@Injectable()
+export class LocalAuthGuard extends AuthGuard('local') {}
