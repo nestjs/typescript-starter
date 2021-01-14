@@ -20,7 +20,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           database: dbConfig.database_name,
           synchronize: syncDB,
           logging: false,
-          entities: [process.env.PWD + '/src/model/*.entity{.ts,.js}']
+          entities: [__dirname + '../model/*.entity{.ts,.js}']
         }
         return option
       }
