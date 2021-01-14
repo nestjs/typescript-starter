@@ -5,3 +5,9 @@ export class UserLoginDto {
 	@ApiProperty()
 	password: string;
 }
+export class TokenPayloadDto {
+	@ApiProperty()
+	username: string
+	@ApiProperty()
+	userId: number
+}

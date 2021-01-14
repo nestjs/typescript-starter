@@ -2,8 +2,9 @@ import { Controller, Get, Post, UseGuards, Request, Body, HttpException, HttpSta
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { LocalAuthGuard, JWTAuthGuard } from '../shared/auth.guard';
 import { IsInt, IsString } from 'class-validator';
-import { UserLoginDto } from '../dto/auth/auth.dto';
+import { TokenPayloadDto, UserLoginDto } from '../dto/auth/auth.dto';
 import { AuthService } from '../service/auth.service';
+import { TokenPayload } from '../decorator/user.decorator';
 @Controller()
 export class AuthController {
 	constructor(private readonly authService: AuthService) { }
@@ -21,9 +22,9 @@ export class AuthController {
 	@ApiBearerAuth()
 	@UseGuards(JWTAuthGuard)
 	@Get('api/auth/token-valid')
-	async validateToken(@Request() req) {
+	async validateToken(@TokenPayload() payload: TokenPayloadDto) {
 		return {
-			payload: req.payload
+			payload: payload
 		}
 	}
 }
