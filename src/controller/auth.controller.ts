@@ -14,7 +14,7 @@ export class AuthController {
 			const token = await this.authService.encodeToken({ ...user })
 			return { access_token: token }
 		} catch (error) {
-			throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+			throw error
 		}
 	}
 

@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from './user.service';
 import * as jwt from 'jsonwebtoken';
+import { ERROR_RESPONSE } from '../constant/ErrorResponse';
 @Injectable()
 export class AuthService {
 	constructor(
@@ -12,13 +13,13 @@ export class AuthService {
 	async validateUser(username: string, pass: string): Promise<any> {
 		const user = await this.usersService.findOne(username);
 		if (!user) {
-			throw new Error(`Not Found user : ${username}`)
+			throw new HttpException(ERROR_RESPONSE.NOT_FOUND_USER, HttpStatus.BAD_REQUEST);
 		}
 		if (user && user.password === pass) {
 			const { password, ...result } = user;
 			return result;
 		} else {
-			throw new Error(`Invalid password`)
+			throw new HttpException(ERROR_RESPONSE.INVALID_PASSWORD, HttpStatus.BAD_REQUEST);
 		}
 	}
 	async validateToken(auth: string) {
@@ -30,9 +31,10 @@ export class AuthService {
 			const secret = this.configService.get('JWT_SECRET');
 			const decoded: any = await jwt.verify(token, secret);
 			return decoded;
-		} catch (err) {
-			const message = 'Token error: ' + (err.message || err.name);
-			throw new Error(message);
+		} catch (error) {
+			const err = ERROR_RESPONSE.INVALID_TOKEN
+			err.message = 'Token error: ' + (error.message || error.name);
+			throw new HttpException(error, HttpStatus.UNAUTHORIZED);
 		}
 	}
 	async encodeToken(payload: any) {

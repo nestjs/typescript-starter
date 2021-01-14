@@ -6,10 +6,12 @@ import * as helmet from 'fastify-helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as morgan from 'morgan';
 import { fastifySwagger } from 'fastify-swagger'
+import { AllExceptionsFilter } from './shared/exceptionFilter';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), { logger: true });
   const configService = app.get(ConfigService);
   const PORT = configService.get('port')
+  app.useGlobalFilters(new AllExceptionsFilter())
   app.register(helmet.fastifyHelmet, {
     contentSecurityPolicy: {
       directives: {
