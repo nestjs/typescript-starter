@@ -27,4 +27,9 @@ export class AuthController {
 			payload: payload
 		}
 	}
+	@Get('api/auth/users')
+	async getUser(){
+		const users = await this.authService.getUsers()
+		return users
+	}
 }

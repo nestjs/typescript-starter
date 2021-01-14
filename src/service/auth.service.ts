@@ -47,4 +47,8 @@ export class AuthService {
 		}
 
 	}
+	async getUsers() {
+		const res = await this.usersService.getAllUsers()
+		return res
+	}
 }

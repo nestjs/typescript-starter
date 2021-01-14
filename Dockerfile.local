@@ -4,8 +4,8 @@ RUN apk --no-cache add curl
 WORKDIR /app
 
 ENV DB_URL=host.docker.internal
-ENV DB_USERNAME=root
-ENV DB_PASSWORD=root
+ENV DB_USERNAME=admin
+ENV DB_PASSWORD=P@ssw0rd
 ENV DB_NAME=nest
 ENV DB_PORT=5432
 ENV DB_TYPE=postgres
