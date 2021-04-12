@@ -1,0 +1,9 @@
+{
+  "DB_NAME": "myDatabase",
+  "DB_HOST": "127.0.0.1",
+  "DB_PORT": 3306,
+  "DB_USER": "root",
+  "DB_PASSWORD": "3brs6kzopzMK",
+  "DB_TYPE": "mysql",
+  "NODE_ENV": "dev"
+}
