@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  app:
+    build: .
+    entrypoint: ./.docker/entrypoint.sh
+    container_name: nestjs_template
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/app
