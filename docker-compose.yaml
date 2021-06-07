@@ -9,6 +9,8 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
+    networks:
+      - postgres
 
   postgres:
     container_name: postgres
