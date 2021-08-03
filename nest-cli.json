@@ -1,4 +1,48 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/nest-typescript-starter/src",
+  "monorepo": true,
+  "root": "apps/nest-typescript-starter",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/nest-typescript-starter/tsconfig.app.json"
+  },
+  "projects": {
+    "nest-typescript-starter": {
+      "type": "application",
+      "root": "apps/nest-typescript-starter",
+      "entryFile": "main",
+      "sourceRoot": "apps/nest-typescript-starter/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nest-typescript-starter/tsconfig.app.json"
+      }
+    },
+    "admin": {
+      "type": "application",
+      "root": "apps/admin",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "db": {
+      "type": "library",
+      "root": "libs/db",
+      "entryFile": "index",
+      "sourceRoot": "libs/db/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/db/tsconfig.lib.json"
+      }
+    }
+  }
 }
