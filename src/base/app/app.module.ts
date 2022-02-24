@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 
-import { DatabaseModule } from 'src/database/database.module'
+import { DatabaseModule } from 'src/base/database/database.module'
 import { ModulesModule } from 'src/modules/modules.module'
 
 import { AppService } from './app.service'
