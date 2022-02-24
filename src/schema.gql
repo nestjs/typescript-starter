@@ -2,29 +2,205 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateManyStudentsInput {
+  """Array of records to create"""
+  students: [CreateStudentInput!]!
+}
+
+input CreateOneStudentInput {
+  """The record to create"""
+  student: CreateStudentInput!
+}
+
 input CreateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  key: String!
+  name: String!
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+input DeleteManyStudentsInput {
+  """Filter to find records to delete"""
+  filter: StudentDeleteFilter!
+}
+
+input DeleteOneStudentInput {
+  """The id of the record to delete."""
+  id: ID!
 }
 
 type Mutation {
-  createStudent(createStudentInput: CreateStudentInput!): Student!
-  removeStudent(id: Int!): Student!
-  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
+  createManyStudents(input: CreateManyStudentsInput!): [Student!]!
+  createOneStudent(input: CreateOneStudentInput!): Student!
+  deleteManyStudents(input: DeleteManyStudentsInput!): DeleteManyResponse!
+  deleteOneStudent(input: DeleteOneStudentInput!): StudentDeleteResponse!
+  updateManyStudents(input: UpdateManyStudentsInput!): UpdateManyResponse!
+  updateOneStudent(input: UpdateOneStudentInput!): Student!
+}
+
+type OffsetPageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+}
+
+input OffsetPaging {
+  """Limit the number of records returned"""
+  limit: Int
+
+  """Offset to start returning records from"""
+  offset: Int
 }
 
 type Query {
-  student(id: Int!): Student!
-  students: [Student!]!
+  student(
+    """The id of the record to find."""
+    id: ID!
+  ): Student
+  students(
+    """Specify to filter the records returned."""
+    filter: StudentFilter = {}
+
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to sort results."""
+    sorting: [StudentSort!] = []
+  ): StudentConnection!
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input StringFieldComparison {
+  eq: String
+  gt: String
+  gte: String
+  iLike: String
+  in: [String!]
+  is: Boolean
+  isNot: Boolean
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  notILike: String
+  notIn: [String!]
+  notLike: String
 }
 
 type Student {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: String!
+  key: String!
+  name: String!
+}
+
+type StudentAggregateGroupBy {
+  key: String
+  name: String
+}
+
+type StudentConnection {
+  """Array of nodes."""
+  nodes: [Student!]!
+
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type StudentCountAggregate {
+  key: Int
+  name: Int
+}
+
+input StudentDeleteFilter {
+  and: [StudentDeleteFilter!]
+  key: StringFieldComparison
+  name: StringFieldComparison
+  or: [StudentDeleteFilter!]
+}
+
+type StudentDeleteResponse {
+  id: String
+  key: String
+  name: String
+}
+
+input StudentFilter {
+  and: [StudentFilter!]
+  key: StringFieldComparison
+  name: StringFieldComparison
+  or: [StudentFilter!]
+}
+
+type StudentMaxAggregate {
+  key: String
+  name: String
+}
+
+type StudentMinAggregate {
+  key: String
+  name: String
+}
+
+input StudentSort {
+  direction: SortDirection!
+  field: StudentSortFields!
+  nulls: SortNulls
+}
+
+enum StudentSortFields {
+  key
+  name
+}
+
+input StudentUpdateFilter {
+  and: [StudentUpdateFilter!]
+  key: StringFieldComparison
+  name: StringFieldComparison
+  or: [StudentUpdateFilter!]
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+input UpdateManyStudentsInput {
+  """Filter used to find fields to update"""
+  filter: StudentUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateStudentInput!
+}
+
+input UpdateOneStudentInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateStudentInput!
 }
 
 input UpdateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  id: String!
+  key: String
+  name: String
 }

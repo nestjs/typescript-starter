@@ -1,7 +1,12 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Column, Entity } from 'typeorm'
 
-@ObjectType()
-export class Student {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number
+import { CommonEntity } from 'src/base/shared/entities/common.entity'
+
+@Entity({ name: 'students' })
+export class Student extends CommonEntity {
+  @Column()
+  name: string
+
+  @Column()
+  key: string
 }
