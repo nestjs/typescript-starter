@@ -1,11 +1,10 @@
 import { FilterableField } from '@nestjs-query/query-graphql'
-import { Field, ObjectType } from '@nestjs/graphql'
+import { ObjectType } from '@nestjs/graphql'
+
+import { CommonDTO } from 'src/base/shared/dtos/common.dto'
 
 @ObjectType('Student') // renomeia para o graphql, aparece como Student no playground
-export class StudentDTO {
-  @Field()
-  id: string
-
+export class StudentDTO extends CommonDTO {
   @FilterableField()
   name: string
 
