@@ -4,6 +4,6 @@ import { CreateStudentInput } from './create-student.input'
 
 @InputType()
 export class UpdateStudentInput extends PartialType(CreateStudentInput) {
-  @Field(() => String)
-  id: string
+  @Field(() => String, { nullable: true })
+  id?: string
 }

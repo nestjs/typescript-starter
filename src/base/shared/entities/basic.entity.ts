@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 export class BasicEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id?: string
 
   constructor() {
     super()
