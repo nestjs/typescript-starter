@@ -6,7 +6,7 @@ type Content {
   createdAt: DateTime!
   description: String!
   id: String!
-  link: String!
+  link: String
   updatedAt: DateTime!
 }
 
@@ -106,7 +106,7 @@ input ContentUpdateFilter {
 }
 
 input CreateContentInput {
-  description: String
+  description: String!
   link: String
 }
 
@@ -655,18 +655,15 @@ input StudentUpdateFilter {
 
 input UpdateContentInput {
   description: String
-  id: ID
   link: String
 }
 
 input UpdateDisciplineInput {
-  id: String
   name: String
 }
 
 input UpdateLessonInput {
   description: String
-  id: String
 }
 
 input UpdateManyContentsInput {
@@ -739,7 +736,6 @@ input UpdateOneStudentInput {
 }
 
 input UpdateStudentInput {
-  id: String
   key: String
   name: String
 }

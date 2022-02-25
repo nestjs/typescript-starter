@@ -8,6 +8,6 @@ export class ContentDTO extends CommonDTO {
   @FilterableField()
   description: string
 
-  @FilterableField()
+  @FilterableField({ nullable: true })
   link: string
 }
