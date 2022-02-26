@@ -2,10 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddContentsToLessonInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
 type Content {
   createdAt: DateTime!
   description: String!
   id: String!
+  lesson: Lesson!
   link: String
   updatedAt: DateTime!
 }
@@ -60,8 +69,18 @@ input ContentFilter {
   createdAt: DateFieldComparison
   description: StringFieldComparison
   id: StringFieldComparison
+  lesson: ContentFilterLessonFilter
   link: StringFieldComparison
   or: [ContentFilter!]
+  updatedAt: DateFieldComparison
+}
+
+input ContentFilterLessonFilter {
+  and: [ContentFilterLessonFilter!]
+  createdAt: DateFieldComparison
+  description: StringFieldComparison
+  id: StringFieldComparison
+  or: [ContentFilterLessonFilter!]
   updatedAt: DateFieldComparison
 }
 
@@ -327,6 +346,16 @@ input DisciplineUpdateFilter {
 }
 
 type Lesson {
+  contents(
+    """Specify to filter the records returned."""
+    filter: ContentFilter = {}
+
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to sort results."""
+    sorting: [ContentSort!] = []
+  ): LessonContentsConnection
   createdAt: DateTime!
   description: String!
   id: String!
@@ -343,6 +372,17 @@ type LessonAggregateGroupBy {
 type LessonConnection {
   """Array of nodes."""
   nodes: [Lesson!]!
+
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type LessonContentsConnection {
+  """Array of nodes."""
+  nodes: [Content!]!
 
   """Paging information"""
   pageInfo: OffsetPageInfo!
@@ -376,10 +416,21 @@ type LessonDeleteResponse {
 
 input LessonFilter {
   and: [LessonFilter!]
+  contents: LessonFilterContentFilter
   createdAt: DateFieldComparison
   description: StringFieldComparison
   id: StringFieldComparison
   or: [LessonFilter!]
+  updatedAt: DateFieldComparison
+}
+
+input LessonFilterContentFilter {
+  and: [LessonFilterContentFilter!]
+  createdAt: DateFieldComparison
+  description: StringFieldComparison
+  id: StringFieldComparison
+  link: StringFieldComparison
+  or: [LessonFilterContentFilter!]
   updatedAt: DateFieldComparison
 }
 
@@ -420,6 +471,7 @@ input LessonUpdateFilter {
 }
 
 type Mutation {
+  addContentsToLesson(input: AddContentsToLessonInput!): Lesson!
   createManyContents(input: CreateManyContentsInput!): [Content!]!
   createManyDisciplines(input: CreateManyDisciplinesInput!): [Discipline!]!
   createManyLessons(input: CreateManyLessonsInput!): [Lesson!]!
@@ -436,6 +488,10 @@ type Mutation {
   deleteOneDiscipline(input: DeleteOneDisciplineInput!): DisciplineDeleteResponse!
   deleteOneLesson(input: DeleteOneLessonInput!): LessonDeleteResponse!
   deleteOneStudent(input: DeleteOneStudentInput!): StudentDeleteResponse!
+  removeContentsFromLesson(input: RemoveContentsFromLessonInput!): Lesson!
+  removeLessonFromContent(input: RemoveLessonFromContentInput!): Content!
+  setContentsOnLesson(input: SetContentsOnLessonInput!): Lesson!
+  setLessonOnContent(input: SetLessonOnContentInput!): Content!
   updateManyContents(input: UpdateManyContentsInput!): UpdateManyResponse!
   updateManyDisciplines(input: UpdateManyDisciplinesInput!): UpdateManyResponse!
   updateManyLessons(input: UpdateManyLessonsInput!): UpdateManyResponse!
@@ -519,6 +575,38 @@ type Query {
     """Specify to sort results."""
     sorting: [StudentSort!] = []
   ): StudentConnection!
+}
+
+input RemoveContentsFromLessonInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input RemoveLessonFromContentInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetContentsOnLessonInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input SetLessonOnContentInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
 }
 
 """Sort Directions"""
