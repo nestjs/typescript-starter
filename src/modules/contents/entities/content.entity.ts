@@ -11,6 +11,9 @@ export class Content extends CommonEntity {
   @Column({ nullable: true })
   linkContent: string
 
+  @Column({ nullable: true })
+  lessonId: string
+
   @ManyToOne(() => Lesson)
   lesson: Lesson
 }

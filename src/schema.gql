@@ -126,6 +126,7 @@ input ContentUpdateFilter {
 
 input CreateContentInput {
   description: String!
+  lessonId: String
   linkContent: String
 }
 
@@ -744,6 +745,7 @@ input StudentUpdateFilter {
 input UpdateContentInput {
   description: String
   id: String
+  lessonId: String
   linkContent: String
 }
 
