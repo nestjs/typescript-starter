@@ -15,7 +15,7 @@ type Content {
   description: String!
   id: String!
   lesson: Lesson!
-  link: String
+  linkContent: String
   updatedAt: DateTime!
 }
 
@@ -23,7 +23,7 @@ type ContentAggregateGroupBy {
   createdAt: DateTime
   description: String
   id: String
-  link: String
+  linkContent: String
   updatedAt: DateTime
 }
 
@@ -42,7 +42,7 @@ type ContentCountAggregate {
   createdAt: Int
   description: Int
   id: Int
-  link: Int
+  linkContent: Int
   updatedAt: Int
 }
 
@@ -51,7 +51,7 @@ input ContentDeleteFilter {
   createdAt: DateFieldComparison
   description: StringFieldComparison
   id: StringFieldComparison
-  link: StringFieldComparison
+  linkContent: StringFieldComparison
   or: [ContentDeleteFilter!]
   updatedAt: DateFieldComparison
 }
@@ -60,7 +60,7 @@ type ContentDeleteResponse {
   createdAt: DateTime
   description: String
   id: String
-  link: String
+  linkContent: String
   updatedAt: DateTime
 }
 
@@ -70,7 +70,7 @@ input ContentFilter {
   description: StringFieldComparison
   id: StringFieldComparison
   lesson: ContentFilterLessonFilter
-  link: StringFieldComparison
+  linkContent: StringFieldComparison
   or: [ContentFilter!]
   updatedAt: DateFieldComparison
 }
@@ -88,7 +88,7 @@ type ContentMaxAggregate {
   createdAt: DateTime
   description: String
   id: String
-  link: String
+  linkContent: String
   updatedAt: DateTime
 }
 
@@ -96,7 +96,7 @@ type ContentMinAggregate {
   createdAt: DateTime
   description: String
   id: String
-  link: String
+  linkContent: String
   updatedAt: DateTime
 }
 
@@ -110,7 +110,7 @@ enum ContentSortFields {
   createdAt
   description
   id
-  link
+  linkContent
   updatedAt
 }
 
@@ -119,14 +119,14 @@ input ContentUpdateFilter {
   createdAt: DateFieldComparison
   description: StringFieldComparison
   id: StringFieldComparison
-  link: StringFieldComparison
+  linkContent: StringFieldComparison
   or: [ContentUpdateFilter!]
   updatedAt: DateFieldComparison
 }
 
 input CreateContentInput {
   description: String!
-  link: String
+  linkContent: String
 }
 
 input CreateDisciplineInput {
@@ -429,7 +429,7 @@ input LessonFilterContentFilter {
   createdAt: DateFieldComparison
   description: StringFieldComparison
   id: StringFieldComparison
-  link: StringFieldComparison
+  linkContent: StringFieldComparison
   or: [LessonFilterContentFilter!]
   updatedAt: DateFieldComparison
 }
@@ -743,7 +743,8 @@ input StudentUpdateFilter {
 
 input UpdateContentInput {
   description: String
-  link: String
+  id: String
+  linkContent: String
 }
 
 input UpdateDisciplineInput {
@@ -752,6 +753,7 @@ input UpdateDisciplineInput {
 
 input UpdateLessonInput {
   description: String
+  id: String
 }
 
 input UpdateManyContentsInput {

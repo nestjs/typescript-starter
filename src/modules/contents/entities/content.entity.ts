@@ -9,7 +9,7 @@ export class Content extends CommonEntity {
   description: string
 
   @Column({ nullable: true })
-  link: string
+  linkContent: string
 
   @ManyToOne(() => Lesson)
   lesson: Lesson

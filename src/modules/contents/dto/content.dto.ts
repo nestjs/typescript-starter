@@ -14,5 +14,5 @@ export class ContentDTO extends CommonDTO {
   description: string
 
   @FilterableField({ nullable: true })
-  link: string
+  linkContent: string
 }
