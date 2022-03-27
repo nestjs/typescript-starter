@@ -12,9 +12,13 @@ export class Bet {
     number: number;
     @Column()
     url: string;
-    @Column()
+    @Column({
+        nullable: true
+    })
     odds: number;
-    @Column()
+    @Column({
+        nullable: true
+    })
     ev: number;
     @Column({
         default: false

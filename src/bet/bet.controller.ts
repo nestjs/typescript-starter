@@ -17,4 +17,9 @@ export class BetController {
     Logger.log("GET ALL BetS")
     return this.BetsService.findAll();
   }
+
+  @Get('latest')
+  async findLatest(): Promise<Bet> {
+    return this.BetsService.findLatest();
+  }
 }
