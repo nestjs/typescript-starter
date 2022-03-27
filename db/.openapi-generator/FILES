@@ -1,0 +1,5 @@
+.openapi-generator-ignore
+Model/Bet.sql
+Model/Race.sql
+README.md
+mysql_schema.sql

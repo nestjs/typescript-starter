@@ -54,6 +54,27 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/bet' 
+    post: 
+      parameters: 
+      - name: date
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/date'
+      requestBody:
+        description: Body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bet'
+      responses: 
+        '200':
+          description: Latest bet
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/bet' 
 components:
   schemas: 
     date: 
