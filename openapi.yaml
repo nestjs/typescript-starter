@@ -5,12 +5,6 @@ info:
 paths: 
   /bet/: 
     get: 
-      parameters: 
-      - name: date
-        in: path
-        required: true
-        schema: 
-          $ref: '#/components/schemas/date'
       responses: 
         '200':
           description: Latest bet
@@ -19,12 +13,6 @@ paths:
               schema: 
                 $ref: '#/components/schemas/bet' 
     post: 
-      parameters: 
-      - name: date
-        in: path
-        required: true
-        schema: 
-          $ref: '#/components/schemas/date'
       requestBody:
         description: Body
         required: true
@@ -39,21 +27,37 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/bet' 
-  /bet/{date}: 
+  /bet/latest: 
     get: 
-      parameters: 
-      - name: date
-        in: path
-        required: true
-        schema: 
-          $ref: '#/components/schemas/date'
       responses: 
         '200':
-          description: Latest bet
+          description: Latest bet which is between odds 1-10 and ev is over 5
           content:
             application/json:
               schema: 
                 $ref: '#/components/schemas/bet' 
+  /bet/{id}: 
+    patch: 
+      parameters: 
+      - name: id
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/date'
+      requestBody:
+        description: Body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bet'
+      responses: 
+        '200':
+          description: Update the odds and ev of bet
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/bet'
 components:
   schemas: 
     date: 
