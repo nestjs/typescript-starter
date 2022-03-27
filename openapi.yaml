@@ -3,43 +3,7 @@ info:
   title: AutoBetter API
   version: 0.0.1
 paths: 
-  /schedule/{date}: 
-    get: 
-      parameters: 
-      - name: date
-        in: path
-        required: true
-        schema: 
-          $ref: '#/components/schemas/date'
-      responses: 
-        '200':
-          description: Schedule
-          content:
-            application/json:
-              schema: 
-                $ref: '#/components/schemas/schedule' 
-    post: 
-      parameters: 
-      - name: date
-        in: path
-        required: true
-        schema: 
-          $ref: '#/components/schemas/date'
-      requestBody:
-        description: Body
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/race'
-      responses: 
-        '200':
-          description: Added race to schedule
-          content:
-            application/json:
-              schema: 
-                $ref: '#/components/schemas/race'
-  /bet/{date}: 
+  /bet/: 
     get: 
       parameters: 
       - name: date
@@ -75,12 +39,27 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/bet' 
+  /bet/{date}: 
+    get: 
+      parameters: 
+      - name: date
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/date'
+      responses: 
+        '200':
+          description: Latest bet
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/bet' 
 components:
   schemas: 
     date: 
       type: string
       format: datetime
-    race:
+    bet:
       type: object
       properties:
         id:
@@ -94,21 +73,10 @@ components:
         url:
           type: string
           format: url
-    bet: 
-      type: object
-      properties: 
-        id:
-          type: integer
-        date:
-          $ref: '#/components/schemas/date'
         odds:
           type: integer
         ev:
           type: number
-        race:
-          $ref: '#/components/schemas/race'
-    schedule:
-        type: array
-        items:
-          $ref: '#/components/schemas/race'
+        placed:
+          type: boolean
         
