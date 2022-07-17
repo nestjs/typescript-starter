@@ -17,7 +17,7 @@ export default class SubscriberService {
     private subscriberRepository: Repository<SubscriberEntity>,
   ) {}
 
-  createSubscriber(data: SubscribersDto) {
+  createSubscribers(data: SubscribersDto) {
     const { tag, subscribers } = data; // destructuring the request body
 
     subscribers.forEach(async (sbs: Subscriber) => {
