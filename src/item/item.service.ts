@@ -20,8 +20,8 @@ export class ItemService {
     return this.repository.find();
   }
 
-  findOne(id: any): Promise<Item> {
-    return this.repository.findOne(id);
+  findOne(id: number): Promise<Item> {
+    return this.repository.findOneById(id);
   }
 
   async update(id: number, updateItemDto: UpdateItemDto): Promise<Item> {
@@ -35,7 +35,7 @@ export class ItemService {
     return this.repository.save(item);
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const item = await this.findOne(id);
     return this.repository.remove(item);
   }

@@ -26,8 +26,8 @@ export class ItemController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.itemService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.itemService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,7 +36,7 @@ export class ItemController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.itemService.remove(id);
   }
 }
