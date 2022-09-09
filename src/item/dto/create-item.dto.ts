@@ -2,14 +2,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateItemDto {
-  @ApiProperty({ example: 'Bananas' })
+  @ApiProperty({ example: 'Drenagem linfática' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
   @ApiPropertyOptional({
-    example: 'Cavendish bananas',
-    description: 'Optional description of the item',
+    example: 'Drenagem ',
+    description: 'Massoterapia e drenagem local',
   })
   @IsOptional()
   @IsString()
