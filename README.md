@@ -62,7 +62,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test - Temo um teste já pronto para servir de base para a implementação dos demais.
+## Test - Temos um teste já pronto para servir de base para a implementação dos demais.
 
 ```bash
 # unit tests
