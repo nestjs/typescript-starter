@@ -35,7 +35,9 @@ DB_SYNCHRONIZE=true
 
 - Como sugestão de nome "clinestetic" no arquivo .env
 
-OBS.: Caso seja necessário a aplicação irá pedir para instalar e configurar o driver se sei SGBD.
+OBS.: 1 - Caso seja necessário a aplicação irá pedir para instalar e configurar o driver se sei SGBD.
+      2 - Alguns tipos de dados também podem dá conflitos de acordo com a sintax do SGBD adotado. Ex: Timestemp para mysql
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
