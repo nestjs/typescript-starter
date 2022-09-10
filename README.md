@@ -35,8 +35,9 @@ DB_SYNCHRONIZE=true
 
 - Como sugestão de nome "clinestetic" no arquivo .env
 
-OBS.: 1 - Caso seja necessário a aplicação irá pedir para instalar e configurar o driver se sei SGBD.
-      2 - Alguns tipos de dados também podem dá conflitos de acordo com a sintax do SGBD adotado. Ex: Timestemp para mysql
+OBS.: - Caso seja necessário a aplicação irá pedir para instalar e configurar o driver se sei SGBD.
+      - Alguns tipos de dados também podem dá conflitos de acordo com a sintax do SGBD adotado. Ex: Timestemp para mysql
+      - Cuidado para não usar as credeciais do SGBD equivocadamente. Ex.: Porta, senha e usuario corretamente.
 
 ## Description
 
