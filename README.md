@@ -10,18 +10,25 @@ App para segmento de estética
 
 ## DATABASE
 
-Obs.: Crie um arquivo na raiz do projeto de nome ".env" e Add as configurações de acesso ao seu banco de dados no arquivo da aplicação.
+Obs.: Crie um arquivo na raiz do projeto de nome ".env" e Add as configurações de acesso ao seu banco de dados(username ) no arquivo da aplicação.
 
 - Cole as informações abaixo no seu arquivo .env e salve:
 
-- SERVER_PORT=3000
-- MODE=DEV
-- DB_HOST=127.0.0.1
-- DB_PORT=3306
-- DB_USERNAME=root
-- DB_PASSWORD=
-- DB_DATABASE=clinestetic
-- DB_SYNCHRONIZE=true
+SERVER_PORT=3000 
+
+MODE=DEV
+
+DB_HOST=127.0.0.1
+
+DB_PORT=
+
+DB_USERNAME=root
+
+DB_PASSWORD=
+
+DB_DATABASE=clinestetic
+
+DB_SYNCHRONIZE=true
 
 
 - A app não está configurada para criar seu banco de dados. Apenas para criar as tabelas num banco já existente. Antes de executar os comandos de "start" indicados nesse readme abaixo, acesse seu SGBD (mysql, postgree, oracle etc) e crie o banco de dados.
