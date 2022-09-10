@@ -10,7 +10,7 @@ App para segmento de estética
 
 ## DATABASE
 
-Obs.: Crie um arquivo na raiz do projeto de nome ".env" e Add as configurações de acesso ao seu banco de dados(username ) no arquivo da aplicação.
+Obs.: Crie um arquivo na raiz do projeto de nome ".env" e Add as configurações de acesso ao seu banco de dados(username/password) no arquivo da aplicação.
 
 - Cole as informações abaixo no seu arquivo .env e salve:
 
