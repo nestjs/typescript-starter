@@ -74,7 +74,7 @@ $ npm run test:e2e
 # test coverage - mostra a cobertura de linhas e arquivos de sua aplicação
 $ npm run test:cov
 ```
-Obs.: Para rodar o exeplo de teste já funcional dessa aplicação, execute o comando de teste e passe o nome do arquivo de teste. Como o modelo abaixo:
+Obs.: Para rodar o exemplo de teste já funcional dessa aplicação, execute o comando de teste e passe o nome do arquivo de teste. Como o modelo abaixo:
 
 ```bash
 npm run test app.controller.spec.ts
