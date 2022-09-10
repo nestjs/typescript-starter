@@ -95,4 +95,6 @@ http://localhost:3000/api
 
 ## Collections para o Postman - outra maneira de testar sua app com o Postman
 
- Basta importar  o arquivo na raiz do projeto "TesteNest.postman_collection.json"
+ Basta importar  o arquivo  "TesteNest.postman_collection.json" na raiz do projeto
+
+ - Abra seu Postman e importe.
