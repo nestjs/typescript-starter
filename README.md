@@ -82,7 +82,7 @@ npm run test app.controller.spec.ts
 
 ## Support
 
-Clinistetic é um projeto inicial para o segmento de clinica de estética com pretenção de ser escalável e se tornar uma rede de do tipo GDS. Para maiores informações entre em contato com a equipe[NITECH](https://nitechacademy.com.br/) o laboratório online de software e tecnologias.
+Clinistetic é um projeto inicial para o segmento de clinica de estética com pretenção de ser escalável e se tornar uma rede de tipo GDS. Para maiores informações entre em contato com a equipe[NITECH](https://nitechacademy.com.br/) o laboratório online de software e tecnologias.
 
 
 ## License
