@@ -40,9 +40,10 @@ OBS.: Caso seja necessário a aplicação irá pedir para instalar e configurar 
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-utilizado como base para desenvolvimento dessa app inicial.
+Utilizado como base para desenvolvimento dessa app inicial.
 
-## Installation (ao clonar o repositório deve executar esse comando para baixar todas as dependencias, ele vai criar uma pasta "node_modules" para sua app)
+## Installation 
+- (ao clonar o repositório deve executar esse comando para baixar todas as dependencias, ele vai criar uma pasta "node_modules" para sua app)
 
 ```bash
 $ npm install
