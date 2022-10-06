@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
@@ -5,6 +6,7 @@ export class CreateItemDto {
   @ApiProperty({ example: 'Drenagem linfática' })
   @IsString()
   @IsNotEmpty()
+  
   name: string;
 
   @ApiPropertyOptional({
