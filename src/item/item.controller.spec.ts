@@ -48,7 +48,7 @@ describe('ItemController', () => {
             findAll: jest.fn().mockResolvedValue(itemEntityList),
             findById: jest.fn().mockResolvedValue(newItemEntity),
             update: jest.fn(),
-            remove: jest.fn(),
+            remove: jest.fn().mockResolvedValue(newItemEntity),
           },
         },
       ],
@@ -134,6 +134,24 @@ describe('ItemController', () => {
       //Arrange
       //Act
       //Assert
+    });
+  });
+
+  describe('remove', () => {
+    it('should delete a item by id successfully', async () => {
+      //Act
+      const result = await controller.remove(1);
+      //Assert
+      expect(result).toEqual(newItemEntity);
+      expect(service.remove).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an exception', () => {
+      //Arrange
+      jest.spyOn(controller, 'remove').mockRejectedValueOnce(new Error());
+
+      //Assert
+      expect(controller.remove(1)).rejects.toThrowError();
     });
   });
 });
