@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+import { UpdateItemDto } from './dto/update-item.dto'; /* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
 import { Item } from './entities/item.entity';
 import { ItemController } from './item.controller';
@@ -47,7 +47,7 @@ describe('ItemController', () => {
             create: jest.fn().mockResolvedValue(newItemEntity),
             findAll: jest.fn().mockResolvedValue(itemEntityList),
             findById: jest.fn().mockResolvedValue(newItemEntity),
-            update: jest.fn(),
+            update: jest.fn().mockResolvedValue(newItemEntity),
             remove: jest.fn().mockResolvedValue(newItemEntity),
           },
         },
@@ -125,15 +125,20 @@ describe('ItemController', () => {
   });
 
   describe('update', () => {
-    it('should return a item by id successfully', async () => {
+    it('should update a item successfully', async () => {
       //Arrange
       //Act
+      const result = await controller.update('1', UpdateItemDto);
       //Assert
+      expect(result).toEqual(newItemEntity);
+      expect(service.update).toHaveBeenCalledTimes(1);
     });
-    it('should throw an exception', async () => {
+
+    it('should throw an exception', () => {
       //Arrange
-      //Act
+      jest.spyOn(controller, 'update').mockRejectedValueOnce(new Error());
       //Assert
+      expect(controller.update('1', UpdateItemDto)).rejects.toThrowError();
     });
   });
 
