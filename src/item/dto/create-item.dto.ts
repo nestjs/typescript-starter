@@ -6,7 +6,6 @@ export class CreateItemDto {
   @ApiProperty({ example: 'Drenagem linfática' })
   @IsString()
   @IsNotEmpty()
-  
   name: string;
 
   @ApiPropertyOptional({

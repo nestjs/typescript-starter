@@ -30,18 +30,12 @@ describe('ItemController', () => {
     }),
   ];
 
-  const newItem = new Item({
+  const newItemEntity = new Item({
     id: 1,
     name: 'carbox',
     description: 'carboxiterapia',
     quantity: 3,
   });
-
-  const body = new CreateItemDto();
-
-  body.description = 'Carboxterapia';
-  body.name = 'Carbox';
-  body.quantity = 5;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -50,10 +44,11 @@ describe('ItemController', () => {
         {
           provide: ItemService,
           useValue: {
-            create: jest.fn().mockRejectedValue(itemEntityList[0]),
+            create: jest.fn().mockResolvedValue(newItemEntity),
             findAll: jest.fn().mockResolvedValue(itemEntityList),
-            findById: jest.fn().mockResolvedValue(newItem),
+            findById: jest.fn().mockResolvedValue(newItemEntity),
             update: jest.fn(),
+            remove: jest.fn(),
           },
         },
       ],
@@ -70,13 +65,17 @@ describe('ItemController', () => {
 
   describe('create', () => {
     it('should create a item successfully', async () => {
+      //Arrange
+      const body: CreateItemDto = {
+        name: 'drenagem',
+        description: 'drenagem linfática',
+        quantity: 2,
+      };
+
       //Act
       const result = await controller.create(body);
-
       //Assert
-      console.log(result);
-      console.log(body);
-      expect(result).toEqual(newItem);
+      expect(result).toEqual(newItemEntity);
       expect(service.create).toHaveBeenCalledTimes(1);
     });
 
@@ -112,7 +111,7 @@ describe('ItemController', () => {
       //Act
       const result = await controller.findById(1);
       //Assert
-      expect(result).toEqual(itemEntityList[0]);
+      expect(result).toEqual(newItemEntity);
       expect(service.findById).toHaveBeenCalledTimes(1);
     });
 
