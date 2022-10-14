@@ -26,12 +26,12 @@ export class Item extends BaseEntity {
   @Column({ name: 'quantity', type: 'int' })
   quantity: number;
 
-  constructor(todo?: Partial<Item>) {
+  constructor(item?: Partial<Item>) {
     super();
-    this.id = todo?.id;
-    this.name = todo?.name;
-    this.updatedAt = todo?.updatedAt;
-    this.description = todo?.description;
-    this.quantity = todo?.quantity;
+    this.id = item?.id;
+    this.name = item?.name;
+    this.updatedAt = item?.updatedAt;
+    this.description = item?.description;
+    this.quantity = item?.quantity;
   }
 }

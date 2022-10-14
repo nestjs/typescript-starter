@@ -22,7 +22,7 @@ export class ItemService {
   }
 
   findById(id: number): Promise<Item> {
-    return this.repository.findOneBy({id});
+    return this.repository.findOneBy({ id });
   }
 
   async update(id: number, updateItemDto: UpdateItemDto): Promise<Item> {
