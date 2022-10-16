@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { DataSource } from 'typeorm';
 import { ProcedimentModule } from './procediment/procediment.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
+import { ClinicModule } from './clinic/clinic.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { SchedulingModule } from './scheduling/scheduling.module';
     UserModule,
     AuthModule,
     ProcedimentModule,
-    SchedulingModule
+    SchedulingModule,
+    ClinicModule
   ],
   controllers: [AppController],
   providers: [AppService],
