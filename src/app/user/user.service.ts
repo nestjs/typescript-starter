@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
   async findAll() {
     return await this.userRepository.find({
       select: ['id', 'firstName', 'lastName', 'email'],

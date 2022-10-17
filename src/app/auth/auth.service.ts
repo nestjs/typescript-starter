@@ -1,6 +1,6 @@
-import { UserService } from './../app/user/user.service';
+import { UserService } from '../user/user.service';
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/app/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -13,8 +13,7 @@ export class AuthService {
 
   async login(user) {
     const payload = { sub: user.id, email: user.email };
-
-    return {
+    return { 
       token: this.jwtService.sign(payload),
     };
   }

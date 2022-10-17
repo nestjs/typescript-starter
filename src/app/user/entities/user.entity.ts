@@ -6,8 +6,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
+import { Procediment } from '../../procediment/entities/procediment.entity';
 
 @Entity({ name: 'user' })
 export class User {
@@ -34,6 +36,9 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
+
+  @OneToMany(type => Procediment, procediment => procediment.user)
+  procediments: Procediment[];
 
   @BeforeInsert()
   hashPassword() {

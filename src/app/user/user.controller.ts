@@ -16,27 +16,27 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('api/v1/user')
-@UseGuards(AuthGuard('jwt'))
+@Controller('user')
+//@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Get('/getall')
   async index() {
     return await this.userService.findAll();
   }
 
-  @Post()
+  @Post('/save')
   async store(@Body() body: CreateUserDto) {
     return await this.userService.store(body);
   }
 
-  @Get(':id')
+  @Get('/get/:id')
   async show(@Param('id', new ParseIntPipe()) id: number) {
     return await this.userService.findOneOrFail({ where: { id } });
   }
 
-  @Put(':id')
+  @Put('/put/:id')
   async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() body: UpdateUserDto,
@@ -44,9 +44,10 @@ export class UserController {
     return await this.userService.update(id, body);
   }
 
-  @Delete(':id')
+  @Delete('/del/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id', new ParseIntPipe()) id: number) {
     await this.userService.destroy(id);
   }
+  
 }
