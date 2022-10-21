@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
 import { Procediment } from '../../procediment/entities/procediment.entity';
+import { Combo } from 'src/app/combo/entities/combo.entity';
 
 @Entity({ name: 'user' })
 export class User {
@@ -37,8 +38,11 @@ export class User {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
 
-  @OneToMany(type => Procediment, procediment => procediment.user)
+  @OneToMany((type) => Procediment, (procediment) => procediment.user)
   procediments: Procediment[];
+
+  @OneToMany((type) => Combo, (combo) => combo.user)
+  combo: Combo[];
 
   @BeforeInsert()
   hashPassword() {

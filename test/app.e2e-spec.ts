@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { AppModule } from './../src/app.module';
+
 import { INestApplication } from '@nestjs/common';
+import { AppModule } from 'src/app/app.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

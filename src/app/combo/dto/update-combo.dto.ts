@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class UpdateProcedimentDto {
+export class UpdateCombo {
   @IsNotEmpty()
   id: number;
 
@@ -11,8 +11,14 @@ export class UpdateProcedimentDto {
   description: string;
 
   @IsNotEmpty()
-  cust: number;
+  cost: number;
+
+  //@IsNotEmpty()
+  //picture: any;
 
   @IsNotEmpty()
-  price: number;
+  installment: number;
+
+  @IsNotEmpty()
+  pack: string;
 }
