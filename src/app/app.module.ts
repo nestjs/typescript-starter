@@ -11,6 +11,7 @@ import { DataSource } from 'typeorm';
 import { ProcedimentModule } from './procediment/procediment.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
 import { ClinicModule } from './clinic/clinic.module';
+import { ComboModule } from './combo/combo.module';
 
 @Module({
   imports: [
@@ -31,11 +32,12 @@ import { ClinicModule } from './clinic/clinic.module';
     AuthModule,
     ProcedimentModule,
     SchedulingModule,
-    ClinicModule
+    ClinicModule,
+    ComboModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private datasource: DataSource){}
+  constructor(private datasource: DataSource) {}
 }
