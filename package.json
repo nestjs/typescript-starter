@@ -26,6 +26,12 @@
       "CI=true npm run test"
     ]
   },
+
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
  
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -96,10 +102,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
   }
 }
