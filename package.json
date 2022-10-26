@@ -23,13 +23,13 @@
   
   "lint-staged": {
     "./src/**/*": [
-      "CI=true npm test"
+      "CI=true npm run test"
     ]
   },
 
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "prepare-commit-msg": " exec < /dev/tty && npx cz --hook || true "
     }
   },
  
