@@ -1,19 +1,18 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class UpdateProcedimentDto {
-    @IsNotEmpty()
-    id: number;
+  @IsNotEmpty()
+  id: number;
 
-    @IsNotEmpty()
-    name: string;
+  @IsNotEmpty()
+  name: string;
 
-    @IsNotEmpty()
-    description: string;
+  @IsNotEmpty()
+  description: string;
 
-    @IsNotEmpty()
-    cust: number;
+  @IsNotEmpty()
+  cust: number;
 
-    @IsNotEmpty()
-    price   : number;
-
+  @IsNotEmpty()
+  price: number;
 }

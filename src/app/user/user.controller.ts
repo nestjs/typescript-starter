@@ -49,5 +49,4 @@ export class UserController {
   async destroy(@Param('id', new ParseIntPipe()) id: number) {
     await this.userService.destroy(id);
   }
-  
 }

@@ -37,7 +37,7 @@ export class User {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
 
-  @OneToMany(type => Procediment, procediment => procediment.user)
+  @OneToMany((type) => Procediment, (procediment) => procediment.user)
   procediments: Procediment[];
 
   @BeforeInsert()

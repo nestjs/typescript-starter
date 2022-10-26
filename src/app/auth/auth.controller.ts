@@ -16,7 +16,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('user-info')
   getUserInfo(@Request() req) {
-    return req.user
+    return req.user;
   }
-
 }

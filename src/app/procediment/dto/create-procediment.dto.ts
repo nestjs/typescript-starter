@@ -3,15 +3,15 @@ import { MessagesHelper } from '../../helpers/messages.helper';
 import { RegExHelper } from '../../helpers/regex.helper';
 
 export class CreateProcedimentDto {
-    @IsNotEmpty()
-    name: string;
+  @IsNotEmpty()
+  name: string;
 
-    @IsNotEmpty()
-    description: string;
+  @IsNotEmpty()
+  description: string;
 
-    @IsNotEmpty()
-    cust: number;
+  @IsNotEmpty()
+  cust: number;
 
-    @IsNotEmpty()
-    price: number;
+  @IsNotEmpty()
+  price: number;
 }
