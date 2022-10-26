@@ -78,6 +78,14 @@
       "prepare-commit-msg": " exec < /dev/tty && npx cz --hook || true "
     }
   },
+
+  "lint-staged": {
+    "src/**/*": [
+      "npm run lint",
+      "CI=true npm run test --findRelatedTests --bail"
+    ]
+  },
+
   "jest": {
     "moduleFileExtensions": [
       "js",
