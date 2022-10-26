@@ -20,6 +20,17 @@
     "commit": "cz",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": " exec < /dev/tty && npx cz --hook || true "
+    }
+  },
+  "lint-staged": {
+    "src/**/*": [
+      "npm run lint",
+      "CI=true npm run test --findRelatedTests --bail"
+    ]
+  },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
@@ -63,6 +74,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
     "jest": "^28.1.2",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "source-map-support": "^0.5.21",
     "supertest": "^6.2.4",
@@ -70,22 +82,8 @@
     "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.7.4",
-    "lint-staged": "^13.0.3"
+    "typescript": "^4.7.4"
   },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": " exec < /dev/tty && npx cz --hook || true "
-    }
-  },
-
-  "lint-staged": {
-    "src/**/*": [
-      "npm run lint",
-      "CI=true npm run test --findRelatedTests --bail"
-    ]
-  },
-
   "jest": {
     "moduleFileExtensions": [
       "js",
