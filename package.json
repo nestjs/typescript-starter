@@ -27,7 +27,7 @@
   },
 
   "lint-staged": {
-    "src/**/*": [
+    "./src/**/*": [
       "CI=true npm test"
     ]
   },
