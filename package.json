@@ -26,12 +26,6 @@
       "CI=true npm run test"
     ]
   },
-
-  "husky": {
-    "hooks": {
-      "pre-commit": " exec < /dev/tty && npx cz --hook || true "
-    }
-  },
  
   "dependencies": {
     "@nestjs/common": "^9.0.0",
