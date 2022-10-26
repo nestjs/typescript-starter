@@ -22,13 +22,13 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": " exec < /dev/tty && npx cz --hook || true "
+      "pre-commit": "lint-staged"
     }
   },
+
   "lint-staged": {
     "src/**/*": [
-      "npm lint",
-      "npm test"
+      "CI=true npm test"
     ]
   },
   "dependencies": {
