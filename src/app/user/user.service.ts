@@ -25,6 +25,11 @@ export class UserService {
     }
   }
 
+  async fundById(id: number){
+    const user = await this.findOneOrFail({ where: { id } });
+    return user;
+  }
+
   async store(data: CreateUserDto) {
     const user = this.userRepository.create(data);
     return await this.userRepository.save(user);
