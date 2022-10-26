@@ -20,17 +20,19 @@
     "commit": "cz",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-
+  
   "lint-staged": {
     "./src/**/*": [
       "CI=true npm test"
     ]
   },
+
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+ 
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
