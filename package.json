@@ -12,7 +12,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
@@ -22,14 +22,15 @@
   },
   
   "lint-staged": {
-    "./src/**/*": [
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "npm run lint",
       "npm run test"
     ]
   },
 
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
+  "husky": {
+    "hooks": {
+      "pre-commit": "exec < /dev/tty && npx cz --hook || true "
     }
   },
  
@@ -102,5 +103,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }

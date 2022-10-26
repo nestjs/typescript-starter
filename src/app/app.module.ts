@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -31,11 +30,11 @@ import { ClinicModule } from './clinic/clinic.module';
     AuthModule,
     ProcedimentModule,
     SchedulingModule,
-    ClinicModule
+    ClinicModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private datasource: DataSource){}
+  constructor(private datasource: DataSource) {}
 }
