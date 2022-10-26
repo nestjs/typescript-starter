@@ -27,8 +27,8 @@
   },
   "lint-staged": {
     "src/**/*": [
-      "npm run lint",
-      "npm run test"
+      "npm lint",
+      "npm test"
     ]
   },
   "dependencies": {
