@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
 import ProductsService from './products.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
+import JwtAuthenticationGuard from "../authentication/jwt-authentication.guard";
 
 @Controller('products')
 export default class ProductsController {
@@ -20,6 +21,7 @@ export default class ProductsController {
     }
 
     @Post()
+    @UseGuards(JwtAuthenticationGuard)
     async createProduct(@Body() product: CreateProductDto) {
         return this.productsService.createProduct(product);
     }
