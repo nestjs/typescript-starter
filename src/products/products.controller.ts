@@ -8,7 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import ProductsService from './products.service';
+import ProductsService from './productsService';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';

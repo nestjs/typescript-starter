@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Transform } from 'class-transformer';
 
-@Entity()
+@Entity('product')
 class ProductEntity {
   @PrimaryGeneratedColumn()
   public id: number;

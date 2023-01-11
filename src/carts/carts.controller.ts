@@ -17,6 +17,6 @@ export default class CartsController {
   @Get()
   @UseGuards(JwtAuthenticationGuard)
   getActiveCart(@Req() request: RequestWithUser) {
-    return this.cartsService.getActiveCart(request.user);
+    return this.cartsService.getActiveCart(request.user.id);
   }
 }

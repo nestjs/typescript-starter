@@ -17,7 +17,6 @@ class CartEntity {
   @Column()
   public isArchived: boolean;
 
-  // jak zrobić samo id?
   @ManyToOne(() => User, (owner: User) => owner.carts)
   public owner: User;
 
