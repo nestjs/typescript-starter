@@ -3,11 +3,14 @@ import { ProductsModule } from './products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './database/database.module';
-import { AuthenticationModule } from "./authentication/authentication.module";
+import { AuthenticationModule } from './authentication/authentication.module';
+import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
+import { APP_FILTER } from '@nestjs/core';
+import { CartsModule } from "./carts/carts.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
-    ProductsModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -18,12 +21,20 @@ import { AuthenticationModule } from "./authentication/authentication.module";
         PORT: Joi.number(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
-      })
+      }),
     }),
     DatabaseModule,
     AuthenticationModule,
+    ProductsModule,
+    CartsModule,
+    UsersModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ExceptionsLoggerFilter,
+    },
+  ],
 })
 export class AppModule {}
