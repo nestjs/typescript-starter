@@ -10,19 +10,22 @@ import User from '../users/user.entity';
 import Product from '../products/product.entity';
 
 @Entity()
-class CartEntity {
+class Cart {
   @PrimaryGeneratedColumn()
   public id: number;
+
+  @Column()
+  public name: string;
 
   @Column()
   public isArchived: boolean;
 
   @ManyToOne(() => User, (owner: User) => owner.carts)
-  public owner: User;
+  public ownerId: User;
 
   @ManyToMany(() => Product)
   @JoinTable()
   public products: Product[];
 }
 
-export default CartEntity;
+export default Cart;

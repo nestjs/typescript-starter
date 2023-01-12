@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import CartEntity from './cart.entity';
+import Cart from './cart.entity';
 import { CartNotFoundException } from './exception/cartNotFound.exception';
 import { CreateCartDto } from './dto/createCart.dto';
 import ProductsService from "../products/productsService";
@@ -9,13 +9,17 @@ import ProductsService from "../products/productsService";
 @Injectable()
 export default class CartsService {
   constructor(
-    @InjectRepository(CartEntity)
-    private cartsRepository: Repository<CartEntity>,
+    @InjectRepository(Cart)
+    private cartsRepository: Repository<Cart>,
+
     private readonly productsService: ProductsService
   ) {}
 
-  async createCart(cart: CreateCartDto) {
-    const newCart = await this.cartsRepository.create(cart);
+  async createCart(cart: CreateCartDto, userId) {
+    const newCart = await this.cartsRepository.create({
+      ...cart,
+    ownerId: userId
+    });
     await this.cartsRepository.save(newCart);
     return newCart;
   }
@@ -32,12 +36,12 @@ export default class CartsService {
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: user }],
+      where: [{ isArchived: false }, { ownerId: user }],
       relations: ['owner'],
     });
     if (activeCart) {
       return activeCart;
     }
-    throw new CartNotFoundException(user);
+    throw new CartNotFoundException();
   }
 }

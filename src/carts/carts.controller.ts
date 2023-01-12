@@ -10,8 +10,8 @@ export default class CartsController {
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
-  createNewCart(@Body() cart: CreateCartDto) {
-    return this.cartsService.createCart(cart);
+  createNewCart(@Body() cart: CreateCartDto, @Req() request: RequestWithUser) {
+    return this.cartsService.createCart(cart, request.user.id);
   }
 
   @Get()
@@ -19,4 +19,10 @@ export default class CartsController {
   getActiveCart(@Req() request: RequestWithUser) {
     return this.cartsService.getActiveCart(request.user.id);
   }
+
+  // @Post()
+  // @UseGuards(JwtAuthenticationGuard)
+  // addProductsToCart(@Body() cartId: UpdateProductsArray, @Req() request: RequestWithUser) {
+  //   return this.cartsService.addProductsToCart(request.user.id, cartId )
+  // }
 }

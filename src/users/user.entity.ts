@@ -18,9 +18,8 @@ class User {
   @Column()
   public password: string;
 
-  //ustawić żeby był expose tylko na aktywnym carcie
   @Expose()
-  @OneToMany(() => Cart, (cart: Cart) => cart.owner)
+  @OneToMany(() => Cart, (cart: Cart) => cart.ownerId)
   public carts: Cart[];
 }
 

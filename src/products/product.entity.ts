@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Transform } from 'class-transformer';
 
 @Entity('product')
-class ProductEntity {
+class Product {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -21,4 +21,4 @@ class ProductEntity {
   public category?: string;
 }
 
-export default ProductEntity;
+export default Product;

@@ -3,14 +3,14 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateproduct.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import {In, Repository} from 'typeorm';
-import ProductEntity from './product.entity';
+import Product from './product.entity';
 import { ProductNotFoundException } from './exception/productNotFound.exception';
 
 @Injectable()
 export default class ProductsService {
   constructor(
-    @InjectRepository(ProductEntity)
-    private productsRepository: Repository<ProductEntity>,
+    @InjectRepository(Product)
+    private productsRepository: Repository<Product>,
   ) {}
 
   getAllProducts() {
