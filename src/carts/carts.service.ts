@@ -11,11 +11,14 @@ export default class CartsService {
   constructor(
     @InjectRepository(Cart)
     private cartsRepository: Repository<Cart>,
-
     private readonly productsService: ProductsService
   ) {}
 
   async createCart(cart: CreateCartDto, userId) {
+    const cartToArchive = await this.getActiveCart(userId)
+    if(cartToArchive) {
+      cartToArchive.isArchived = true
+    }
     const newCart = await this.cartsRepository.create({
       ...cart,
     ownerId: userId
@@ -24,14 +27,12 @@ export default class CartsService {
     return newCart;
   }
 
-  async addProductsToCart(cartId: number, productsIds: number[]) {
+  async addProductsToCart(userId, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds)
-    const cart = await this.cartsRepository.findOne({
-      where: {id: cartId}
-    })
-    cart.products = products
-    await this.cartsRepository.save(cart);
-    return cart;
+    const cartToUpdate = await this.getActiveCart(userId)
+    cartToUpdate.products = products
+    await this.cartsRepository.save(cartToUpdate);
+    return cartToUpdate;
   }
 
   async getActiveCart(user) {
