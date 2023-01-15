@@ -4,45 +4,63 @@ import { Repository } from 'typeorm';
 import Cart from './cart.entity';
 import { CartNotFoundException } from './exception/cartNotFound.exception';
 import { CreateCartDto } from './dto/createCart.dto';
-import ProductsService from "../products/productsService";
+import ProductsService from '../products/productsService';
+import OrdersService from '../orders/orders.service';
 
 @Injectable()
 export default class CartsService {
   constructor(
     @InjectRepository(Cart)
     private cartsRepository: Repository<Cart>,
-    private readonly productsService: ProductsService
+    private readonly productsService: ProductsService,
+    private readonly ordersService: OrdersService,
   ) {}
 
-  async createCart(cart: CreateCartDto, userId) {
-    const cartToArchive = await this.getActiveCart(userId)
-    if(cartToArchive) {
-      cartToArchive.isArchived = true
+  async createCart(cart: CreateCartDto, user) {
+    const cartToArchive = await this.cartsRepository.findOne({
+      where: [{ isArchived: false }, { owner: user }],
+      relations: ['owner'],
+    });
+    if (cartToArchive) {
+      cartToArchive.isArchived = true;
+      await this.cartsRepository.save(cartToArchive);
     }
     const newCart = await this.cartsRepository.create({
       ...cart,
-    ownerId: userId
+      owner: user,
     });
-    await this.cartsRepository.save(newCart);
-    return newCart;
+    return this.cartsRepository.save(newCart);
   }
 
-  async addProductsToCart(userId, productsIds: number[]) {
-    const products = await this.productsService.getProductsByIds(productsIds)
-    const cartToUpdate = await this.getActiveCart(userId)
-    cartToUpdate.products = products
-    await this.cartsRepository.save(cartToUpdate);
-    return cartToUpdate;
+  async addProductsToCart(user, productsIds: number[]) {
+    const products = await this.productsService.getProductsByIds(productsIds);
+    const cartToUpdate = await this.getActiveCart(user);
+    cartToUpdate.products = products;
+    return this.cartsRepository.save(cartToUpdate);
   }
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { ownerId: user }],
-      relations: ['owner'],
+      where: [{ isArchived: false }, { owner: user }],
+      relations: ['owner', 'products'],
     });
     if (activeCart) {
       return activeCart;
     }
     throw new CartNotFoundException();
+  }
+
+  async finishTransaction(user) {
+    const activeCart = await this.cartsRepository.findOne({
+      where: [{ isArchived: false }, { owner: user }],
+      relations: ['owner', 'products'],
+    });
+    activeCart.isArchived = true;
+    await this.cartsRepository.save(activeCart);
+    const orderBody = {
+      paymentFinished: true,
+      finishedAt: new Date(Date.now()).toString(),
+    };
+    return this.ordersService.createOrder(orderBody);
   }
 }

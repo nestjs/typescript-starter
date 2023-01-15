@@ -6,8 +6,8 @@ import { DatabaseModule } from './database/database.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { APP_FILTER } from '@nestjs/core';
-import { CartsModule } from "./carts/carts.module";
-import { UsersModule } from "./users/users.module";
+import { CartsModule } from './carts/carts.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

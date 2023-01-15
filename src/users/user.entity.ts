@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Expose } from 'class-transformer';
 import Cart from '../carts/cart.entity';
 
@@ -19,7 +25,8 @@ class User {
   public password: string;
 
   @Expose()
-  @OneToMany(() => Cart, (cart: Cart) => cart.ownerId)
+  @OneToMany(() => Cart, (cart: Cart) => cart.owner)
+  @JoinTable()
   public carts: Cart[];
 }
 

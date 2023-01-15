@@ -17,11 +17,11 @@ class Cart {
   @Column()
   public name: string;
 
-  @Column()
+  @Column({ default: false })
   public isArchived: boolean;
 
   @ManyToOne(() => User, (owner: User) => owner.carts)
-  public ownerId: User;
+  public owner: User;
 
   @ManyToMany(() => Product)
   @JoinTable()

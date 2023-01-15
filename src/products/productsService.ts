@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateproduct.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import {In, Repository} from 'typeorm';
+import { In, Repository } from 'typeorm';
 import Product from './product.entity';
 import { ProductNotFoundException } from './exception/productNotFound.exception';
 
@@ -18,7 +18,7 @@ export default class ProductsService {
   }
 
   async getProductsByIds(productsIds: number[]) {
-    return this.productsRepository.find({where: {id: In(productsIds)}})
+    return this.productsRepository.find({ where: { id: In(productsIds) } });
   }
   async getProductById(id: number) {
     const product = await this.productsRepository.findOne({ where: { id } });
@@ -41,8 +41,7 @@ export default class ProductsService {
 
   async createProduct(product: CreateProductDto) {
     const newProduct = await this.productsRepository.create(product);
-    await this.productsRepository.save(newProduct);
-    return newProduct;
+    return this.productsRepository.save(newProduct);
   }
 
   async deleteProduct(id: number) {

@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 import CartsService from './carts.service';
 import RequestWithUser from '../authentication/requestWithUser.interface';
@@ -22,7 +22,19 @@ export default class CartsController {
 
   @Post('add-products')
   @UseGuards(JwtAuthenticationGuard)
-  addProductsToCart(@Body() productsIdsArray: number[], @Req() request: RequestWithUser) {
-    return this.cartsService.addProductsToCart(request.user.id, productsIdsArray )
+  addProductsToCart(
+    @Req() request: RequestWithUser,
+    @Body() productsIdsArray: number[],
+  ) {
+    return this.cartsService.addProductsToCart(
+      request.user.id,
+      request.body.productsIds,
+    );
+  }
+
+  @Post('finish-transaction')
+  @UseGuards(JwtAuthenticationGuard)
+  finishTransaction(@Req() request: RequestWithUser) {
+    return this.cartsService.finishTransaction(request.user.id);
   }
 }
