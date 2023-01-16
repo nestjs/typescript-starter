@@ -18,7 +18,7 @@ export default class CartsService {
 
   async createCart(cart: CreateCartDto, user) {
     const cartToArchive = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: user }],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       relations: ['owner'],
     });
     if (cartToArchive) {
@@ -35,20 +35,20 @@ export default class CartsService {
   async addProductsToCart(user, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
-    products.forEach(product => cartToUpdate.products.push(product))
+    products.forEach((product) => cartToUpdate.products.push(product));
     return this.cartsRepository.save(cartToUpdate);
   }
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: user }],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       relations: ['owner', 'products'],
       select: {
         owner: {
           id: true,
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
     });
     if (activeCart) {
       return activeCart;
@@ -58,22 +58,22 @@ export default class CartsService {
 
   async finishTransaction(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: user }],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       select: {
         owner: {
           id: true,
-          name: true
-        }
+          name: true,
+        },
       },
       relations: ['owner', 'products'],
     });
-    if(activeCart) {
+    if (activeCart) {
       activeCart.isArchived = true;
       await this.cartsRepository.save(activeCart);
       const orderBody = {
         paymentFinished: true,
         finishedAt: new Date(Date.now()).toString(),
-        cart: activeCart
+        cart: activeCart,
       };
       return this.ordersService.createOrder(orderBody);
     }

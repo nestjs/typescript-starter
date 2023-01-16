@@ -7,8 +7,6 @@ import {
   UseGuards,
   Res,
   Get,
-  UseInterceptors,
-  ClassSerializerInterceptor,
   SerializeOptions,
 } from '@nestjs/common';
 import { Response } from 'express';

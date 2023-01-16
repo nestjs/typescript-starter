@@ -20,7 +20,9 @@ export default class OrdersService {
     return this.ordersRepository.find({
       where: {
         cart: {
-          owner: user,
+          owner: {
+            id: user,
+          },
         },
       },
       select: {
@@ -28,9 +30,9 @@ export default class OrdersService {
           id: true,
           owner: {
             id: true,
-            name: true
-          }
-        }
+            name: true,
+          },
+        },
       },
       relations: ['cart', 'cart.products', 'cart.owner'],
     });
