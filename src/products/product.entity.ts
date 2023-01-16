@@ -10,7 +10,7 @@ class Product {
   public name: string;
 
   @Column()
-  public priceInDollars: number;
+  public priceInDollars: string;
 
   @Column({ nullable: true })
   @Transform(({ value }) => {

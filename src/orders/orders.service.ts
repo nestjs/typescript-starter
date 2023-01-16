@@ -23,6 +23,15 @@ export default class OrdersService {
           owner: user,
         },
       },
+      select: {
+        cart: {
+          id: true,
+          owner: {
+            id: true,
+            name: true
+          }
+        }
+      },
       relations: ['cart', 'cart.products', 'cart.owner'],
     });
   }

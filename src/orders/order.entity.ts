@@ -18,9 +18,6 @@ export class Order {
   @Column()
   public finishedAt: string;
 
-  @Column()
-  public cartId: number;
-
   @OneToOne(() => Cart, {
     cascade: true,
     eager: true,
