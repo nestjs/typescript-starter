@@ -16,6 +16,7 @@ export class UsersService {
     if (!deleteResponse.affected) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+    return deleteResponse
   }
 
   async getByEmail(email: string) {

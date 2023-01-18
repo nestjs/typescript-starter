@@ -21,6 +21,7 @@ export class Order {
   @OneToOne(() => Cart, {
     cascade: true,
     eager: true,
+    onDelete: "CASCADE"
   })
   @JoinColumn()
   public cart: Cart;

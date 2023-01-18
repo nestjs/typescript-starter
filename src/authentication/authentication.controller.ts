@@ -15,13 +15,15 @@ import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
+import {UsersService} from "../users/users.service";
 
 @Controller('authentication')
 @SerializeOptions({
   strategy: 'excludeAll',
 })
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(private readonly authenticationService: AuthenticationService,
+              private readonly usersService: UsersService) {}
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
@@ -63,6 +65,9 @@ export class AuthenticationController {
         'Set-Cookie',
         this.authenticationService.getCookieForLogOut(),
     );
-    return this.authenticationService.deleteUser(request.user.id)
+    const deletedUser = await this.usersService.delete(request.user.id)
+    if (deletedUser) {
+      return response.sendStatus(200);
+    }
   }
 }

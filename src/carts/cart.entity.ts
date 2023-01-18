@@ -20,7 +20,7 @@ class Cart {
   @Column({ default: false })
   public isArchived: boolean;
 
-  @ManyToOne(() => User, (owner: User) => owner.carts)
+  @ManyToOne(() => User, (owner: User) => owner.carts, { onDelete: 'CASCADE' })
   public owner: User;
 
   @ManyToMany(() => Product)

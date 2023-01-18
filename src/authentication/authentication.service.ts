@@ -52,10 +52,6 @@ export class AuthenticationService {
     }
   }
 
-  public async deleteUser(id: number) {
-    return this.usersService.delete(id)
-  }
-
   private async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
