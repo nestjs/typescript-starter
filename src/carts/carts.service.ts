@@ -4,21 +4,22 @@ import { Repository } from 'typeorm';
 import Cart from './cart.entity';
 import { CartNotFoundException } from './exception/cartNotFound.exception';
 import { CreateCartDto } from './dto/createCart.dto';
-import ProductsService from '../products/productsService';
+import ProductsService from '../products/products-service';
 import OrdersService from '../orders/orders.service';
 
 @Injectable()
 export default class CartsService {
   constructor(
-    @InjectRepository(Cart)
-    private cartsRepository: Repository<Cart>,
-    private readonly productsService: ProductsService,
-    private readonly ordersService: OrdersService,
-  ) {}
+      @InjectRepository(Cart)
+      private cartsRepository: Repository<Cart>,
+      private readonly productsService: ProductsService,
+      private readonly ordersService: OrdersService,
+  ) {
+  }
 
   async createCart(cart: CreateCartDto, user) {
     const cartToArchive = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: [{isArchived: false}, {owner: {id: user}}],
       relations: ['owner'],
     });
     if (cartToArchive) {
@@ -41,7 +42,7 @@ export default class CartsService {
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: [{isArchived: false}, {owner: {id: user}}],
       relations: ['owner', 'products'],
       select: {
         owner: {
@@ -58,7 +59,7 @@ export default class CartsService {
 
   async finishTransaction(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: [{isArchived: false}, {owner: {id: user}}],
       select: {
         owner: {
           id: true,

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm';
 import { Transform } from 'class-transformer';
 
 @Entity('product')
@@ -19,6 +19,9 @@ class Product {
     }
   })
   public category?: string;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }
 
 export default Product;

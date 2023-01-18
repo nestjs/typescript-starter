@@ -37,6 +37,7 @@ export class AuthenticationService {
       );
     }
   }
+
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
       const user = await this.usersService.getByEmail(email);
@@ -49,6 +50,10 @@ export class AuthenticationService {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  public async deleteUser(id: number) {
+    return this.usersService.delete(id)
   }
 
   private async verifyPassword(

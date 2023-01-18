@@ -35,6 +35,7 @@ export default class OrdersService {
         },
       },
       relations: ['cart', 'cart.products', 'cart.owner'],
+      withDeleted: true
     });
   }
 }

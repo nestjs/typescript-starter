@@ -7,7 +7,7 @@ import {
   UseGuards,
   Res,
   Get,
-  SerializeOptions,
+  SerializeOptions, Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
@@ -54,5 +54,15 @@ export class AuthenticationController {
       this.authenticationService.getCookieForLogOut(),
     );
     return response.sendStatus(200);
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Delete('user')
+  async delete(@Req() request: RequestWithUser, @Res() response: Response) {
+    response.setHeader(
+        'Set-Cookie',
+        this.authenticationService.getCookieForLogOut(),
+    );
+    return this.authenticationService.deleteUser(request.user.id)
   }
 }

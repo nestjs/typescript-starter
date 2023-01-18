@@ -7,7 +7,7 @@ import Product from './product.entity';
 import { ProductNotFoundException } from './exception/productNotFound.exception';
 
 @Injectable()
-export default class ProductsService {
+export default class ProductsService  {
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
@@ -45,7 +45,7 @@ export default class ProductsService {
   }
 
   async deleteProduct(id: number) {
-    const deleteResponse = await this.productsRepository.delete(id);
+    const deleteResponse = await this.productsRepository.softDelete(id);
     if (!deleteResponse.affected) {
       throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
     }
