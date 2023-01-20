@@ -10,16 +10,15 @@ import OrdersService from '../orders/orders.service';
 @Injectable()
 export default class CartsService {
   constructor(
-      @InjectRepository(Cart)
-      private cartsRepository: Repository<Cart>,
-      private readonly productsService: ProductsService,
-      private readonly ordersService: OrdersService,
-  ) {
-  }
+    @InjectRepository(Cart)
+    private cartsRepository: Repository<Cart>,
+    private readonly productsService: ProductsService,
+    private readonly ordersService: OrdersService,
+  ) {}
 
   async createCart(cart: CreateCartDto, user) {
     const cartToArchive = await this.cartsRepository.findOne({
-      where: [{isArchived: false}, {owner: {id: user}}],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       relations: ['owner'],
     });
     if (cartToArchive) {
@@ -33,6 +32,12 @@ export default class CartsService {
     return this.cartsRepository.save(newCart);
   }
 
+  async emptyActiveCart(user) {
+    const cartToEmpty = await this.getActiveCart(user);
+    cartToEmpty.products = [];
+    return this.cartsRepository.save(cartToEmpty);
+  }
+
   async addProductsToCart(user, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
@@ -42,7 +47,7 @@ export default class CartsService {
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{isArchived: false}, {owner: {id: user}}],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       relations: ['owner', 'products'],
       select: {
         owner: {
@@ -59,7 +64,7 @@ export default class CartsService {
 
   async finishTransaction(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{isArchived: false}, {owner: {id: user}}],
+      where: [{ isArchived: false }, { owner: { id: user } }],
       select: {
         owner: {
           id: true,
@@ -80,5 +85,4 @@ export default class CartsService {
     }
     return;
   }
-
 }

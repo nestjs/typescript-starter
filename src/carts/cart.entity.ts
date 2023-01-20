@@ -23,7 +23,7 @@ class Cart {
   @ManyToOne(() => User, (owner: User) => owner.carts, { onDelete: 'CASCADE' })
   public owner: User;
 
-  @ManyToMany(() => Product)
+  @ManyToMany(() => Product, { cascade: true })
   @JoinTable()
   public products: Product[];
 }

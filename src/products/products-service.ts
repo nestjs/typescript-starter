@@ -7,7 +7,7 @@ import Product from './product.entity';
 import { ProductNotFoundException } from './exception/productNotFound.exception';
 
 @Injectable()
-export default class ProductsService  {
+export default class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,

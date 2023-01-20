@@ -11,12 +11,12 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async delete (id: number) {
+  async delete(id: number) {
     const deleteResponse = await this.usersRepository.delete(id);
     if (!deleteResponse.affected) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return deleteResponse
+    return deleteResponse;
   }
 
   async getByEmail(email: string) {

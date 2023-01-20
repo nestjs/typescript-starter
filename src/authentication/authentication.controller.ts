@@ -7,7 +7,8 @@ import {
   UseGuards,
   Res,
   Get,
-  SerializeOptions, Delete,
+  SerializeOptions,
+  Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
@@ -15,15 +16,17 @@ import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
-import {UsersService} from "../users/users.service";
+import { UsersService } from '../users/users.service';
 
 @Controller('authentication')
 @SerializeOptions({
   strategy: 'excludeAll',
 })
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService,
-              private readonly usersService: UsersService) {}
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
@@ -62,10 +65,10 @@ export class AuthenticationController {
   @Delete('user')
   async delete(@Req() request: RequestWithUser, @Res() response: Response) {
     response.setHeader(
-        'Set-Cookie',
-        this.authenticationService.getCookieForLogOut(),
+      'Set-Cookie',
+      this.authenticationService.getCookieForLogOut(),
     );
-    const deletedUser = await this.usersService.delete(request.user.id)
+    const deletedUser = await this.usersService.delete(request.user.id);
     if (deletedUser) {
       return response.sendStatus(200);
     }

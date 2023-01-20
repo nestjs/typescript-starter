@@ -8,7 +8,7 @@ import { CreateCartDto } from './dto/createCart.dto';
 export default class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
-  @Post('new-cart')
+  @Post()
   @UseGuards(JwtAuthenticationGuard)
   createNewCart(@Body() cart: CreateCartDto, @Req() request: RequestWithUser) {
     return this.cartsService.createCart(cart, request.user.id);
@@ -20,7 +20,7 @@ export default class CartsController {
     return this.cartsService.getActiveCart(request.user.id);
   }
 
-  @Post('add-products')
+  @Post('products')
   @UseGuards(JwtAuthenticationGuard)
   addProductsToCart(
     @Req() request: RequestWithUser,
@@ -32,9 +32,15 @@ export default class CartsController {
     );
   }
 
-  @Post('finish-transaction')
+  @Post('finish')
   @UseGuards(JwtAuthenticationGuard)
   finishTransaction(@Req() request: RequestWithUser) {
     return this.cartsService.finishTransaction(request.user.id);
+  }
+
+  @Post('empty')
+  @UseGuards(JwtAuthenticationGuard)
+  emptyActiveCart(@Req() request: RequestWithUser) {
+    return this.cartsService.emptyActiveCart(request.user.id);
   }
 }

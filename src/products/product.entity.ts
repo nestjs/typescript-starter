@@ -1,5 +1,16 @@
-import {Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Transform } from 'class-transformer';
+
+export enum productsCategory {
+  MEAT = 'meat',
+  DAIRY = 'dairy',
+  ALCOHOL = 'alcohol',
+}
 
 @Entity('product')
 class Product {
@@ -9,10 +20,14 @@ class Product {
   @Column()
   public name: string;
 
-  @Column()
-  public priceInDollars: string;
+  @Column({type: "decimal", precision: 10, scale: 2})
+  public priceInDollars: number;
 
-  @Column({ nullable: true })
+  @Column({
+    type: 'enum',
+    enum: productsCategory,
+    nullable: true
+  })
   @Transform(({ value }) => {
     if (value !== null) {
       return value;
