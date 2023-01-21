@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import CartsService from './carts.service';
 import RequestWithUser from '../authentication/request-with-user.interface';
 import { CreateCartDto } from './dto/create-cart.dto';
@@ -9,19 +8,16 @@ export default class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
   @Post()
-  @UseGuards(JwtAuthenticationGuard)
   createNewCart(@Body() cart: CreateCartDto, @Req() request: RequestWithUser) {
     return this.cartsService.createCart(cart, request.user.id);
   }
 
   @Get()
-  @UseGuards(JwtAuthenticationGuard)
   getActiveCart(@Req() request: RequestWithUser) {
     return this.cartsService.getActiveCart(request.user.id);
   }
 
   @Post('products')
-  @UseGuards(JwtAuthenticationGuard)
   addProductsToCart(
     @Req() request: RequestWithUser,
     @Body() productsIdsArray: number[],
@@ -33,13 +29,11 @@ export default class CartsController {
   }
 
   @Post('orders/finish')
-  @UseGuards(JwtAuthenticationGuard)
   finishTransaction(@Req() request: RequestWithUser) {
     return this.cartsService.finishTransaction(request.user.id);
   }
 
   @Post('empty')
-  @UseGuards(JwtAuthenticationGuard)
   emptyActiveCart(@Req() request: RequestWithUser) {
     return this.cartsService.emptyActiveCart(request.user.id);
   }
@@ -47,12 +41,10 @@ export default class CartsController {
 
 //TODO:
 // 10. Globalny Guard by się przydał w połączeniu z dekoratorem IsPublic
-// 11. productsService.ts --> products.service.ts
 // 12. Order entity --> status encji lepiej robić enumem a nie booleanem, bo co jeżeli wymaganie się zmieni i będzie płatnośc in progress?
 // 13. Zrób obsługę dat za pomocą luxona + stwórz endpoint który będzie przyjmował startDate i endDate i zwracał wszystkie ordery pomiedzy tymi datami, waliduj customowym walidatorem czy startDate nie jest po endDate
 // 14. Cart service ->         finishedAt: new Date(Date.now()).toString(), ==> może lepiej toISOString?
 // 17. notFoundException - dodać informację jaki ID ma user
-// 18. nazewnictwo plików - ogólnie, nazewnictwo z myslnikami nie camel case
 // 19. Create cart DTO is archived jest niepotrzebne
 // 21. createdUser.password = undefined, delete password from user response, delete specific data while returning
 // 22. nie BadRequest tylko Conflict 409 - same email

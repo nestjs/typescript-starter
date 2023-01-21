@@ -6,12 +6,10 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import ProductsService from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 import { FindOneParams } from '../shared/types/find-one-params';
 
 @Controller('products')
@@ -29,7 +27,6 @@ export default class ProductsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthenticationGuard)
   async createProduct(@Body() product: CreateProductDto) {
     return this.productsService.createProduct(product);
   }

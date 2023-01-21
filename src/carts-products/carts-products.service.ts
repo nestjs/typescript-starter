@@ -40,7 +40,9 @@ export default class CartsProductsService {
     const findAllCartsRelations = await this.cartsProductsRepository.find({
       where: { cart: { id: cart.id } },
     });
-    findAllCartsRelations.forEach(relation => this.cartsProductsRepository.delete(relation))
+    findAllCartsRelations.forEach((relation) =>
+      this.cartsProductsRepository.delete(relation),
+    );
     return;
   }
 }

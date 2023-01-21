@@ -4,19 +4,19 @@ import {
   Controller,
   HttpCode,
   Post,
-  UseGuards,
   Res,
   Get,
   SerializeOptions,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
 import RequestWithUser from './request-with-user.interface';
-import { LocalAuthenticationGuard } from './local-authentication.guard';
-import JwtAuthenticationGuard from './jwt-authentication.guard';
 import { UsersService } from '../users/users.service';
+import { Public } from '../shared/decorators/public.decorator';
+import { LocalAuthenticationGuard } from './local-authentication.guard';
 
 @Controller('authentication')
 @SerializeOptions({
@@ -28,12 +28,12 @@ export class AuthenticationController {
     private readonly usersService: UsersService,
   ) {}
 
+  @Public()
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
     return this.authenticationService.register(registrationData);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Get()
   authenticate(@Req() request: RequestWithUser) {
     const user = request.user;
@@ -42,6 +42,7 @@ export class AuthenticationController {
   }
 
   @HttpCode(200)
+  @Public()
   @UseGuards(LocalAuthenticationGuard)
   @Post('log-in')
   async logIn(@Req() request: RequestWithUser) {
@@ -51,7 +52,6 @@ export class AuthenticationController {
     return user;
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
     response.setHeader(
@@ -61,7 +61,6 @@ export class AuthenticationController {
     return response.sendStatus(200);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Delete('user')
   async delete(@Req() request: RequestWithUser, @Res() response: Response) {
     response.setHeader(
