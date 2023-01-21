@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 import CartsService from './carts.service';
-import RequestWithUser from '../authentication/requestWithUser.interface';
-import { CreateCartDto } from './dto/createCart.dto';
+import RequestWithUser from '../authentication/request-with-user.interface';
+import { CreateCartDto } from './dto/create-cart.dto';
 
 @Controller('carts')
 export default class CartsController {
@@ -46,8 +46,6 @@ export default class CartsController {
 }
 
 //TODO:
-// 5. Czy rozkminiłeś usuwanie i co ma się zadziać jak każda z encji jest usuwana, co ma sie zamianić na null a co ma sie usunąć
-// 9. Products.controller Jeżeli includujemy to warto zrobić na to oddzielny endpoint żeby klasyczny get zwracał surowe dane bez include
 // 10. Globalny Guard by się przydał w połączeniu z dekoratorem IsPublic
 // 11. productsService.ts --> products.service.ts
 // 12. Order entity --> status encji lepiej robić enumem a nie booleanem, bo co jeżeli wymaganie się zmieni i będzie płatnośc in progress?

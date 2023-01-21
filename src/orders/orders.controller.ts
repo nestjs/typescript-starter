@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
-import { CreateOrderDto } from './dto/createOrder.dto';
+import { CreateOrderDto } from './dto/create-order.dto';
 import OrdersService from './orders.service';
-import RequestWithUser from '../authentication/requestWithUser.interface';
+import RequestWithUser from '../authentication/request-with-user.interface';
 
 @Controller('orders')
 export default class OrdersController {
@@ -12,6 +12,12 @@ export default class OrdersController {
   @UseGuards(JwtAuthenticationGuard)
   createNewOrder(@Body() order: CreateOrderDto) {
     return this.ordersService.createOrder(order);
+  }
+
+  @Get('details')
+  @UseGuards(JwtAuthenticationGuard)
+  getAllUsersOrdersWithDetails(@Req() request: RequestWithUser) {
+    return this.ordersService.getAllUsersOrdersWithProducts(request.user.id);
   }
 
   @Get()

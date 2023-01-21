@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/createProduct.dto';
-import { UpdateProductDto } from './dto/updateproduct.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import Product from './product.entity';
-import { ProductNotFoundException } from './exception/productNotFound.exception';
+import { ProductNotFoundException } from './exception/product-not-found.exception';
 
 @Injectable()
 export default class ProductsService {

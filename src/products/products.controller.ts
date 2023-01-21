@@ -8,11 +8,11 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import ProductsService from './products-service';
-import { CreateProductDto } from './dto/createProduct.dto';
-import { UpdateProductDto } from './dto/updateProduct.dto';
+import ProductsService from './products.service';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
-import { FindOneParams } from '../shared/types/findOneParams';
+import { FindOneParams } from '../shared/types/find-one-params';
 
 @Controller('products')
 export default class ProductsController {
