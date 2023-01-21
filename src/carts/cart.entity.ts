@@ -1,13 +1,12 @@
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import User from '../users/user.entity';
-import Product from '../products/product.entity';
+import CartProduct from '../carts-products/cart-product.entity';
 
 @Entity()
 class Cart {
@@ -23,9 +22,12 @@ class Cart {
   @ManyToOne(() => User, (owner: User) => owner.carts, { onDelete: 'CASCADE' })
   public owner: User;
 
-  @ManyToMany(() => Product, { cascade: true })
-  @JoinTable()
-  public products: Product[];
+  @OneToMany(
+    () => CartProduct,
+    (cartProduct: CartProduct) => cartProduct.cart,
+    { onDelete: 'CASCADE' },
+  )
+  public cartProduct: CartProduct[];
 }
 
 export default Cart;

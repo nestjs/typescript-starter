@@ -20,13 +20,13 @@ class Product {
   @Column()
   public name: string;
 
-  @Column({type: "decimal", precision: 10, scale: 2})
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   public priceInDollars: number;
 
   @Column({
     type: 'enum',
     enum: productsCategory,
-    nullable: true
+    nullable: true,
   })
   @Transform(({ value }) => {
     if (value !== null) {

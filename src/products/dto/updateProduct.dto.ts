@@ -10,7 +10,6 @@ export class UpdateProductDto {
   @IsOptional()
   name?: string;
 
-  @IsString()
-  @IsOptional()
-  priceInDollars?: string;
+  @IsNumber()
+  priceInDollars?: number;
 }

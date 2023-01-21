@@ -6,6 +6,7 @@ import { CartNotFoundException } from './exception/cartNotFound.exception';
 import { CreateCartDto } from './dto/createCart.dto';
 import ProductsService from '../products/products-service';
 import OrdersService from '../orders/orders.service';
+import CartsProductsService from '../carts-products/carts-products.service';
 
 @Injectable()
 export default class CartsService {
@@ -14,6 +15,7 @@ export default class CartsService {
     private cartsRepository: Repository<Cart>,
     private readonly productsService: ProductsService,
     private readonly ordersService: OrdersService,
+    private readonly cartsProductsService: CartsProductsService,
   ) {}
 
   async createCart(cart: CreateCartDto, user) {
@@ -34,21 +36,22 @@ export default class CartsService {
 
   async emptyActiveCart(user) {
     const cartToEmpty = await this.getActiveCart(user);
-    cartToEmpty.products = [];
-    return this.cartsRepository.save(cartToEmpty);
+    return this.cartsProductsService.emptyActiveCart(cartToEmpty);
   }
 
   async addProductsToCart(user, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
-    products.forEach((product) => cartToUpdate.products.push(product));
-    return this.cartsRepository.save(cartToUpdate);
+    products.forEach((product) =>
+      this.cartsProductsService.createCartProduct(cartToUpdate, product),
+    );
+    return;
   }
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
       where: [{ isArchived: false }, { owner: { id: user } }],
-      relations: ['owner', 'products'],
+      relations: ['owner', 'cartProduct', 'cartProduct.product'],
       select: {
         owner: {
           id: true,
