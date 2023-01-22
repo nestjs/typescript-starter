@@ -40,7 +40,5 @@ export default class CartsController {
 }
 
 //TODO:
-// 13. Zrób obsługę dat za pomocą luxona + stwórz endpoint który będzie przyjmował startDate i endDate i zwracał wszystkie ordery pomiedzy tymi datami, waliduj customowym walidatorem czy startDate nie jest po endDate
-// 14. Cart service ->         finishedAt: new Date(Date.now()).toString(), ==> może lepiej toISOString?
 // 21. createdUser.password = undefined, delete password from user response, delete specific data while returning
 // 24. logOut - jeżeli ktos sie wylogowuje , invalidate json web token nest js, zapisywanie tokenów które nie są ważne i nie przepuzsczać ich (blocklista)
