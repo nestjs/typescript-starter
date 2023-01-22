@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './order.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
@@ -34,7 +34,7 @@ export default class OrdersService {
           },
         },
       },
-      relations: ['cart', 'cart.products', 'cart.owner'],
+      relations: ['cart', 'cart.cartProduct', 'cart.owner'],
       withDeleted: true,
     });
   }
@@ -47,6 +47,19 @@ export default class OrdersService {
             id: user,
           },
         },
+      },
+    });
+  }
+
+  async getAllUsersOrdersBetweenDates(user, startDate: Date, endDate: Date) {
+    return this.ordersRepository.find({
+      where: {
+        cart: {
+          owner: {
+            id: user,
+          },
+        },
+        createdDate: Between(startDate, endDate),
       },
     });
   }

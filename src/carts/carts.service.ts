@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Cart from './cart.entity';
@@ -20,7 +20,7 @@ export default class CartsService {
 
   async createCart(cart: CreateCartDto, user) {
     const cartToArchive = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: { isArchived: false, owner: { id: user } },
       relations: ['owner'],
     });
     if (cartToArchive) {
@@ -42,15 +42,21 @@ export default class CartsService {
   async addProductsToCart(user, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
-    products.forEach((product) =>
-      this.cartsProductsService.createCartProduct(cartToUpdate, product),
+    if (products) {
+      products.forEach((product) =>
+        this.cartsProductsService.createCartProduct(cartToUpdate, product),
+      );
+      return;
+    }
+    throw new HttpException(
+      'Provided products dont exist',
+      HttpStatus.BAD_REQUEST,
     );
-    return;
   }
 
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: { isArchived: false, owner: { id: user } },
       relations: ['owner', 'cartProduct', 'cartProduct.product'],
       select: {
         owner: {
@@ -62,26 +68,25 @@ export default class CartsService {
     if (activeCart) {
       return activeCart;
     }
-    throw new CartNotFoundException();
+    throw new CartNotFoundException(user);
   }
 
   async finishTransaction(user) {
     const activeCart = await this.cartsRepository.findOne({
-      where: [{ isArchived: false }, { owner: { id: user } }],
+      where: { isArchived: false, owner: { id: user } },
       select: {
         owner: {
           id: true,
           name: true,
         },
       },
-      relations: ['owner', 'products'],
+      relations: ['owner'],
     });
     if (activeCart) {
       activeCart.isArchived = true;
       await this.cartsRepository.save(activeCart);
       const orderBody = {
-        paymentFinished: true,
-        finishedAt: new Date(Date.now()).toString(),
+        paymentFinished: 'finished',
         cart: activeCart,
       };
       return this.ordersService.createOrder(orderBody);

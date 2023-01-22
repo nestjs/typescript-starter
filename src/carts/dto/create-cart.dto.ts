@@ -4,6 +4,4 @@ export class CreateCartDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  isArchived: boolean;
 }
