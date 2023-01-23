@@ -13,12 +13,8 @@ export default class CartsProductsService {
   async createCartProduct(cart, product) {
     const checkIfRelationExists = await this.cartsProductsRepository.findOne({
       where: {
-        cart: {
-          id: cart.id,
-        },
-        product: {
-          id: product.id,
-        },
+        cartId: cart.id,
+        productId: product.id
       },
     });
     if (checkIfRelationExists) {
@@ -38,7 +34,7 @@ export default class CartsProductsService {
 
   async emptyActiveCart(cart) {
     const findAllCartsRelations = await this.cartsProductsRepository.find({
-      where: { cart: { id: cart.id } },
+      where: { cartId: cart.id },
     });
     findAllCartsRelations.forEach((relation) =>
       this.cartsProductsRepository.delete(relation),

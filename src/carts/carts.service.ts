@@ -57,7 +57,7 @@ export default class CartsService {
   async getActiveCart(user) {
     const activeCart = await this.cartsRepository.findOne({
       where: { isArchived: false, owner: { id: user } },
-      relations: ['owner', 'cartProduct', 'cartProduct.product'],
+      relations: ['owner'],
       select: {
         owner: {
           id: true,
