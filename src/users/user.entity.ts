@@ -24,6 +24,11 @@ class User {
   @Column()
   public password: string;
 
+  @Column({
+    nullable: true,
+  })
+  public currentHashedRefreshToken?: string;
+
   @Expose()
   @OneToMany(() => Cart, (cart: Cart) => cart.owner)
   @JoinTable()

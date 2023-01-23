@@ -17,6 +17,7 @@ import RequestWithUser from './request-with-user.interface';
 import { UsersService } from '../users/users.service';
 import { Public } from '../shared/decorators/public.decorator';
 import { LocalAuthenticationGuard } from './local-authentication.guard';
+import JwtRefreshGuard from './jwt-refresh.guard';
 
 @Controller('authentication')
 @SerializeOptions({
@@ -27,6 +28,19 @@ export class AuthenticationController {
     private readonly authenticationService: AuthenticationService,
     private readonly usersService: UsersService,
   ) {}
+
+  @Public()
+  @UseGuards(JwtRefreshGuard)
+  @Get('refresh')
+  refresh(@Req() request: RequestWithUser) {
+    const accessTokenCookie =
+      this.authenticationService.createCookieWithJwtAccessToken(
+        request.user.id,
+      );
+
+    request.res.setHeader('Set-Cookie', accessTokenCookie);
+    return request.user;
+  }
 
   @Public()
   @Post('register')
@@ -47,18 +61,31 @@ export class AuthenticationController {
   @Post('log-in')
   async logIn(@Req() request: RequestWithUser) {
     const { user } = request;
-    const cookie = this.authenticationService.loginUser(user.id);
-    request.res.setHeader('Set-Cookie', cookie);
+    const accessTokenCookie =
+      this.authenticationService.createCookieWithJwtAccessToken(user.id);
+    const refreshTokenCookie =
+      this.authenticationService.createCookieWithJwtRefreshToken(user.id);
+
+    await this.usersService.setCurrentRefreshToken(
+      refreshTokenCookie.token,
+      user.id,
+    );
+
+    request.res.setHeader('Set-Cookie', [
+      accessTokenCookie,
+      refreshTokenCookie.cookie,
+    ]);
     return user;
   }
 
   @Post('log-out')
-  async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-    response.setHeader(
+  @HttpCode(200)
+  async logOut(@Req() request: RequestWithUser) {
+    await this.usersService.removeRefreshToken(request.user.id);
+    request.res.setHeader(
       'Set-Cookie',
       this.authenticationService.getCookieForLogOut(),
     );
-    return response.sendStatus(200);
   }
 
   @Delete('user')

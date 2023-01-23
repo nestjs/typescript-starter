@@ -41,4 +41,3 @@ export default class CartsController {
 
 //TODO:
 // 21. createdUser.password = undefined, delete password from user response, delete specific data while returning
-// 24. logOut - jeżeli ktos sie wylogowuje , invalidate json web token nest js, zapisywanie tokenów które nie są ważne i nie przepuzsczać ich (blocklista)

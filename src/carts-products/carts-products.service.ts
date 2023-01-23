@@ -14,7 +14,7 @@ export default class CartsProductsService {
     const checkIfRelationExists = await this.cartsProductsRepository.findOne({
       where: {
         cartId: cart.id,
-        productId: product.id
+        productId: product.id,
       },
     });
     if (checkIfRelationExists) {
