@@ -11,5 +11,5 @@ export class UpdateProductDto {
   name?: string;
 
   @IsNumber()
-  priceInDollars?: number;
+  priceInDollars: number;
 }

@@ -1,7 +1,9 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum } from 'class-validator';
+import { transactionStatus } from "../order.entity";
 
 export class CreateOrderDto {
-  @IsString()
-  @IsNotEmpty()
-  public paymentFinished: string;
+
+  @IsEnum(transactionStatus)
+  public paymentFinished: transactionStatus;
+
 }

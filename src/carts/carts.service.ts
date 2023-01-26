@@ -7,6 +7,7 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import ProductsService from '../products/products.service';
 import OrdersService from '../orders/orders.service';
 import CartsProductsService from '../carts-products/carts-products.service';
+import {transactionStatus} from "../orders/order.entity";
 
 @Injectable()
 export default class CartsService {
@@ -43,10 +44,9 @@ export default class CartsService {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
     if (products) {
-      products.forEach((product) =>
-        this.cartsProductsService.createCartProduct(cartToUpdate, product),
-      );
-      return;
+      return await Promise.allSettled(products.map((product) =>
+          this.cartsProductsService.createCartProduct(cartToUpdate, product),
+      ));
     }
     throw new HttpException(
       'Provided products dont exist',
@@ -86,7 +86,7 @@ export default class CartsService {
       activeCart.isArchived = true;
       await this.cartsRepository.save(activeCart);
       const orderBody = {
-        paymentFinished: 'finished',
+        paymentFinished: transactionStatus.FINISHED,
         cart: activeCart,
       };
       return this.ordersService.createOrder(orderBody);

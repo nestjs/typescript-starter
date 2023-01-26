@@ -5,11 +5,12 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Transform } from 'class-transformer';
+import {IsOptional} from "class-validator";
 
 export enum productsCategory {
-  MEAT = 'meat',
-  DAIRY = 'dairy',
-  ALCOHOL = 'alcohol',
+  MEAT = 'MEAT',
+  DAIRY = 'DAIRY',
+  ALCOHOL = 'ALCOHOL',
 }
 
 @Entity('product')
@@ -26,14 +27,9 @@ class Product {
   @Column({
     type: 'enum',
     enum: productsCategory,
-    nullable: true,
   })
-  @Transform(({ value }) => {
-    if (value !== null) {
-      return value;
-    }
-  })
-  public category?: string;
+  @IsOptional()
+  public category?: productsCategory | null;
 
   @DeleteDateColumn()
   deletedAt?: Date;

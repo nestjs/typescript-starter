@@ -9,8 +9,8 @@ import {
 import Cart from '../carts/cart.entity';
 
 export enum transactionStatus {
-  FINISHED = 'finished',
-  IN_PROGRESS = 'in progress',
+  FINISHED = 'FINISHED',
+  IN_PROGRESS = 'IN_PROGRESS',
 }
 
 @Entity()
