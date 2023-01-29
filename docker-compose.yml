@@ -24,13 +24,14 @@ services:
     build:
       context: .
       target: install-dependencies
-    command: npm run start:dev
+    command: npm run start:inspect
     volumes:
       - ./src:/user/src/app/src
     env_file:
       - .env
     ports:
       - "3000:3000"
+      - "9229:9229"
     depends_on:
       - postgres
     networks:

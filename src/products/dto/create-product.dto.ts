@@ -1,5 +1,11 @@
-import {IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString} from 'class-validator';
-import {productsCategory} from "../product.entity";
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { productsCategory } from '../product.entity';
 
 export class CreateProductDto {
   @IsString()

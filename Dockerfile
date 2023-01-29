@@ -35,4 +35,5 @@ COPY --from=install-dependencies /user/src/app/node_modules ./node_modules
 COPY --from=create-build /user/src/app/dist ./dist
 COPY package.json ./
 
+
 CMD ["npm", "run", "start:prod"]

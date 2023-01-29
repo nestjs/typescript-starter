@@ -5,12 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import Product from './product.entity';
 import { ProductNotFoundException } from './exception/product-not-found.exception';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export default class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
+    private readonly filesService: FilesService,
   ) {}
 
   getAllProducts() {
@@ -26,6 +28,35 @@ export default class ProductsService {
       return product;
     }
     throw new ProductNotFoundException(id);
+  }
+
+  async addProductImage(
+    productId: number,
+    imageBuffer: Buffer,
+    filename: string,
+  ) {
+    const image = await this.filesService.uploadPublicFile(
+      imageBuffer,
+      filename,
+    );
+    const user = await this.getProductById(productId);
+    await this.productsRepository.update(productId, {
+      ...user,
+      image,
+    });
+    return image;
+  }
+
+  async deleteProductImage(productId: number) {
+    const product = await this.getProductById(productId);
+    const fileId = product.image?.id;
+    if (fileId) {
+      await this.productsRepository.update(productId, {
+        ...product,
+        image: null,
+      });
+      await this.filesService.deletePublicFile(fileId);
+    }
   }
 
   async updateProduct(id: number, product: UpdateProductDto) {
