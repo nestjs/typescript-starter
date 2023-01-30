@@ -18,6 +18,7 @@ export class FilesService {
     const s3 = new S3();
     const uploadResult = await s3
       .upload({
+        ACL: 'public-read',
         Bucket: this.configService.get('AWS_PUBLIC_BUCKET_NAME'),
         Body: dataBuffer,
         Key: `${uuid()}-${filename}`,

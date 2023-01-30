@@ -39,9 +39,9 @@ export default class ProductsService {
       imageBuffer,
       filename,
     );
-    const user = await this.getProductById(productId);
+    const product = await this.getProductById(productId);
     await this.productsRepository.update(productId, {
-      ...user,
+      ...product,
       image,
     });
     return image;

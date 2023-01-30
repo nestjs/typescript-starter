@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,7 +14,6 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { FindOneParams } from '../shared/types/find-one-params';
 import { FileInterceptor } from '@nestjs/platform-express';
-import RequestWithUser from '../authentication/request-with-user.interface';
 import 'multer';
 
 @Controller('products')
@@ -53,17 +51,17 @@ export default class ProductsController {
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   async addImage(
-    @Req() request: RequestWithUser,
+    @Body() productId: { productId: number },
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.productsService.addProductImage(
-      request.user.id,
+      productId.productId,
       file.buffer,
       file.originalname,
     );
   }
   @Delete('image')
-  async deleteImage(@Req() request: RequestWithUser) {
-    return this.productsService.deleteProductImage(request.user.id);
+  async deleteImage(productId: number) {
+    return this.productsService.deleteProductImage(productId);
   }
 }
