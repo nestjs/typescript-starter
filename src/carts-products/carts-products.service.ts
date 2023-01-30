@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import CartProduct from './cart-product.entity';
+import Cart from "../carts/cart.entity";
+import Product from "../products/product.entity";
 
 @Injectable()
 export default class CartsProductsService {
@@ -10,7 +12,7 @@ export default class CartsProductsService {
     private cartsProductsRepository: Repository<CartProduct>,
   ) {}
 
-  async createCartProduct(cart, product) {
+  async createCartProduct(cart: Cart, product: Product) {
     const checkIfRelationExists = await this.cartsProductsRepository.findOne({
       where: {
         cartId: cart.id,
@@ -32,7 +34,7 @@ export default class CartsProductsService {
     return this.cartsProductsRepository.save(cartProductToSave);
   }
 
-  async emptyActiveCart(cart) {
+  async emptyActiveCart(cart: Cart) {
     const findAllCartsRelations = await this.cartsProductsRepository.find({
       where: { cartId: cart.id },
     });

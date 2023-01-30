@@ -8,6 +8,7 @@ import ProductsService from '../products/products.service';
 import OrdersService from '../orders/orders.service';
 import CartsProductsService from '../carts-products/carts-products.service';
 import { transactionStatus } from '../orders/order.entity';
+import UserEntity from "../users/user.entity";
 
 @Injectable()
 export default class CartsService {
@@ -19,9 +20,9 @@ export default class CartsService {
     private readonly cartsProductsService: CartsProductsService,
   ) {}
 
-  async createCart(cart: CreateCartDto, user) {
+  async createCart(cart: CreateCartDto, user: UserEntity) {
     const cartToArchive = await this.cartsRepository.findOne({
-      where: { isArchived: false, owner: { id: user } },
+      where: { isArchived: false, owner: user },
       relations: ['owner'],
     });
     if (cartToArchive) {
@@ -35,12 +36,12 @@ export default class CartsService {
     return this.cartsRepository.save(newCart);
   }
 
-  async emptyActiveCart(user) {
+  async emptyActiveCart(user: UserEntity) {
     const cartToEmpty = await this.getActiveCart(user);
     return this.cartsProductsService.emptyActiveCart(cartToEmpty);
   }
 
-  async addProductsToCart(user, productsIds: number[]) {
+  async addProductsToCart(user: UserEntity, productsIds: number[]) {
     const products = await this.productsService.getProductsByIds(productsIds);
     const cartToUpdate = await this.getActiveCart(user);
     if (products) {
@@ -56,9 +57,9 @@ export default class CartsService {
     );
   }
 
-  async getActiveCart(user) {
+  async getActiveCart(user: UserEntity) {
     const activeCart = await this.cartsRepository.findOne({
-      where: { isArchived: false, owner: { id: user } },
+      where: { isArchived: false, owner: user },
       relations: ['owner'],
       select: {
         owner: {
@@ -70,10 +71,10 @@ export default class CartsService {
     if (activeCart) {
       return activeCart;
     }
-    throw new CartNotFoundException(user);
+    throw new CartNotFoundException(user.id);
   }
 
-  async finishTransaction(user) {
+  async finishTransaction(user: number) {
     const activeCart = await this.cartsRepository.findOne({
       where: { isArchived: false, owner: { id: user } },
       select: {

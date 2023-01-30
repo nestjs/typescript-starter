@@ -15,7 +15,7 @@ export default class OrdersController {
 
   @Get('details')
   getAllUsersOrdersWithDetails(@Req() request: RequestWithUser) {
-    return this.ordersService.getAllUsersOrdersWithProducts(request.user.id);
+    return this.ordersService.getAllUsersOrdersWithProducts(request.user);
   }
 
   @Get()

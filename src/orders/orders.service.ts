@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './order.entity';
 import { Between, Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
+import UserEntity from "../users/user.entity";
+import User from "../users/user.entity";
 
 @Injectable()
 export default class OrdersService {
@@ -16,13 +18,11 @@ export default class OrdersService {
     return this.ordersRepository.save(newOrder);
   }
 
-  async getAllUsersOrdersWithProducts(user) {
+  async getAllUsersOrdersWithProducts(user: UserEntity) {
     return this.ordersRepository.find({
       where: {
         cart: {
-          owner: {
-            id: user,
-          },
+          owner: user
         },
       },
       select: {
@@ -39,25 +39,25 @@ export default class OrdersService {
     });
   }
 
-  async getAllUsersOrders(user) {
+  async getAllUsersOrders(userId: number) {
     return this.ordersRepository.find({
       where: {
         cart: {
           owner: {
-            id: user,
-          },
+            id: userId
+          }
         },
       },
     });
   }
 
-  async getAllUsersOrdersBetweenDates(user, startDate: Date, endDate: Date) {
+  async getAllUsersOrdersBetweenDates(userId: number, startDate: Date, endDate: Date) {
     return this.ordersRepository.find({
       where: {
         cart: {
           owner: {
-            id: user,
-          },
+            id: userId
+          }
         },
         createdDate: Between(startDate, endDate),
       },

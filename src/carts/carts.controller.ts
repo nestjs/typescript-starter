@@ -9,12 +9,12 @@ export default class CartsController {
 
   @Post()
   createNewCart(@Body() cart: CreateCartDto, @Req() request: RequestWithUser) {
-    return this.cartsService.createCart(cart, request.user.id);
+    return this.cartsService.createCart(cart, request.user);
   }
 
   @Get()
   getActiveCart(@Req() request: RequestWithUser) {
-    return this.cartsService.getActiveCart(request.user.id);
+    return this.cartsService.getActiveCart(request.user);
   }
 
   @Post('products')
@@ -23,7 +23,7 @@ export default class CartsController {
     @Body() productsIdsArray: number[],
   ) {
     return this.cartsService.addProductsToCart(
-      request.user.id,
+      request.user,
       request.body.productsIds,
     );
   }
@@ -35,7 +35,7 @@ export default class CartsController {
 
   @Post('empty')
   emptyActiveCart(@Req() request: RequestWithUser) {
-    return this.cartsService.emptyActiveCart(request.user.id);
+    return this.cartsService.emptyActiveCart(request.user);
   }
 }
 
