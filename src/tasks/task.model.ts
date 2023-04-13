@@ -1,3 +1,7 @@
+/**
+ * Define schema for document in MongoDB
+ */
+
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 

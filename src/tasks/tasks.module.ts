@@ -1,3 +1,7 @@
+/**
+ * Module for tasks
+ */
+
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
