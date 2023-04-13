@@ -47,5 +47,8 @@
     npm run test
     npm run test:watch
 
+  Note: 
+  1. PUT requests are not covered in integration test.
+  2. Tried to unit test for insertTask in tasks.service but failed due to failure in mocking save() method.
   
   
