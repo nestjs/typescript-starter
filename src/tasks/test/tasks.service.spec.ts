@@ -48,77 +48,77 @@ describe('TasksService', () => {
       })
     })
 
-    // })
-
-    describe('getTaskById', () => {
-
-      describe('when getTask is called', () => {
-        let task: Task;
-
-        beforeEach(async () => {
-          const moduleRef = await Test.createTestingModule({
-            providers: [
-              TasksService,
-              {
-                provide: getModelToken(Task.name),
-                useClass: TaskModel
-              }
-            ]
-          }).compile();
-
-          tasksService = moduleRef.get<TasksService>(TasksService);
-          taskModel = moduleRef.get<TaskModel>(getModelToken(Task.name));
-
-          jest.spyOn(taskModel, 'findById');
-          task = await tasksService.getTask(taskStub()._id);
-        })
-
-        it('should be defined', () => {
-          expect(tasksService).toBeDefined();
-        })
-
-        test('then it should call the taskModel', () => {
-          expect(taskModel.findById).toHaveBeenCalledWith(taskStub()._id);
-        })
-
-        test('then it should return a task', () => {
-          expect(task).toEqual(taskStub());
-        })
-      })
-    })
-
-    describe('deleteTaskById', () => {
-
-      describe('when deleteTask is called', () => {
-        let task: Task;
-
-        beforeEach(async () => {
-
-          const moduleRef = await Test.createTestingModule({
-            providers: [
-              TasksService,
-              {
-                provide: getModelToken(Task.name),
-                useClass: TaskModel
-              }
-            ]
-          }).compile();
-
-          tasksService = moduleRef.get<TasksService>(TasksService);
-          taskModel = moduleRef.get<TaskModel>(getModelToken(Task.name));
-
-          jest.spyOn(taskModel, 'findByIdAndDelete');
-          task = await tasksService.deleteTask(taskStub()._id);
-        })
-
-        test('then it should call the taskModel', () => {
-          expect(taskModel.findByIdAndDelete).toHaveBeenCalledWith(taskStub()._id);
-        })
-
-        test('then it should return a task', () => {
-          expect(task).toEqual(taskStub());
-        })
-      })
-    })
-
   })
+
+  describe('getTaskById', () => {
+
+    describe('when getTask is called', () => {
+      let task: Task;
+
+      beforeEach(async () => {
+        const moduleRef = await Test.createTestingModule({
+          providers: [
+            TasksService,
+            {
+              provide: getModelToken(Task.name),
+              useClass: TaskModel
+            }
+          ]
+        }).compile();
+
+        tasksService = moduleRef.get<TasksService>(TasksService);
+        taskModel = moduleRef.get<TaskModel>(getModelToken(Task.name));
+
+        jest.spyOn(taskModel, 'findById');
+        task = await tasksService.getTask(taskStub()._id);
+      })
+
+      it('should be defined', () => {
+        expect(tasksService).toBeDefined();
+      })
+
+      test('then it should call the taskModel', () => {
+        expect(taskModel.findById).toHaveBeenCalledWith(taskStub()._id);
+      })
+
+      test('then it should return a task', () => {
+        expect(task).toEqual(taskStub());
+      })
+    })
+  })
+
+  describe('deleteTaskById', () => {
+
+    describe('when deleteTask is called', () => {
+      let task: Task;
+
+      beforeEach(async () => {
+
+        const moduleRef = await Test.createTestingModule({
+          providers: [
+            TasksService,
+            {
+              provide: getModelToken(Task.name),
+              useClass: TaskModel
+            }
+          ]
+        }).compile();
+
+        tasksService = moduleRef.get<TasksService>(TasksService);
+        taskModel = moduleRef.get<TaskModel>(getModelToken(Task.name));
+
+        jest.spyOn(taskModel, 'findByIdAndDelete');
+        task = await tasksService.deleteTask(taskStub()._id);
+      })
+
+      test('then it should call the taskModel', () => {
+        expect(taskModel.findByIdAndDelete).toHaveBeenCalledWith(taskStub()._id);
+      })
+
+      test('then it should return a task', () => {
+        expect(task).toEqual(taskStub());
+      })
+    })
+  })
+
+})
