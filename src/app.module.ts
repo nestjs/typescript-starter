@@ -5,14 +5,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-
+import { ConfigModule } from '@nestjs/config';
 import { TasksModule } from './tasks/tasks.module';
+import { DatabaseModule } from './database/database.module';
+
 
 @Module({
   imports: [
     TasksModule,
-    MongooseModule.forRoot('mongodb://ralabs:ralabs12345@ac-itetvwv-shard-00-02.ggwtpnj.mongodb.net:27017,ac-itetvwv-shard-00-01.ggwtpnj.mongodb.net:27017,ac-itetvwv-shard-00-00.ggwtpnj.mongodb.net:27017/RALabs?w=majority&retryWrites=true&tls=true&authMechanism=SCRAM-SHA-1')
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [AppService],

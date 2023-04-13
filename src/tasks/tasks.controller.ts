@@ -22,41 +22,41 @@ import { TasksService } from './tasks.service';
 import { Task } from './task.model';
 
 @Controller('tasks')
-export class TasksController{
-    constructor(private readonly tasksService: TasksService) {}
+export class TasksController {
+    constructor(private readonly tasksService: TasksService) { }
 
     @Post()
     async addTask(
         @Body('title') prodTitle: string,
         @Body('description') prodDescription: string,
         @Body('status') prodStatus: string
-    ){
-        const generatedId=await this.tasksService.insertTask(prodTitle,prodStatus,prodDescription);
-        return {id:generatedId};
+    ) {
+        const generatedId = await this.tasksService.insertTask(prodTitle, prodStatus, prodDescription);
+        return { id: generatedId };
     }
 
     @Put()
     async updateTask(
         @Body('_id') _id: string,
-        @Body('status') newStatus:string
-    ){
-        const result=await this.tasksService.updateTask(_id,newStatus);
+        @Body('status') newStatus: string
+    ) {
+        const result = await this.tasksService.updateTask(_id, newStatus);
         return result as string;
     }
 
     @Get()
     async getTask(
         @Body('_id') _id: string
-    ):Promise<Task>{
-        const task=await this.tasksService.getTask(_id);
+    ): Promise<Task> {
+        const task = await this.tasksService.getTask(_id);
         return task as Task;
     }
 
     @Delete()
     async deleteTask(
         @Body('_id') _id: string
-    ):Promise<Task>{
-        const task=await this.tasksService.deleteTask(_id);
+    ): Promise<Task> {
+        const task = await this.tasksService.deleteTask(_id);
         return task as Task;
     }
 }

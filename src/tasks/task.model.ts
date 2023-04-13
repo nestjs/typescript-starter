@@ -10,22 +10,22 @@ export type taskDoc = mongoose.HydratedDocument<Task>;
 
 @Schema()
 export class Task {
-    @Prop({type: mongoose.Schema.Types.ObjectId, required:true, auto:true})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, required: true, auto: true })
     _id: string;
 
-    @Prop({type: String, required: true})
+    @Prop({ type: String, required: true })
     title: string;
 
-    @Prop({type: String, required:false})
+    @Prop({ type: String, required: false })
     description: string;
 
-    @Prop({type: String, required: true, enum:['TODO', 'IN_PROGRESS', 'COMPLETED']})
+    @Prop({ type: String, required: true, enum: ['TODO', 'IN_PROGRESS', 'COMPLETED'] })
     status: string;
 
-    @Prop({type: Date, required: true, auto:true, default: Date.now() })
+    @Prop({ type: Date, required: true, auto: true, default: Date.now() })
     createdAt: Date;
 
-    @Prop({type: Date, required: true, default: Date.now() })
+    @Prop({ type: Date, required: true, default: Date.now() })
     updatedAt: Date;
 }
 

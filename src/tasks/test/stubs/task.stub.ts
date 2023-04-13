@@ -2,6 +2,7 @@
  * dummy values for a Task object for test purpose
  */
 import { Task } from "../../task.model";
+import { Types } from "mongoose"
 
 export const taskStub = (): Task => {
  return {

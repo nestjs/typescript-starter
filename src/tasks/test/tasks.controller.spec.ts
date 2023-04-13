@@ -19,7 +19,8 @@ describe('TasksController', () => {
     
     service=module.get<TasksService>(TasksService);
     controller=module.get<TasksController>(TasksController);
-    // jest.clearAllMocks();
+    
+    jest.clearAllMocks();
   });
   
 
