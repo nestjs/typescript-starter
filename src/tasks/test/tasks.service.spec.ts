@@ -1,3 +1,8 @@
+/**
+ * Reference: https://github.com/mguay22/nestjs-mongo/tree/unit-testing
+ * @author Yuting Wu
+ */
+
 import { getModelToken } from "@nestjs/mongoose"
 import { Test } from "@nestjs/testing"
 import { TasksService } from '../tasks.service';

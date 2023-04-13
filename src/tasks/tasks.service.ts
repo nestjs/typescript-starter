@@ -1,18 +1,20 @@
 /**
  * This service module provides methods for the controller to 
  * fulfill requests. It handles errors and may throw exceptions.
+ * Reference: https://www.youtube.com/watch?v=ulfU5vY6I78&ab_channel=Academind
+ * @author Yuting Wu
  */
 
-import { Injectable, NotFoundException, HttpException, HttpStatus} from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Task } from './task.model';
 
 @Injectable()
-export class TasksService{
+export class TasksService {
 
-    constructor(@InjectModel('Task') private readonly taskModel:Model<Task>){}
+    constructor(@InjectModel('Task') private readonly taskModel: Model<Task>) { }
 
     /**
      * Add a task to the model with title, status, and description (optional)
@@ -23,23 +25,23 @@ export class TasksService{
      * @param description Description (optional)
      * @returns _id of new task as string
      */
-    async insertTask(title:string,status:string,description:string){
+    async insertTask(title: string, status: string, description: string) {
         let result;
-        try{
-            const newTask=new this.taskModel({
-                title:title,
-                description:description,
-                status:status
+        try {
+            const newTask = new this.taskModel({
+                title: title,
+                description: description,
+                status: status
             });
-            result=await newTask.save();
-        }catch(error){
-            if(!title){
-                throw new HttpException('Null title',HttpStatus.BAD_REQUEST);
-            }else if(!status){
-                throw new HttpException('Null status',HttpStatus.BAD_REQUEST);
-            }else if(error.name === 'ValidationError'){
-                throw new HttpException('Invalid status',HttpStatus.BAD_REQUEST);
-            }else{
+            result = await newTask.save();
+        } catch (error) {
+            if (!title) {
+                throw new HttpException('Null title', HttpStatus.BAD_REQUEST);
+            } else if (!status) {
+                throw new HttpException('Null status', HttpStatus.BAD_REQUEST);
+            } else if (error.name === 'ValidationError') {
+                throw new HttpException('Invalid status', HttpStatus.BAD_REQUEST);
+            } else {
                 throw new HttpException('Unknown isssue', HttpStatus.SERVICE_UNAVAILABLE);
             }
         }
@@ -54,28 +56,28 @@ export class TasksService{
      * @param status New status
      * @returns task before modification
      */
-    async updateTask(id:string,status:string){
+    async updateTask(id: string, status: string) {
         let result;
-        if(!id){
-            throw new HttpException('Null id',HttpStatus.BAD_REQUEST);
+        if (!id) {
+            throw new HttpException('Null id', HttpStatus.BAD_REQUEST);
         }
-        try{
-            result=await this.taskModel.findByIdAndUpdate(
+        try {
+            result = await this.taskModel.findByIdAndUpdate(
                 id,
                 {
-                    status: status, 
+                    status: status,
                     updatedAt: Date.now()
                 },
-                {runValidators: true}
-                ).exec();
-        }catch(error){
-            if(error.name === 'ValidationError'){
-                throw new HttpException('Invalid status',HttpStatus.BAD_REQUEST);
-            }else{
+                { runValidators: true }
+            ).exec();
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                throw new HttpException('Invalid status', HttpStatus.BAD_REQUEST);
+            } else {
                 throw new HttpException('Unknown isssue', HttpStatus.SERVICE_UNAVAILABLE);
             }
         }
-        if(!result){
+        if (!result) {
             throw new NotFoundException('Could not find task.');
         }
         return 'succeed' as string;
@@ -88,21 +90,21 @@ export class TasksService{
      * @param id Id of target task 
      * @returns target task
      */
-    async getTask(id:string): Promise<Task>{
-        if(!id){
-            throw new HttpException('Null id',HttpStatus.BAD_REQUEST);
+    async getTask(id: string): Promise<Task> {
+        if (!id) {
+            throw new HttpException('Null id', HttpStatus.BAD_REQUEST);
         }
         let task;
-        try{
-            task=await this.taskModel.findById(id).exec();
-        }catch(error){
-            if(error.name === 'ValidationError'){
-                throw new HttpException('Invalid id',HttpStatus.BAD_REQUEST);
-            }else{
+        try {
+            task = await this.taskModel.findById(id).exec();
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
+            } else {
                 throw new HttpException('Unknown isssue', HttpStatus.SERVICE_UNAVAILABLE);
             }
         }
-        if(!task){
+        if (!task) {
             throw new NotFoundException('Could not find task.');
         }
         return task as Task;
@@ -115,21 +117,21 @@ export class TasksService{
      * @param id Id of target task
      * @returns task before deletion
      */
-    async deleteTask(id:string): Promise<Task>{
-        if(!id){
-            throw new HttpException('Null id',HttpStatus.BAD_REQUEST);
+    async deleteTask(id: string): Promise<Task> {
+        if (!id) {
+            throw new HttpException('Null id', HttpStatus.BAD_REQUEST);
         }
         let task;
-        try{
-            task=await this.taskModel.findByIdAndDelete(id).exec()
-        }catch(error){
-            if(error.name === 'ValidationError'){
-                throw new HttpException('Invalid id',HttpStatus.BAD_REQUEST);
-            }else{
+        try {
+            task = await this.taskModel.findByIdAndDelete(id).exec()
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
+            } else {
                 throw new HttpException('Unknown isssue', HttpStatus.SERVICE_UNAVAILABLE);
             }
         }
-        if(!task){
+        if (!task) {
             throw new NotFoundException('Could not find task.');
         }
         return task as Task;

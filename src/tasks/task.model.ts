@@ -1,5 +1,7 @@
 /**
- * Define schema for document in MongoDB
+ * Define schema for document in MongoDB\
+ * Reference: https://docs.nestjs.com/recipes/mongodb
+ * @author Yuting Wu
  */
 
 import * as mongoose from 'mongoose';

@@ -1,5 +1,6 @@
 /**
  * End-to-end/Integration tests for post, get, and delete requests
+ * @author: Yuting Wu
  */
 
 import { Test } from "@nestjs/testing"

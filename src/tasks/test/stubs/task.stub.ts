@@ -1,11 +1,11 @@
 /**
  * dummy values for a Task object for test purpose
+ * @author Yuting Wu
  */
 import { Task } from "../../task.model";
-import { Types } from "mongoose"
 
 export const taskStub = (): Task => {
- return {
+  return {
     title: 'tasktest',
     status: 'TODO',
     _id: '643559ef9d4986350fa5b687',

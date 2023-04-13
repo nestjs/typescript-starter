@@ -1,3 +1,5 @@
+/* Reference: https://github.com/mguay22/nestjs-mongo/tree/e2e-finish */
+
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -18,4 +20,4 @@ import { DatabaseService } from './database.service';
   providers: [DatabaseService],
   exports: [DatabaseService]
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

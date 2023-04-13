@@ -1,16 +1,19 @@
-import { promises } from 'dns';
-import {taskStub} from '../stubs/task.stub'
+/**
+ * @author Yuting Wu
+ * Reference: https://github.com/mguay22/nestjs-mongo/tree/unit-testing
+ */
+import { taskStub } from '../stubs/task.stub'
 import { Task } from 'src/tasks/task.model'
 
 export class TaskModel {
-  
-  protected entityStub=taskStub();
+
+  protected entityStub = taskStub();
 
   constructor(createEntityData: Task) {
     this.constructorSpy(createEntityData);
   }
 
-  constructorSpy(_createEntityData: Task): void {}
+  constructorSpy(_createEntityData: Task): void { }
 
   async save(): Promise<Task> {
     return this.entityStub;
