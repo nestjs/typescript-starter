@@ -1,3 +1,7 @@
+/**
+ * End-to-end/Integration tests for post, get, and delete requests
+ */
+
 import { Test } from "@nestjs/testing"
 import { Connection } from "mongoose"
 import * as request from 'supertest';

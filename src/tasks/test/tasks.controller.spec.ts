@@ -11,34 +11,34 @@ describe('TasksController', () => {
   let service: TasksService;
 
   beforeEach(async () => {
-    const module: TestingModule= await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [TasksController],
       providers: [TasksService],
     })
-    .compile();
-    
-    service=module.get<TasksService>(TasksService);
-    controller=module.get<TasksController>(TasksController);
-    
+      .compile();
+
+    service = module.get<TasksService>(TasksService);
+    controller = module.get<TasksController>(TasksController);
+
     jest.clearAllMocks();
   });
-  
+
 
   /* Test addTask() */
   describe('addTask', () => {
     describe('when addTask is called with correct inputs', () => {
 
-      let title:string;
-      let status:string;
-      let description:string;
-      let id:string;
+      let title: string;
+      let status: string;
+      let description: string;
+      let id: string;
 
       beforeEach(async () => {
-        title=taskStub().title;
-        status=taskStub().status;
-        description=taskStub().description;
+        title = taskStub().title;
+        status = taskStub().status;
+        description = taskStub().description;
 
-        id=(await controller.addTask(title, description, status)).id;
+        id = (await controller.addTask(title, description, status)).id;
       })
 
       test('then it should call tasksService', () => {
@@ -52,14 +52,14 @@ describe('TasksController', () => {
   })
 
   /* Test getTask() */
-  describe('getTask', () =>{
+  describe('getTask', () => {
     let task: Task;
 
     beforeEach(async () => {
-      task = await controller.getTask(taskStub()._id)  
+      task = await controller.getTask(taskStub()._id)
     })
 
-    describe('when getUser is called', () => {
+    describe('when getTask is called', () => {
 
       test('then it should call taskService', () => {
         expect(service.getTask).toBeCalledWith(taskStub()._id);
@@ -72,14 +72,14 @@ describe('TasksController', () => {
   })
 
   /* Test deleteTask() */
-  describe('deleteTask', () =>{
+  describe('deleteTask', () => {
     let task: Task;
 
     beforeEach(async () => {
-      task = await controller.deleteTask(taskStub()._id)  
+      task = await controller.deleteTask(taskStub()._id)
     })
 
-    describe('when deleteUser is called', () => {
+    describe('when deleteTask is called', () => {
 
       test('then it should call taskService', () => {
         expect(service.deleteTask).toBeCalledWith(taskStub()._id);
@@ -91,24 +91,24 @@ describe('TasksController', () => {
     })
   })
 
-    /* Test updateTask() */
-    describe('updateTask', () =>{
-      let result: string;
-  
-      beforeEach(async () => {
-        result = await controller.updateTask(taskStub()._id, 'TODO');
+  /* Test updateTask() */
+  describe('updateTask', () => {
+    let result: string;
+
+    beforeEach(async () => {
+      result = await controller.updateTask(taskStub()._id, 'TODO');
+    })
+
+    describe('when deleteTask is called', () => {
+
+      test('then it should call taskService', () => {
+        expect(service.updateTask).toBeCalledWith(taskStub()._id, 'TODO');
       })
-  
-      describe('when deleteUser is called', () => {
-  
-        test('then it should call taskService', () => {
-          expect(service.updateTask).toBeCalledWith(taskStub()._id,'TODO');
-        })
-  
-        test('then is should return a task', () => {
-          expect(result).toEqual('success');
-        })
+
+      test('then is should return a task', () => {
+        expect(result).toEqual('success');
       })
     })
+  })
 
 });
