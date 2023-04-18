@@ -16,19 +16,19 @@ import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private tasksService: TasksService) {}
+    constructor(private readonly tasksService: TasksService) {}
 
     // get request to display all tasks
     @Get('')
-    getTask() {
+    getTasks() {
         return this.tasksService.getTasks();
     }
 
     // get task by id
     @Get(':id')
-    async getTaskById(@Param('id', ParseIntPipe) id: number) {
+    getTaskById(@Param('id', ParseIntPipe) id: number) {
         try {
-            await this.tasksService.getTaskById(id);
+            return this.tasksService.getTaskById(id);
         } catch (err) {
             throw new HttpException(
                 {
@@ -56,6 +56,6 @@ export class TasksController {
     @Post('')
     @UsePipes(ValidationPipe)
     createTask(@Body() createTaskDto: CreateTaskDto) {
-        this.tasksService.createTask(createTaskDto);
+        return this.tasksService.createTask(createTaskDto);
     }
 }

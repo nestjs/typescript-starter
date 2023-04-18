@@ -15,7 +15,7 @@ export class TasksService {
         return this.taskRepository.find();
     }
 
-    async getTaskById(id: number) {
+    getTaskById(id: number) {
         return this.taskRepository.findOneBy({ id: id });
     }
 
