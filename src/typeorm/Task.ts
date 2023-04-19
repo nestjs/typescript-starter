@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Status } from '../enums/status';
 
-// Task entity model
+// Task entity model, with the required columns, PK: id; title: not null; description: optional; status: enum, string; dates: auto generated.
 @Entity()
 export class Task {
     @PrimaryGeneratedColumn({

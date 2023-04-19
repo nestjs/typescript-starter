@@ -5,9 +5,11 @@ import { INestApplication } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Task } from '../src/typeorm/Task';
 
+// e2e test checks the integration of the app
 describe('UserController (e2e)', () => {
     let app: INestApplication;
 
+    // mock task array for testing
     const mockTasks = [
         {
             id: 1,
@@ -22,6 +24,8 @@ describe('UserController (e2e)', () => {
             status: 'TODO',
         },
     ];
+
+    // mock task repo contianing the necessary methods
     const mockTasksRepo = {
         find: jest.fn().mockResolvedValue(mockTasks),
 
@@ -59,6 +63,7 @@ describe('UserController (e2e)', () => {
         await app.close();
     });
 
+    // get all tasks
     it('/tasks (GET)', () => {
         return request(app.getHttpServer())
             .get('/tasks')
@@ -66,6 +71,7 @@ describe('UserController (e2e)', () => {
             .expect(mockTasks);
     });
 
+    // get a single test
     it('/tasks/id (GET)', () => {
         return request(app.getHttpServer())
             .get('/tasks/1')
@@ -73,6 +79,7 @@ describe('UserController (e2e)', () => {
             .expect(mockTasks);
     });
 
+    // create a task
     it('/tasks (POST)', () => {
         return request(app.getHttpServer())
             .post('/tasks')
@@ -92,6 +99,7 @@ describe('UserController (e2e)', () => {
             });
     });
 
+    // create a task with field missing, no title
     it('/tasks (POST), validation error with no title', () => {
         return request(app.getHttpServer())
             .post('/tasks')
@@ -102,6 +110,7 @@ describe('UserController (e2e)', () => {
             .expect(400);
     });
 
+    // create a task with field missing, no description
     it('/tasks (POST), validation error with no descrip', () => {
         return request(app.getHttpServer())
             .post('/tasks')
@@ -113,6 +122,7 @@ describe('UserController (e2e)', () => {
             .expect(201);
     });
 
+    // create a task with field missing, missspellt status
     it('/tasks (POST), validation error with wrong status', () => {
         return request(app.getHttpServer())
             .post('/tasks')

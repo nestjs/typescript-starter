@@ -8,6 +8,7 @@ import {
 import { Observable, TimeoutError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 
+// timeout exception code that is used in main.ts. didnt work as expected
 @Injectable()
 export class TimeoutInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {

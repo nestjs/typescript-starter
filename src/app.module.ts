@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './typeorm/Task';
 
+// imports TasksModule and TypeOrmModule(for database connection)
 @Module({
     imports: [
         TasksModule,
