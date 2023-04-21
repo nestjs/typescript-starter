@@ -43,6 +43,9 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# start with a Public URL tunneling to your local
+$ npm run start:public
 ```
 
 ## Test

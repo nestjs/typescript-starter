@@ -11,6 +11,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:public": "concurrently \"npm:start\" \"tmole 3000\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -35,6 +36,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
+    "concurrently": "^8.0.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -46,6 +48,7 @@
     "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",
     "tsconfig-paths": "^4.0.0",
+    "tunnelmole": "^2.1.10",
     "typescript": "^4.7.4"
   },
   "jest": {
