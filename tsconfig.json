@@ -6,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "lib": ["ES2023"],
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
