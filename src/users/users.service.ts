@@ -59,6 +59,16 @@ export class UsersService {
             ) {
                 tempEvent.title = `${tempEvent.title} & ${event.title}`;
                 tempEvent.description = `${tempEvent.description} & ${event.description}`;
+                if (tempEvent.status !== event.status) {
+                    if (
+                        tempEvent.status === 'TODO' ||
+                        event.status === 'TODO'
+                    ) {
+                        tempEvent.status = 'TODO';
+                    } else {
+                        tempEvent.status = 'IN_PROGRESS';
+                    }
+                }
                 tempEvent.endTime = new Date(
                     Math.max(
                         tempEvent.endTime.getTime(),

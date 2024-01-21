@@ -32,7 +32,10 @@ export class EventsService {
     }
 
     async getEventById(id: number): Promise<Event> {
-        return this.eventsRepository.findOne({ where: { id } });
+        return this.eventsRepository.findOne({
+            where: { id },
+            relations: ['invitees'],
+        });
     }
 
     async deleteEventById(id: number): Promise<void> {
