@@ -2,10 +2,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+<p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
@@ -34,25 +31,32 @@ $ npm install
 
 ## Running the app
 
+Before starting the application, make sure `PostgreSQL` is installed and please provide following variables in `.env` and `.env.test`. Make sure you created two empty Databases for both production/development and test.
+
 ```bash
-# development
-$ npm run start
+DB_HOST="<Database Host>"
+DB_PORT="<Database Port>"
+DB_USERNAME="<Database Username>"
+DB_PASSWORD="<Database Password>"
+DB_DATABASE="<Database Name>"
 
-# watch mode
-$ npm run start:dev
+# Start application
+npm run start
 
-# production mode
-$ npm run start:prod
+# Start application under development
+npm run start:dev
 ```
 
 ## Test
 
-```bash
-# unit tests
-$ npm run test
+To run both the unit tests and integration tests, use `npm run test`.
 
-# e2e tests
-$ npm run test:e2e
+-   `.controller.spec.ts` contains all the integration tests using the test database
+-   `.service.spec.ts` contains all the unit tests using mocked database implementations
+
+```bash
+# unit all tests suites
+$ npm run test
 
 # test coverage
 $ npm run test:cov
@@ -64,10 +68,13 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+-   Website - [https://nestjs.com](https://nestjs.com/)
+-   Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest

@@ -54,7 +54,7 @@ describe('EventsController', () => {
             const createUserDto = {
                 name: 'Test User',
             };
-            const userResponse = await request(app.getHttpServer())
+            await request(app.getHttpServer())
                 .post('/users')
                 .send(createUserDto)
                 .expect(HttpStatus.CREATED);
@@ -83,7 +83,7 @@ describe('EventsController', () => {
             const createUserDto = {
                 name: 'Test User',
             };
-            const userResponse = await request(app.getHttpServer())
+            await request(app.getHttpServer())
                 .post('/users')
                 .send(createUserDto)
                 .expect(HttpStatus.CREATED);
@@ -120,7 +120,7 @@ describe('EventsController', () => {
             const createUserDto = {
                 name: 'Test User',
             };
-            const userResponse = await request(app.getHttpServer())
+            await request(app.getHttpServer())
                 .post('/users')
                 .send(createUserDto)
                 .expect(HttpStatus.CREATED);

@@ -39,9 +39,9 @@ export class UsersService {
     async mergeAllEvents(userId: number): Promise<Event[]> {
         const events = await this.getEventsForUser(userId);
         events.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-        let mergedEvents = [];
+        const mergedEvents = [];
         let tempEvent = null;
-        let eventsToBeDeleted = new Set<number>();
+        const eventsToBeDeleted = new Set<number>();
         for (const event of events) {
             const invitees = await this.eventsService.getEventInvitees(
                 event.id,
