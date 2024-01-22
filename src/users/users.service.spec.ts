@@ -115,7 +115,7 @@ describe('UsersService', () => {
                     id: 2,
                     title: 'Test Event 2',
                     description: 'Test Event 2 Description',
-                    status: 'IN_PROGRESS', // Example status, adjust according to your Event type
+                    status: 'TODO', // Example status, adjust according to your Event type
                     startTime: new Date('2021-01-01T00:30:00.000Z'),
                     endTime: new Date('2021-01-01T01:30:00.000Z'),
                     createdAt: new Date('2021-01-01T00:00:00.000Z'), // Corrected property name
@@ -145,6 +145,59 @@ describe('UsersService', () => {
 
             const mergedEvents = await service.mergeAllEvents(1);
 
+            expect(mergedEvents).toHaveLength(1);
+            expect(mockEventsService.create).toHaveBeenCalledTimes(1);
+            expect(mockEventsService.deleteEventById).toHaveBeenCalledTimes(2);
+        });
+        it('should return an merged events with status IN_PROGRESS if no event is TODO', async () => {
+            const events = [
+                {
+                    id: 1,
+                    title: 'Test Event 1',
+                    description: 'Test Event 1 Description',
+                    status: 'IN_PROGRESS', // Example status, adjust according to your Event type
+                    startTime: new Date('2021-01-01T00:00:00.000Z'),
+                    endTime: new Date('2021-01-01T01:00:00.000Z'),
+                    createdAt: new Date('2021-01-01T00:00:00.000Z'), // Corrected property name
+                    updatedAt: new Date('2021-01-01T00:00:00.000Z'),
+                    invitees: [
+                        { id: 1, name: 'Test User', events: [] },
+                        { id: 2, name: 'Test User 2', events: [] },
+                    ],
+                },
+                {
+                    id: 2,
+                    title: 'Test Event 2',
+                    description: 'Test Event 2 Description',
+                    status: 'COMPLETED', // Example status, adjust according to your Event type
+                    startTime: new Date('2021-01-01T00:30:00.000Z'),
+                    endTime: new Date('2021-01-01T01:30:00.000Z'),
+                    createdAt: new Date('2021-01-01T00:00:00.000Z'), // Corrected property name
+                    updatedAt: new Date('2021-01-01T00:00:00.000Z'),
+                    invitees: [
+                        { id: 1, name: 'Test User', events: [] },
+                        { id: 3, name: 'Test User 3', events: [] },
+                    ],
+                },
+            ];
+
+            (
+                mockEventsService.getEventInvitees as jest.Mock
+            ).mockImplementation(async (eventId: number) => {
+                const event = events.find((event) => event.id === eventId);
+                if (!event) {
+                    throw new Error('Event not found');
+                }
+                return event.invitees;
+            });
+
+            jest.spyOn(service, 'getEventsForUser').mockResolvedValue(events);
+
+            (mockEventsService.deleteEventById as jest.Mock).mockResolvedValue(
+                {},
+            );
+
+            const mergedEvents = await service.mergeAllEvents(1);
             expect(mergedEvents).toHaveLength(1);
             expect(mockEventsService.create).toHaveBeenCalledTimes(1);
             expect(mockEventsService.deleteEventById).toHaveBeenCalledTimes(2);
