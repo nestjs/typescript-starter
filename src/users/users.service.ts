@@ -80,6 +80,7 @@ export class UsersService {
                 );
                 tempEvent.isMerged = true;
                 eventsToBeDeleted.add(event.id);
+                eventsToBeDeleted.add(tempEvent.id);
             } else {
                 mergedEvents.push(tempEvent);
                 tempEvent = {
