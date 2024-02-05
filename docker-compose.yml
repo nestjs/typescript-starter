@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: bleach5406
+      POSTGRES_PASSWORD: bleach54276
+      POSTGRES_DB: ralab_db
+    ports:
+      - "5432:5432" # Map the default PostgreSQL port to your host
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persist database data
+volumes:
+  postgres-data:
