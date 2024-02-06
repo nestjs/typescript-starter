@@ -77,4 +77,4 @@ npm test
 
 ## Demo
 
-For a demonstration of the API and testing procedures, a video is available <a href="https://drive.google.com/drive/folders/1LYNZp_0yeEtHITnDLLjOwmoscuiUFVzq?usp=drive_link">here</a>.
+For a demonstration of the API and testing procedures, 2 videos are available <a href="https://drive.google.com/drive/folders/1LYNZp_0yeEtHITnDLLjOwmoscuiUFVzq?usp=drive_link">here</a> (one for demo, one for unitest).
