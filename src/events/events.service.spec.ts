@@ -61,7 +61,7 @@ describe('EventsService', () => {
     expect(service).toBeDefined();
   });
 
-  // Test for undefuned user
+  // Test for undefined user
   it("throws NotFoundException if user doesn't exist", async () => {
     jest.spyOn(prismaService.user, 'findUnique').mockResolvedValueOnce(null);
     await expect(service.mergeAllEventsForUser(99)).rejects.toThrow(NotFoundException);
