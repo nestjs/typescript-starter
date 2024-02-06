@@ -49,7 +49,7 @@ export class EventsService {
     });
 
     // Process each invitee in the invitees field of the request body
-    invitees.forEach(async (invitee) => {
+    for (const invitee of invitees) {
       // Find the matching user with ID
       const user = await this.prisma.user.findUnique({
         where: { id: invitee.id },
@@ -89,8 +89,7 @@ export class EventsService {
           },
         },
       });
-
-    });
+    }
 
     // Return the created event
     return await this.prisma.event.findUnique({

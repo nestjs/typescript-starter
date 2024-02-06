@@ -42,4 +42,15 @@ export class UsersService {
     }
     return user;
   }
+
+  // Service for deleting an user with ID
+  async deleteUser(id: number) {
+    try {
+      // Delete the event with the matching ID
+      return await this.prisma.user.delete({ where: { id: id } });
+    } 
+    catch (error) {
+      throw new NotFoundException(`Could not find user with ID ${id} to delete.`);
+    }
+  }
 }
