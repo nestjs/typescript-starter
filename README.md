@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This [NestJS](https://github.com/nestjs/nest) project offers a platform for event management, seamlessly integrating user functionalities to allow for the creation, update, and deletion of event records alongside user management capabilities. Utilizing [MySQL](https://www.mysql.com/), the application supports complex relationships, such as users attending multiple events, through a clean and intuitive API. With a focus on scalability and maintainability, this setup is ideal for developers looking to build or expand on a comprehensive event scheduling and user management system.
 
 ## Installation
 
@@ -45,6 +45,53 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## API Endpoints
+
+<div style="text-align: justify;">
+
+**Events:**
+
+- **POST /events**: Creates a new event with the given details. Requires a JSON payload with event information such as title, description, status, startTime, endTime, and an array of invitee IDs.
+
+  **Example payload:**
+
+```json
+{
+  "title": "Team Meeting",
+  "description": "Monthly team sync.",
+  "status": "TODO",
+  "startTime": "2024-04-01T09:00:00Z",
+  "endTime": "2024-04-01T10:00:00Z",
+  "invitees": [1, 2]
+}
+```
+  - **GET /events**: Retrieves a list of all events.
+  - **GET /events/:id**: Retrieves details of a specific event by its ID.
+  - **DELETE /events/:id**: Deletes a specific event by its ID.
+  - **POST /events/merge**: Merges overlapping events for a specified user. Requires a JSON payload with the user ID.
+
+    **Example payload:**
+```json
+{
+  "userId": 1
+}
+```
+
+**Users:**
+
+  - **POST /users**: Creates a new user with the given details. Requires a JSON payload with user information such as name and an optional array of event IDs to associate with the user.
+
+    **Example payload:** 
+```json
+{
+  "name": "John Doe",
+  "eventIds": [1, 3]
+}
+```
+  - **GET /users**: Retrieves a list of all users.
+  - **DELETE /users/:id**: Deletes a specific user by its ID.
+</div>
+
 ## Test
 
 ```bash
@@ -58,15 +105,10 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
