@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from '../entities/event.entity';
 import { User } from '../entities/user.entity';
@@ -15,19 +15,24 @@ export class UsersService {
     ) {}
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        const { eventIds, ...userData } = createUserDto;
-
-        const events = eventIds ? await this.eventsRepository.findBy({
+        const { eventIds = [], ...userData } = createUserDto;
+    
+        const existingEvents = eventIds.length > 0 ? await this.eventsRepository.findBy({
             id: In(eventIds),
         }) : [];
-
+    
+        if (eventIds.length > 0 && existingEvents.length !== eventIds.length) {
+            throw new Error('One or more events do not exist.');
+        }
+    
         const user = this.usersRepository.create({
             ...userData,
-            events,
+            events: existingEvents,
         });
-
+    
         return this.usersRepository.save(user);
     }
+    
 
     async findAll() {
         return this.usersRepository.find();

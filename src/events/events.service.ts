@@ -4,6 +4,7 @@ import { Repository, In } from 'typeorm';
 import { Event } from '../entities/event.entity';
 import { User } from '../entities/user.entity';
 import { CreateEventDto } from './dto/create-event.dto';
+import { merge } from 'rxjs';
 
 @Injectable()
 export class EventsService {
@@ -49,11 +50,9 @@ export class EventsService {
   }
 
   async findOne(id: number): Promise<Event> {
-    const event = await this.eventsRepository.createQueryBuilder('event')
-        .leftJoin('event.invitees', 'user') // Setup the join, but don't select any fields from `user` yet
-        .addSelect(['user.id', 'user.name']) // Explicitly select only `id` and `name` fields of `user`
-        .where('event.id = :id', { id })
-        .getOne();
+    const event = await this.eventsRepository.findOne({
+      where: { id }
+    });
 
     if (!event) {
         throw new NotFoundException(`Event with ID ${id} not found`);
@@ -70,47 +69,44 @@ export class EventsService {
 
 
   async mergeOverlappingEvents(userId: number): Promise<Event[]> {
-    const events = await this.eventsRepository
-      .createQueryBuilder('event')
-      .leftJoinAndSelect('event.invitees', 'user')
-      .where('user.id = :userId', { userId })
-      .orderBy('event.startTime', 'ASC')
-      .getMany();
+    const userWithEvents = await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ['events', 'events.invitees'],
+    });
   
-    if (events.length <= 1) return events;
+    if (userWithEvents.events.length <= 1) return userWithEvents.events;
   
-    let mergedEvents: Event[] = [];
-    let tempEvent = events[0];
-    let inviteesSet = new Set(tempEvent.invitees.map(invitee => invitee.id));
-
+    const events = userWithEvents.events.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+    const mergedEvents = [];
+    let tempEvent = { ...events[0], invitees: new Set(events[0].invitees.map(({ id, name }) => ({ id, name }))) };
+  
     for (let i = 1; i < events.length; i++) {
-      let currentEvent = events[i];
-      currentEvent.invitees.forEach(invitee => inviteesSet.add(invitee.id));
-
+      const currentEvent = events[i];
       if (currentEvent.startTime <= tempEvent.endTime) {
         tempEvent.endTime = new Date(Math.max(tempEvent.endTime.getTime(), currentEvent.endTime.getTime()));
         tempEvent.title += ` / ${currentEvent.title}`;
         tempEvent.description += ` / ${currentEvent.description}`;
-
-        await this.eventsRepository.delete(currentEvent.id);
+        currentEvent.invitees.forEach(invitee => tempEvent.invitees.add({ id: invitee.id, name: invitee.name }));
+        
+        await this.eventsRepository.delete({ id: currentEvent.id });
       } else {
-        mergedEvents.push(tempEvent);
-        tempEvent = currentEvent;
+        mergedEvents.push({ ...tempEvent, invitees: Array.from(tempEvent.invitees) });
+        tempEvent = { ...currentEvent, invitees: new Set(currentEvent.invitees.map(({ id, name }) => ({ id, name }))) };
       }
     }
-    mergedEvents.push(tempEvent);
-
-    for (let userId of inviteesSet) {
-      let user = await this.usersRepository.findOne({ where: { id: userId }, relations: ['events'] });
-      if (user) {
-          user.events = mergedEvents;
-          await this.usersRepository.save(user);
-      }
+    mergedEvents.push({ ...tempEvent, invitees: Array.from(tempEvent.invitees) });
+  
+    for (const event of mergedEvents) {
+      await this.eventsRepository.save({
+        ...event,
+        invitees: event.invitees.map(invitee => ({ id: invitee.id, name: invitee.name })),
+      });
     }
-
-    await this.eventsRepository.save(mergedEvents);
-
-    return mergedEvents;
-}
-
+  
+    return mergedEvents.map(event => ({
+      ...event,
+      invitees: event.invitees.map(invitee => ({ id: invitee.id, name: invitee.name })),
+    }));
+  }
+  
 }

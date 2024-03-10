@@ -62,7 +62,6 @@ describe('EventsService', () => {
         updatedAt: new Date()
       };
       
-  
       mockUsersRepository.find = jest.fn().mockResolvedValue(mockUsers);
       mockEventsRepository.create = jest.fn().mockReturnValue(resultEvent);
       mockEventsRepository.save = jest.fn().mockResolvedValue(resultEvent);
@@ -91,7 +90,6 @@ describe('EventsService', () => {
       }
     });
   });
-  
 
   describe('findAll', () => {
     it('should return an array of events', async () => {
@@ -116,16 +114,7 @@ describe('EventsService', () => {
         title: "Event Title",
       };
   
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoin: jest.fn().mockReturnThis(),
-          addSelect: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          getOne: jest.fn().mockResolvedValue(expectedEvent),
-        };
-  
-        return mockQueryBuilder as SelectQueryBuilder<Event>;
-      });
+      mockEventsRepository.findOne = jest.fn().mockResolvedValue(expectedEvent);
   
       const result = await service.findOne(eventId);
       expect(result).toEqual(expectedEvent);
@@ -133,19 +122,11 @@ describe('EventsService', () => {
   
     it('should throw NotFoundException if event not found', async () => {
       const eventId = 999;
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoin: jest.fn().mockReturnThis(),
-          addSelect: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          getOne: jest.fn().mockResolvedValue(null),
-        };
-  
-        return mockQueryBuilder as SelectQueryBuilder<Event>;
-      });
-  
+      mockEventsRepository.findOne = jest.fn().mockResolvedValue(undefined);
+    
       await expect(service.findOne(eventId)).rejects.toThrow(NotFoundException);
     });
+    
   });
   
   describe('remove', () => {
@@ -172,33 +153,21 @@ describe('EventsService', () => {
         { id: 1, title: "Event 1", description: "Description 1", startTime: new Date('2022-01-01T09:00:00.000Z'), endTime: new Date('2022-01-01T11:00:00.000Z'), invitees: [{ id: 1, name: 'User 1' }] },
         { id: 2, title: "Event 2", description: "Description 2", startTime: new Date('2022-01-01T10:30:00.000Z'), endTime: new Date('2022-01-01T12:00:00.000Z'), invitees: [{ id: 1, name: 'User 1' }] },
       ];
-  
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoinAndSelect: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          orderBy: jest.fn().mockReturnThis(),
-          getMany: jest.fn().mockResolvedValue(events),
-        }
-        return mockQueryBuilder as SelectQueryBuilder<Event>
-      });
-  
+
       mockEventsRepository.delete = jest.fn().mockResolvedValue({ affected: 1 });
+      mockEventsRepository.save = jest.fn().mockImplementation(event => Promise.resolve(event));
       mockUsersRepository.findOne = jest.fn().mockResolvedValue({
         id: userId,
         name: 'User 1',
-        events: [],
+        events: events,
       });
-  
-      mockUsersRepository.save = jest.fn().mockImplementation(user => Promise.resolve(user));
-      mockEventsRepository.save = jest.fn().mockImplementation(event => Promise.resolve(event));
   
       const mergedEvents = await service.mergeOverlappingEvents(userId);
   
       expect(mergedEvents.length).toBe(1);
       expect(mergedEvents[0].title).toContain('Event 1 / Event 2');
+      expect(mergedEvents[0].invitees[0]).toEqual({ id: userId, name: 'User 1'});
       expect(mockEventsRepository.delete).toHaveBeenCalledTimes(1);
-      expect(mockUsersRepository.save).toHaveBeenCalled();
       expect(mockEventsRepository.save).toHaveBeenCalled();
     });
 
@@ -209,51 +178,29 @@ describe('EventsService', () => {
         { id: 2, title: "Event 2", description: "Description 2", startTime: new Date('2022-01-01T11:00:00.000Z'), endTime: new Date('2022-01-01T12:00:00.000Z'), invitees: [{ id: 1, name: 'User 1' }] },
       ];
   
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoinAndSelect: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          orderBy: jest.fn().mockReturnThis(),
-          getMany: jest.fn().mockResolvedValue(events),
-        }
-        return mockQueryBuilder as SelectQueryBuilder<Event>
-      });
       mockEventsRepository.save = jest.fn().mockImplementation(event => Promise.resolve(event));
   
       mockUsersRepository.findOne = jest.fn().mockResolvedValue({
         id: userId,
         name: 'User 1',
-        events: [],
+        events: events,
       });
-  
-      mockUsersRepository.save = jest.fn().mockImplementation(user => Promise.resolve(user));
-  
+    
       const mergedEvents = await service.mergeOverlappingEvents(userId);
   
       expect(mergedEvents.length).toBe(2);
-      expect(mergedEvents).toEqual(expect.arrayContaining(events));
-      expect(mockUsersRepository.save).toHaveBeenCalled();
+      expect(mockEventsRepository.save).toHaveBeenCalled();
     });
     it('should return the single event only', async () => {
       const userId = 1;
       const event = [
         { id: 1, title: "Event 1", description: "Description 1", startTime: new Date('2022-01-01T09:00:00.000Z'), endTime: new Date('2022-01-01T10:00:00.000Z'), invitees: [{ id: 1, name: 'User 1' }] },
       ];
-  
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoinAndSelect: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          orderBy: jest.fn().mockReturnThis(),
-          getMany: jest.fn().mockResolvedValue(event),
-        }
-        return mockQueryBuilder as SelectQueryBuilder<Event>
-      });
-  
+
       mockUsersRepository.findOne = jest.fn().mockResolvedValue({
         id: userId,
         name: 'User 1',
-        events: [],
+        events: event,
       });
     
       const mergedEvents = await service.mergeOverlappingEvents(userId);

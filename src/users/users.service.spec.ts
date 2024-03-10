@@ -74,7 +74,29 @@ describe('UsersService', () => {
       expect(mockUsersRepository.create).toHaveBeenCalledWith(expectedUserData);
       expect(mockUsersRepository.save).toHaveBeenCalled();
       expect(result).toEqual({ id: 3, ...expectedUserData });
-    });        
+    });
+    it('should throw no such event error', async () => {    
+      const createUserDto = {
+        name: 'Test User',
+        eventIds: [1, 2]
+      };
+    
+      const events = [{ id: 1 }];
+      mockEventsRepository.findBy = jest.fn().mockResolvedValue(events);
+    
+      mockUsersRepository.create = jest.fn();
+      mockUsersRepository.save = jest.fn();
+    
+      try {
+        await service.create(createUserDto);
+      } catch (error) {
+        expect(error.message).toEqual('One or more events do not exist.');
+      }
+    
+      expect(mockUsersRepository.create).not.toHaveBeenCalled();
+      expect(mockUsersRepository.save).not.toHaveBeenCalled();
+    });
+    
   });
 
   describe('findAll', () => {

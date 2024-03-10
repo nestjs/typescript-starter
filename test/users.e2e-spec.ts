@@ -50,9 +50,23 @@ describe('UsersController (e2e)', () => {
       .then((response) => {
         expect(response.body).toHaveProperty('id');
         expect(response.body.name).toEqual('John Doe');
-        // additional assertions as necessary
       });
   });
+
+  it('/POST fail to create a user with unknown event', () => {
+    return request(app.getHttpServer())
+      .post('/users')
+      .send({
+        name: 'John Doe',
+        eventIds: [999],
+      })
+      .expect(500)
+      .then((response) => {
+        expect(response.body).toHaveProperty('statusCode');
+        expect(response.body.message).toContain('Internal server error'); 
+      });
+  });
+  
 
   it('/GET find user by ID', async () => {
     const response = await request(app.getHttpServer())
