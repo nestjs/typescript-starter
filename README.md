@@ -104,6 +104,40 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+## Event `merge` Test Examples
+```json
+// Event 1: Overlap with event 2
+{
+    "title": "Team Meeting",
+    "description": "Discussing monthly goals.",
+    "status": "TODO",
+    "startTime": "2024-04-01T09:00:00Z",
+    "endTime": "2024-04-01T10:00:00Z",
+    "invitees": [1, 2]
+}
+```
+```json
+// Event 2: Overlap with event 1
+{
+  "title": "Project Planning",
+  "description": "Planning phase for new project.",
+  "status": "IN_PROGRESS",
+  "startTime": "2024-04-01T09:30:00Z",
+  "endTime": "2024-04-01T11:00:00Z",
+  "invitees": [1]
+}
+```
+```json
+// Event 3: No overlap
+{
+  "title": "Team Lunch",
+  "description": "Casual lunch with the team.",
+  "status": "TODO",
+  "startTime": "2024-04-01T12:00:00Z",
+  "endTime": "2024-04-01T13:00:00Z",
+  "invitees": [1, 2]
+}
+```
 
 
 ## Support
