@@ -53,21 +53,20 @@ describe('UsersController (e2e)', () => {
       });
   });
 
-  it('/POST fail to create a user with unknown event', () => {
+  it('POST /users - fail to create a user with unknown event', () => {
     return request(app.getHttpServer())
       .post('/users')
       .send({
         name: 'John Doe',
         eventIds: [999],
       })
-      .expect(500)
+      .expect(400)
       .then((response) => {
-        expect(response.body).toHaveProperty('statusCode');
-        expect(response.body.message).toContain('Internal server error'); 
+        expect(response.body).toHaveProperty('statusCode', 400);
+        expect(response.body).toHaveProperty('message', 'One or more events do not exist.');
       });
   });
   
-
   it('/GET find user by ID', async () => {
     const response = await request(app.getHttpServer())
       .post('/users')

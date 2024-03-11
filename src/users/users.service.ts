@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from '../entities/event.entity';
 import { User } from '../entities/user.entity';
@@ -22,7 +22,7 @@ export class UsersService {
         }) : [];
     
         if (eventIds.length > 0 && existingEvents.length !== eventIds.length) {
-            throw new Error('One or more events do not exist.');
+            throw new HttpException('One or more events do not exist.', HttpStatus.BAD_REQUEST);
         }
     
         const user = this.usersRepository.create({
