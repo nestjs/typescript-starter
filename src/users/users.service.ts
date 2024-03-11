@@ -32,4 +32,9 @@ export class UsersService {
     
         return this.usersRepository.save(user);
     }
+    
+
+    async findAll() {
+        return this.usersRepository.find();
+    }
 }

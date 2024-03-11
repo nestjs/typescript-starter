@@ -98,4 +98,14 @@ describe('UsersService', () => {
     });
     
   });
+
+  describe('findAll', () => {
+    it('should successfully find all users', async () => {
+      mockUsersRepository.find = jest.fn().mockResolvedValue([]);
+
+      const result = await service.findAll();
+      expect(result).toBeInstanceOf(Array);
+      expect(mockUsersRepository.find).toHaveBeenCalled();
+    });
+  });
 });
