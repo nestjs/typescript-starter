@@ -98,43 +98,4 @@ describe('UsersService', () => {
     });
     
   });
-
-  describe('findAll', () => {
-    it('should successfully find all users', async () => {
-      mockUsersRepository.find = jest.fn().mockResolvedValue([]);
-
-      const result = await service.findAll();
-      expect(result).toBeInstanceOf(Array);
-      expect(mockUsersRepository.find).toHaveBeenCalled();
-    });
-  });
-
-  describe('deleteUser', () => {
-    it('should successfully delete an user', async () => {
-      const userId = 1;
-
-      const eventsWithUser = [{
-        invitees: [{ id: 1, name: 'Test User' }, { id: 2, name: 'Other User' }]
-      }];
-  
-      mockEventsRepository.createQueryBuilder = jest.fn(() => {
-        const mockQueryBuilder: Partial<SelectQueryBuilder<Event>> = {
-          leftJoin: jest.fn().mockReturnThis(),
-          where: jest.fn().mockReturnThis(),
-          getMany: jest.fn().mockResolvedValue(eventsWithUser),
-        }
-        return mockQueryBuilder as SelectQueryBuilder<Event>
-      });
-
-      mockUsersRepository.delete = jest.fn().mockResolvedValue({ affected: 1 });
-      mockEventsRepository.save = jest.fn().mockImplementation(event => Promise.resolve(event));
-
-      await service.deleteUser(userId);
-
-      expect(mockEventsRepository.createQueryBuilder).toHaveBeenCalled();
-      expect(mockEventsRepository.save).toHaveBeenCalled();
-      expect(mockUsersRepository.delete).toHaveBeenCalledWith(userId);
-    });
-  });
-  
 });

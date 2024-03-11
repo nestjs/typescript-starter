@@ -32,24 +32,4 @@ export class UsersService {
     
         return this.usersRepository.save(user);
     }
-    
-
-    async findAll() {
-        return this.usersRepository.find();
-    }
-
-    async deleteUser(userId: number): Promise<void> {
-        const events = await this.eventsRepository
-            .createQueryBuilder('event')
-            .leftJoin('event.invitees', 'user')
-            .where('user.id = :userId', { userId })
-            .getMany();
-        
-        for (const event of events) {
-            event.invitees = event.invitees.filter(invitee => invitee.id !== userId);
-            await this.eventsRepository.save(event);
-        }
-    
-        await this.usersRepository.delete(userId);
-    }
 }
