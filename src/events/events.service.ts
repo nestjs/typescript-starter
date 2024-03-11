@@ -78,7 +78,10 @@ export class EventsService {
   
     const events = userWithEvents.events.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
     const mergedEvents = [];
-    let tempEvent = { ...events[0], invitees: new Set(events[0].invitees.map(({ id, name }) => ({ id, name }))) };
+    let tempEvent = { 
+      ...events[0], 
+      invitees: new Map(events[0].invitees.map(invitee => [invitee.id, invitee])) 
+    };
   
     for (let i = 1; i < events.length; i++) {
       const currentEvent = events[i];
@@ -86,16 +89,21 @@ export class EventsService {
         tempEvent.endTime = new Date(Math.max(tempEvent.endTime.getTime(), currentEvent.endTime.getTime()));
         tempEvent.title += ` / ${currentEvent.title}`;
         tempEvent.description += ` / ${currentEvent.description}`;
-        currentEvent.invitees.forEach(invitee => tempEvent.invitees.add({ id: invitee.id, name: invitee.name }));
+        currentEvent.invitees.forEach(invitee => tempEvent.invitees.set(invitee.id, invitee));
         
         await this.eventsRepository.delete({ id: currentEvent.id });
       } else {
-        mergedEvents.push({ ...tempEvent, invitees: Array.from(tempEvent.invitees) });
-        tempEvent = { ...currentEvent, invitees: new Set(currentEvent.invitees.map(({ id, name }) => ({ id, name }))) };
+        mergedEvents.push({ 
+          ...tempEvent, 
+          invitees: Array.from(tempEvent.invitees.values())
+        });
+        tempEvent = { 
+          ...currentEvent, 
+          invitees: new Map(currentEvent.invitees.map(invitee => [invitee.id, invitee])) 
+        };
       }
     }
-    mergedEvents.push({ ...tempEvent, invitees: Array.from(tempEvent.invitees) });
-  
+    mergedEvents.push({ ...tempEvent, invitees: Array.from(tempEvent.invitees.values()) });
     for (const event of mergedEvents) {
       await this.eventsRepository.save({
         ...event,
@@ -108,5 +116,6 @@ export class EventsService {
       invitees: event.invitees.map(invitee => ({ id: invitee.id, name: invitee.name })),
     }));
   }
+  
   
 }
