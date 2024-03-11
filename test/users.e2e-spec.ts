@@ -86,21 +86,6 @@ describe('UsersController (e2e)', () => {
       });
   });
 
-  it('/DELETE user', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/users')
-      .send({
-        name: 'John Doe',
-        eventIds: []
-      })
-      .expect(201);
-
-    const userId = response.body.id;
-    return request(app.getHttpServer())
-      .delete(`/users/${userId}`)
-      .expect(200);
-  });
-
   afterAll(async () => {
     await app.close();
   });

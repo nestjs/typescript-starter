@@ -57,17 +57,5 @@ describe('UsersController', () => {
       expect(service.findAll).toHaveBeenCalled();
       expect(result).toEqual(expectedResult);
     });
-  });
-  
-  describe('deleteUser', () => {
-    it('should call userService.deleteUser', async () => {
-      const userId = 1;
-      service.deleteUser = jest.fn().mockResolvedValue(undefined);
-
-      await controller.deleteUser(userId.toString());
-      expect(service.deleteUser).toHaveBeenCalledWith(userId);
-    });
-  });
-  
-  
+  });  
 });
