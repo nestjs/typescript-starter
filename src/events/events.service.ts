@@ -116,6 +116,4 @@ export class EventsService {
       invitees: event.invitees.map(invitee => ({ id: invitee.id, name: invitee.name })),
     }));
   }
-  
-  
 }
