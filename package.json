@@ -23,6 +23,9 @@
     "@nestjs/core": "^10.3.2",
     "@nestjs/platform-express": "^10.3.2",
     "class-validator": "^0.14.1",
+    "nestjs-pino": "^4.0.0",
+    "pino-http": "^9.0.0",
+    "pino-pretty": "^11.0.0",
     "reflect-metadata": "^0.2.1",
     "rxjs": "^7.8.1"
   },
