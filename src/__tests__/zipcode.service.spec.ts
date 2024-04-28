@@ -31,19 +31,15 @@ describe('ZipcodeService', () => {
         [zipcodeId]: expectedZipcode,
       };
 
-      // Act
       const result = service.getZipcode(zipcodeId);
 
-      // Assert
       expect(result).toEqual(expectedZipcode);
     });
 
     it('should throw NotFoundException when the zipcode does not exist', () => {
-      // Arrange
       const zipcodeId = '12345';
       service['zipsData'] = {};
 
-      // Act & Assert
       expect(() => service.getZipcode(zipcodeId)).toThrowError(NotFoundException);
     });
   });

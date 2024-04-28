@@ -20,9 +20,18 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET)', () => {
+    const expected = {
+      zipcode: '00501',
+      city: 'Holtsville',
+      state: 'New York',
+      stateAbbreviation: 'NY',
+      county: 'Suffolk',
+      latitude: 40.8154,
+      longitude: -73.0451,
+    };
     return request(app.getHttpServer())
       .get('/zipcodes/00501')
       .expect(200)
-      .expect('Hello World!');
+      .expect(JSON.stringify(expected));
   });
 });
