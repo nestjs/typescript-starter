@@ -14,7 +14,7 @@ import { Organizer } from '@prisma/client';
 @ApiTags('organizers')
 @Controller('organizers')
 export class OrganizerController {
-  constructor(private readonly organizerService: OrganizerService) { }
+  constructor(private readonly organizerService: OrganizerService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create organizer' })

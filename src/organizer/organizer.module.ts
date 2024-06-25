@@ -6,4 +6,4 @@ import { OrganizerService } from './organizer.service';
   controllers: [OrganizerController],
   providers: [OrganizerService],
 })
-export class OrganizerModule { }
+export class OrganizerModule {}
