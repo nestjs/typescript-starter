@@ -6,4 +6,4 @@ import { VolunteerService } from './volunteer.service';
   controllers: [VolunteerController],
   providers: [VolunteerService],
 })
-export class VolunteerModule { }
+export class VolunteerModule {}

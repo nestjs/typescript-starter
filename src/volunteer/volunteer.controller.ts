@@ -14,7 +14,7 @@ import { Volunteer } from '@prisma/client';
 @ApiTags('volunteers')
 @Controller('volunteers')
 export class VolunteerController {
-  constructor(private readonly volunteerService: VolunteerService) { }
+  constructor(private readonly volunteerService: VolunteerService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new volunteer' })
