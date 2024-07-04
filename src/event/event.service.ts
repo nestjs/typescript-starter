@@ -6,7 +6,7 @@ export interface CreateEventDto {
   title: string;
   description?: string;
   organizerId: string;
-  date: Date; // Tipo Date para representar a data do evento
+  date: Date; // Alterado para string, representando a data no formato ISO-8601
   volunteerId: string;
 }
 
@@ -28,7 +28,7 @@ export class EventService {
         title: data.title,
         description: data.description || null,
         organizerId: data.organizerId,
-        date: data.date,
+        date: new Date(data.date), // Convertendo a string para um objeto Date
         volunteerId: data.volunteerId,
       },
     });
