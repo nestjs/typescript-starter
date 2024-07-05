@@ -21,12 +21,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^10.3.8",
+    "@nestjs/common": "^10.3.9",
     "@nestjs/config": "^3.2.3",
-    "@nestjs/core": "^10.3.8",
+    "@nestjs/core": "^10.3.9",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
-    "@nestjs/platform-express": "^10.3.8",
+    "@nestjs/platform-express": "^10.3.9",
     "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.15.0",
     "bcrypt": "^5.1.1",
