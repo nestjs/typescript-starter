@@ -67,4 +67,14 @@ export class EventController {
   async delete(@Param('id') id: string) {
     return this.eventService.delete(id);
   }
+
+  @Post(':id/payment')
+  @ApiOperation({ summary: 'Pay for an event' })
+  @ApiResponse({
+    status: 200,
+    description: 'The payment was successful.',
+  })
+  async pay(@Param('id') id: string) {
+    return this.eventService.pay(id);
+  }
 }
