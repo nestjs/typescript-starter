@@ -7,6 +7,8 @@ import { PrismaClient, Image, Banner } from '@prisma/client';
 @Injectable()
 export class UploadService {
   private prisma: PrismaClient;
+  private basePath =
+    '/home/cabreira/Área de Trabalho/integrador/ConnecTech-Front/public';
 
   constructor() {
     this.prisma = new PrismaClient();
@@ -22,8 +24,8 @@ export class UploadService {
 
     const fileExt = extname(file.originalname);
     const filename = `${uuidv4()}${fileExt}`;
-    const basePath = entity === 'volunteer' ? 'volunteers' : 'organizers';
-    const filePath = join(process.cwd(), 'uploads', basePath);
+    const subFolder = entity === 'volunteer' ? 'volunteers' : 'organizers';
+    const filePath = join(this.basePath, subFolder);
 
     // Ensure the directory exists
     if (!existsSync(filePath)) {
@@ -44,7 +46,7 @@ export class UploadService {
 
     const createdImage = await this.prisma.image.create({
       data: {
-        url: `/${basePath}/${filename}`,
+        url: `/${subFolder}/${filename}`,
       },
     });
 
@@ -58,7 +60,7 @@ export class UploadService {
 
     const fileExt = extname(file.originalname);
     const filename = `${uuidv4()}${fileExt}`;
-    const filePath = join(process.cwd(), 'uploads', 'banners');
+    const filePath = join(this.basePath, 'banners');
 
     // Ensure the directory exists
     if (!existsSync(filePath)) {
