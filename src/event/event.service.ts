@@ -27,7 +27,7 @@ export class EventService {
         organizer: { connect: { id: data.organizerId } }, // Conectar o organizador pelo ID
         date: new Date(data.date),
         volunteerId: data.volunteerId,
-        price: 0, // Adicionar um valor padrão para price, se necessário
+        price: data.price, // Adicionar um valor padrão para price, se necessário
         image_url: '', // Adicionar um valor padrão para image_url, se necessário
       },
     });
@@ -52,7 +52,13 @@ export class EventService {
     return this.prisma.event.delete({ where: { id } });
   }
 
-  async pay(id: string): Promise<void | Error> {
+  async pay(id: string): Promise<
+    | {
+        id: string;
+        link: string;
+      }
+    | Error
+  > {
     try {
       const event = await this.prisma.event.findUnique({ where: { id } });
       if (!event) {
@@ -69,7 +75,7 @@ export class EventService {
         },
         data: {
           reference_id: randomUUID(),
-          expiration_date: Date.now() + 5 * 60 * 1000,
+          expiration_date: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
           customer_modifiable: true,
           items: [
             {
@@ -77,7 +83,6 @@ export class EventService {
               name: event.title,
               quantity: 1,
               unit_amount: event.price,
-              image_url: event.image_url,
             },
           ],
           additional_amount: 0,
@@ -94,19 +99,20 @@ export class EventService {
             },
           ],
           soft_descriptor: 'ConnecTech',
-          redirect_url: '',
-          return_url: 'https://pagseguro.uol.com.br',
         },
       };
 
-      axios
-        .request(options)
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.error(error.response.data);
-        });
+      const response = await axios.request(options);
+
+      if (response.status !== 201) {
+        throw new Error('Error while processing payment');
+      } else {
+        const retorno = {
+          id: response.data.id,
+          link: response.data.links[1].href,
+        };
+        return retorno;
+      }
     } catch (error) {
       throw new Error('Error while processing payment');
     }
