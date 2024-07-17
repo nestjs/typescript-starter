@@ -1,3 +1,4 @@
+// src/event/event.controller.ts
 import {
   Controller,
   Post,
@@ -8,12 +9,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
-import { CreateEventDto, EventService } from './event.service';
+
+import { EventService } from './event.service';
+import { CreateEventDto } from './dtos/create-event.dto';
+import { UpdateEventDto } from './dtos/update-event.dto';
 
 @ApiTags('events')
 @Controller('events')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(private readonly eventService: EventService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create an event' })
@@ -53,7 +57,7 @@ export class EventController {
   })
   async update(
     @Param('id') id: string,
-    @Body() updateEventDto: Partial<CreateEventDto>,
+    @Body() updateEventDto: UpdateEventDto,
   ) {
     return this.eventService.update(id, updateEventDto);
   }
@@ -76,5 +80,15 @@ export class EventController {
   })
   async pay(@Param('id') id: string) {
     return this.eventService.pay(id);
+  }
+
+  @Get(':id/volunteers')
+  @ApiOperation({ summary: 'Get volunteers associated with an event' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all volunteers associated with the event.',
+  })
+  async findVolunteers(@Param('id') eventId: string) {
+    return this.eventService.findVolunteers(eventId);
   }
 }

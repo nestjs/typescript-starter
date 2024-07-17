@@ -1,16 +1,11 @@
+// src/event/event.service.ts
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { PrismaClient, Event } from '@prisma/client';
-import axios from 'axios';
-import { randomUUID } from 'crypto';
+import { PrismaClient, Event, Volunteer } from '@prisma/client';
 
-export interface CreateEventDto {
-  location: string;
-  title: string;
-  description?: string;
-  organizerId: string;
-  date: Date; // Alterado para string, representando a data no formato ISO-8601
-  volunteerId: string;
-}
+import { randomUUID } from 'crypto';
+import axios from 'axios';
+import { CreateEventDto } from './dtos/create-event.dto';
+import { UpdateEventDto } from './dtos/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -21,7 +16,7 @@ export class EventService {
   }
 
   async create(data: CreateEventDto): Promise<Event> {
-    if (!data.location || !data.title ) {
+    if (!data.location || !data.title) {
       throw new BadRequestException('Missing required fields');
     }
     return this.prisma.event.create({
@@ -29,9 +24,11 @@ export class EventService {
         location: data.location,
         title: data.title,
         description: data.description || null,
-        organizerId: data.organizerId,
-        date: new Date(data.date), // Convertendo a string para um objeto Date
+        organizer: { connect: { id: data.organizerId } }, // Conectar o organizador pelo ID
+        date: new Date(data.date),
         volunteerId: data.volunteerId,
+        price: 0, // Adicionar um valor padrão para price, se necessário
+        image_url: '', // Adicionar um valor padrão para image_url, se necessário
       },
     });
   }
@@ -44,7 +41,7 @@ export class EventService {
     return this.prisma.event.findUnique({ where: { id } });
   }
 
-  async update(id: string, data: Partial<Event>): Promise<Event> {
+  async update(id: string, data: UpdateEventDto): Promise<Event> {
     return this.prisma.event.update({
       where: { id },
       data,
@@ -113,5 +110,11 @@ export class EventService {
     } catch (error) {
       throw new Error('Error while processing payment');
     }
+  }
+
+  async findVolunteers(eventId: string): Promise<Volunteer[]> {
+    return this.prisma.volunteer.findMany({
+      where: { eventId },
+    });
   }
 }

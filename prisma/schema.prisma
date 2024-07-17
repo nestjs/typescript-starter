@@ -20,39 +20,56 @@ model Event {
   organizerId String
   volunteerId String?
   volunteers  Volunteer[]
-
+  banner      Banner?     @relation(fields: [bannerId], references: [id])
+  bannerId    String?     @unique
+  price       Int
+  image_url   String?
 }
 
 model Organizer {
-  id        String     @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String     @unique
-  cnpj      String     @unique
+  email     String    @unique
+  cnpj      String    @unique
   password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deleteAt  DateTime?  @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleteAt  DateTime? @updatedAt
   events    Event[]
+  imageId   String?   @unique
+  image     Image?    @relation(fields: [imageId], references: [id])
 }
 
 model Volunteer {
-  id        String     @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String     @unique
-  cpf       String     @unique
+  email     String    @unique
+  cpf       String    @unique
   password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deleteAt  DateTime?  @updatedAt
-  event     Event?     @relation(fields: [eventId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleteAt  DateTime? @updatedAt
+  event     Event?    @relation(fields: [eventId], references: [id])
   eventId   String?
+  imageId   String?   @unique
+  image     Image?    @relation(fields: [imageId], references: [id])
 }
 
 model Banner {
+  id        String    @id @default(uuid())
+  url       String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deleteAt  DateTime? @updatedAt
+  event     Event?
+}
+
+model Image {
   id        String     @id @default(uuid())
   url       String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   deleteAt  DateTime?  @updatedAt
- 
+  organizer Organizer?
+  volunteer Volunteer?
 }

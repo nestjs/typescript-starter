@@ -14,10 +14,11 @@ export class VolunteerService {
       data: {
         email: data.email,
         name: data.name,
-        eventId: data.eventId,
+        // eventId: data.eventId,
         id: data.id,
         cpf: data.cpf,
         password: data.password,
+        // imageId: data.imageId,
       },
     });
   }
@@ -39,5 +40,16 @@ export class VolunteerService {
 
   async delete(id: string): Promise<Volunteer> {
     return this.prisma.volunteer.delete({ where: { id } });
+  }
+  async associateToEvent(
+    volunteerId: string,
+    eventId: string,
+  ): Promise<Volunteer> {
+    return this.prisma.volunteer.update({
+      where: { id: volunteerId },
+      data: {
+        eventId: eventId,
+      },
+    });
   }
 }

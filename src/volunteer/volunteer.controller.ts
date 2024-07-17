@@ -14,7 +14,7 @@ import { Volunteer } from '@prisma/client';
 @ApiTags('volunteers')
 @Controller('volunteers')
 export class VolunteerController {
-  constructor(private readonly volunteerService: VolunteerService) {}
+  constructor(private readonly volunteerService: VolunteerService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create a new volunteer' })
@@ -65,5 +65,18 @@ export class VolunteerController {
   })
   remove(@Param('id') id: string) {
     return this.volunteerService.delete(id);
+  }
+
+  @Post(':id/associate/:eventId')
+  @ApiOperation({ summary: 'Associate a volunteer to an event' })
+  @ApiResponse({
+    status: 200,
+    description: 'The volunteer has been successfully associated to the event.',
+  })
+  async associateToEvent(
+    @Param('id') volunteerId: string,
+    @Param('eventId') eventId: string,
+  ) {
+    return this.volunteerService.associateToEvent(volunteerId, eventId);
   }
 }

@@ -8,6 +8,7 @@ import { OrganizerModule } from './organizer/organizer.module';
 import { VolunteerModule } from './volunteer/volunteer.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -19,9 +20,10 @@ import { PrismaModule } from './prisma/prisma.module';
     OrganizerModule,
     VolunteerModule,
     AuthModule,
+    UploadModule,
     PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
