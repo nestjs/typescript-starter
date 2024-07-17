@@ -8,7 +8,7 @@ import { PrismaClient, Image, Banner } from '@prisma/client';
 export class UploadService {
   private prisma: PrismaClient;
   private basePath =
-    '/home/cabreira/Área de Trabalho/integrador/ConnecTech-Front/public';
+    'C:/Users/980185/Desktop/Faculdade/Projeto integrador/back/src/upload';
 
   constructor() {
     this.prisma = new PrismaClient();

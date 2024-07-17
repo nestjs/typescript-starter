@@ -17,7 +17,7 @@ import { UpdateEventDto } from './dtos/update-event.dto';
 @ApiTags('events')
 @Controller('events')
 export class EventController {
-  constructor(private readonly eventService: EventService) { }
+  constructor(private readonly eventService: EventService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create an event' })

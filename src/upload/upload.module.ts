@@ -9,10 +9,10 @@ import { VolunteerService } from 'src/volunteer/volunteer.service';
 @Module({
   imports: [
     MulterModule.register({
-      dest: '/home/cabreira/Área de Trabalho/integrador/ConnecTech-Front/public',
+      dest: 'C:/Users/980185/Desktop/Faculdade/Projeto integrador/back/src/upload',
     }),
   ],
   controllers: [UploadController],
   providers: [UploadService, VolunteerService, OrganizerService, EventService],
 })
-export class UploadModule { }
+export class UploadModule {}

@@ -5,4 +5,5 @@ export class CreateEventDto {
   organizerId: string;
   date: Date;
   volunteerId: string;
+  price: number;
 }
