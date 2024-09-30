@@ -1,0 +1,151 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "foreground": "#8B949E"
+        }
+      },
+      {
+        "scope": "string",
+        "settings": {
+          "foreground": "#A5D6FF"
+        }
+      },
+      {
+        "scope": "keyword",
+        "settings": {
+          "foreground": "#FF7B72"
+        }
+      },
+      {
+        "scope": "constant.numeric",
+        "settings": {
+          "foreground": "#79C0FF"
+        }
+      },
+      {
+        "scope": "variable",
+        "settings": {
+          "foreground": "#C9D1D9"
+        }
+      },
+      {
+        "scope": "variable.language",
+        "settings": {
+          "foreground": "#FF7B72"
+        }
+      },
+      {
+        "scope": "entity.name.function",
+        "settings": {
+          "foreground": "#D2A8FF"
+        }
+      },
+      {
+        "scope": "entity.name.type",
+        "settings": {
+          "foreground": "#7EE787"
+        }
+      },
+      {
+        "scope": "entity.name.tag",
+        "settings": {
+          "foreground": "#7EE787"
+        }
+      },
+      {
+        "scope": "storage.type",
+        "settings": {
+          "foreground": "#FF7B72"
+        }
+      },
+      {
+        "scope": "storage.modifier",
+        "settings": {
+          "foreground": "#FF7B72"
+        }
+      },
+      {
+        "scope": "punctuation",
+        "settings": {
+          "foreground": "#C9D1D9"
+        }
+      },
+      {
+        "scope": "constant.language",
+        "settings": {
+          "foreground": "#79C0FF"
+        }
+      },
+      {
+        "scope": "support.function",
+        "settings": {
+          "foreground": "#D2A8FF"
+        }
+      },
+      {
+        "scope": "support.constant",
+        "settings": {
+          "foreground": "#79C0FF"
+        }
+      },
+      {
+        "scope": "support.type",
+        "settings": {
+          "foreground": "#7EE787"
+        }
+      },
+      {
+        "scope": "meta.tag",
+        "settings": {
+          "foreground": "#7EE787"
+        }
+      },
+      {
+        "scope": "meta.brace",
+        "settings": {
+          "foreground": "#C9D1D9"
+        }
+      },
+      {
+        "scope": "string.quoted.double",
+        "settings": {
+          "foreground": "#A5D6FF"
+        }
+      },
+      {
+        "scope": "string.quoted.single",
+        "settings": {
+          "foreground": "#A5D6FF"
+        }
+      }
+    ]
+  }
+}
+
+// comment: для комментариев
+// string: для строк
+// variable: для переменных
+// keyword: для ключевых слов
+// constant: для констант
+
+// Комментарии: #8B949E (серый)
+// Строки: #A5D6FF (светло-голубой)
+// Ключевые слова: #FF7B72 (розовый)
+// Числа: #79C0FF (голубой)
+// Переменные: #C9D1D9 (светло-серый)
+// Языковые переменные: #FF7B72 (розовый)
+// Функции: #D2A8FF (светло-фиолетовый)
+// Типы: #7EE787 (светло-зеленый)
+// HTML-теги: #7EE787 (светло-зеленый)
+// Модификаторы хранения: #FF7B72 (розовый)
+// Пунктуация: #C9D1D9 (светло-серый)
+// Языковые константы: #79C0FF (голубой)
+// Функции поддержки: #D2A8FF (светло-фиолетовый)
+// Константы поддержки: #79C0FF (голубой)
+// Типы поддержки: #7EE787 (светло-зеленый)
+// Мета-теги: #7EE787 (светло-зеленый)
+// Скобки: #C9D1D9 (светло-серый)
+// Строки в кавычках: #A5D6FF (светло-голубой)
