@@ -1,5 +1,4 @@
-# Nest TypeScript Starter API
-
+# ConnecTech Api
 Este repositório é uma API construída com NestJS utilizando TypeScript. A API oferece funcionalidades como autenticação, organização de usuários e integração com o banco de dados via Prisma ORM. 
 
 ## Tecnologias Usadas
