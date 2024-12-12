@@ -7,7 +7,7 @@ async function bootstrap() {
 
   // Configurar CORS usando enableCors
   app.enableCors({
-    origin: 'http://localhost:3001', // Adicione a origem permitida aqui
+    origin: 'http://localhost:3001' || 'https://connect-tech-api-main.vercel.app', // Adicione a origem permitida aqui
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Se precisar permitir cookies entre diferentes origens
   });
