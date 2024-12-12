@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "(.*)",
-        "dest": "src/AppModule.ts"
+        "dest": "src/main.ts"
       }
     ]
   }
