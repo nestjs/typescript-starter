@@ -5,7 +5,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { UserService } from '../user/user.service';
 import { LoginUserDto } from 'src/user/dto/login-user.dto'; // Ensure you have LoginUserDto properly defined
-import { PrismaService } from 'prisma/prisma,service';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class AuthService {

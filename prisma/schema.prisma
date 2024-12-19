@@ -23,9 +23,10 @@ model User {
 }
 
 model Todo {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(cuid())
   title       String
   description String?
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      Int?
+  completed   Boolean
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
 }

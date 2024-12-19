@@ -20,4 +20,12 @@ export class AuthController {
     const token = await this.authService.generateJwtToken(user);
     return { access_token: token };
   }
+
+  @Post('logout')
+  @ApiOperation({ summary: 'Log out the user' })
+  @ApiResponse({ status: 200, description: 'Logout successful.' })
+  @ApiResponse({ status: 401, description: 'User not authenticated.' })
+  async logout() {
+    return { message: 'Logout successful' };
+  }
 }
