@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "image-auto-sender-backend",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Nest TypeScript backend",
   "license": "MIT",
   "scripts": {
     "build": "nest build",
