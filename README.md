@@ -5,10 +5,33 @@
 
 ## Project setup
 
+## Before all 
+
+Install Docker
+Node version LTS 
+VSCode with extesions: {{Prettier, Eslint}}
+Git 
+After instalations run in your terminal 
+
 ```bash
-$ npm install
+$ npm i -g @nestjs/cli && npm i @prisma/client
 ```
 
+```bash
+$ git clone git@github.com:raphael-dias/image-auto-sender-backend.git
+```
+For dependencies install
+
+```bash
+$ npm install && npm install -D ts-node
+```
+And to configure the environment run this command
+
+```bash
+$ npm run start
+```
+
+## Utils 
 ## Docker UP 
 
 ```bash
@@ -20,6 +43,15 @@ $ npm docker:up
 ```bash
 $ npm docker:down
 ```
+
+## Prisma Utils
+
+## Create tables in database
+```bash
+npx prisma migrate dev --name init
+```
+
+
 
 ## Compile and run the project
 
