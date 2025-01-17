@@ -19,8 +19,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "engines": {
-    "npm": ">=8.0.0",
-    "node": ">=16.0.0"
+    "npm": ">=10.0.0",
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
