@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventModule } from './event/event.module';
+import { Event } from './event/event';
+import { User } from './user/user';
 
 @Module({
   imports: [
@@ -13,7 +15,7 @@ import { EventModule } from './event/event.module';
       username: 'nest',
       password: 'password123',
       database: 'event_manager',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [Event, User],
       synchronize: true,
     }),
     EventModule,
