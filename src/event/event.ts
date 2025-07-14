@@ -9,7 +9,7 @@ import {
   Repository,
 } from 'typeorm';
 import { User } from '../user/user';
-import { Injectable, Controller, Post, Get, Body, Param, Delete, Put } from '@nestjs/common';
+import { Injectable, Controller, Post, Get, Body, Param, Delete, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 export type EventStatus = 'TODO' | 'IN_PROGRESS' | 'COMPLETED';
@@ -58,7 +58,6 @@ export class EventService {
     return await this.eventRepo.save(event);
   }
 
-	// POST('merge-all')
 	async mergeAll(userId: number): Promise<Event> {
 		const user = await this.userRepo.findOne({
 			where: { id: userId },
@@ -66,7 +65,7 @@ export class EventService {
 		});
 
 		if (!user) {
-			throw new Error('User not found');
+			throw new NotFoundException('User not found');
 		}
 
 		const events = user.events.sort(
@@ -89,10 +88,10 @@ export class EventService {
 				current.description = `${current.description ?? ''} ${next.description ?? ''}`.trim();
 				current.status = this.pickStatus(current.status, next.status);
 				current.startTime = new Date(
-					Math.min(new Date(current.startTime).getTime(), new Date(next.startTime).getTime())
+				Math.min(new Date(current.startTime).getTime(), new Date(next.startTime).getTime())
 				);
 				current.endTime = new Date(
-					Math.max(new Date(current.endTime).getTime(), new Date(next.endTime).getTime())
+				Math.max(new Date(current.endTime).getTime(), new Date(next.endTime).getTime())
 				);
 				current.invitees = this.mergeInvitees(current.invitees, next.invitees);
 			} else {
@@ -111,7 +110,7 @@ export class EventService {
 		return savedMerged[0];
 	}
 
-	private mergeInvitees(inv1: User[], inv2: User[]): User[] {
+	private mergeInvitees(inv1: User[] = [], inv2: User[] = []): User[] {
 		const all = [...inv1, ...inv2];
 		const map = new Map<number, User>();
 		all.forEach((u) => map.set(u.id, u));
@@ -124,9 +123,9 @@ export class EventService {
 	}
 
 	// GET()
-  async findAll() {
-    return await this.eventRepo.find({ relations: ['invitees'] });
-  }
+	async findAll() {
+		return await this.eventRepo.find({ relations: ['invitees'] });
+	}
 	
 	// GET(':id')
 	async findById(id: number) {
@@ -140,12 +139,6 @@ export class EventService {
 	async deleteById(id: number) {
 		await this.eventRepo.delete(id);
 		return { message: `Event ${id} deleted.` };
-	}
-
-	// PUT
-	async update(id: number, data: Partial<Event>) {
-		await this.eventRepo.update(id, data);
-		return this.findById(id);
 	}
 }
 
@@ -176,10 +169,5 @@ export class EventController {
 	@Delete(':id')
 	async deleteById(@Param('id') id: number) {
 		return this.eventService.deleteById(Number(id));
-	}
-
-	@Put(':id')
-	async update(@Param('id') id: number, @Body() data: Partial<Event>) {
-		return this.eventService.update(Number(id), data);
 	}
 }
