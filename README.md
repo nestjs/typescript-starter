@@ -97,7 +97,7 @@ Test files:
 - `event.controller.spec.ts`
 - `event.service.spec.ts`
 
-#### 🎥 Demo Video (To Be Added)
+#### 🎥 [Demo Video](https://drive.google.com/uc?id=1fZxGoZGVXSuy607uG4mCARMkGuiK6iHB&export=download)
 
 - Creating a task
 - Getting and deleting a task
