@@ -31,6 +31,62 @@
 $ npm install
 ```
 
+## Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```bash
+# Database Configuration
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=nestuser
+DATABASE_PASS=nestpass
+DATABASE_NAME=nestdb
+
+# Admin User Configuration (optional - defaults will be used if not set)
+ADMIN_NAME=Admin User
+ADMIN_EMAIL=admin@example.com
+```
+
+## Admin User Seeder
+
+The application automatically creates an admin user on startup if one doesn't exist. The seeder runs when the application initializes and creates a default admin user with the following properties:
+
+- **Name**: Configurable via `ADMIN_NAME` environment variable (defaults to "Admin User")
+- **Email**: Configurable via `ADMIN_EMAIL` environment variable (defaults to "admin@example.com")
+- **Admin Role**: Always set to `true`
+
+The seeder only runs once - if an admin user already exists, it will skip the creation process.
+
+## API Documentation
+
+The application includes comprehensive Swagger/OpenAPI documentation that can be accessed at:
+
+**Swagger UI**: `http://localhost:3000/api`
+
+### Available Endpoints
+
+#### User Management (`/users`)
+
+- `GET /users` - Get all users
+- `GET /users/admins` - Get all admin users
+- `POST /users` - Create a new user
+
+#### Cat Management (`/cats`)
+
+- `GET /cats/all` - Get all cats
+- `GET /cats/getById/:id` - Get a cat by ID
+- `POST /cats/create` - Create a new cat
+- `GET /cats/filter?age=X&breed=Y` - Filter cats by age and breed
+
+The Swagger documentation provides:
+
+- Interactive API testing interface
+- Request/response schemas
+- Example data
+- Parameter descriptions
+- Response codes and descriptions
+
 ## Compile and run the project
 
 ```bash
