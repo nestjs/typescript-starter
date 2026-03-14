@@ -1,98 +1,210 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Event Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project extends the NestJS TypeScript starter with an event management feature built for the assignment requirements.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+It provides:
 
-## Description
+- User creation
+- Event creation
+- Event lookup by id
+- Event deletion by id
+- Merging all overlapping events for a specific user
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The application uses NestJS, TypeORM, and SQLite for local development and automated tests.
 
-## Project setup
+## Tech Stack
 
-```bash
-$ npm install
-```
+- NestJS
+- TypeORM
+- SQLite
+- Jest
+- Supertest
 
-## Compile and run the project
+## Data Model
 
-```bash
-# development
-$ npm run start
+### User
 
-# watch mode
-$ npm run start:dev
+- `id`: auto-generated numeric identifier
+- `name`: required string
+- `events`: many-to-many relation with events
 
-# production mode
-$ npm run start:prod
-```
+### Event
 
-## Run tests
+- `id`: auto-generated numeric identifier
+- `title`: required string
+- `description`: optional string
+- `status`: enum value: `TODO`, `IN_PROGRESS`, `COMPLETED`
+- `createdAt`: auto-generated timestamp
+- `updatedAt`: auto-generated timestamp
+- `startTime`: event start timestamp
+- `endTime`: event end timestamp
+- `invitees`: many-to-many relation with users
 
-```bash
-# unit tests
-$ npm run test
+Events and users are modeled as a many-to-many relationship using TypeORM. This allows merge operations to combine invitees across overlapping events and persist the updated associations correctly.
 
-# e2e tests
-$ npm run test:e2e
+## Setup
 
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Install dependencies:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Run the Application
 
-## Resources
+Start the server:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npm run start
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+For development mode:
 
-## Support
+```bash
+npm run start:dev
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+By default, the app uses a local SQLite database file:
 
-## Stay in touch
+```text
+dev.sqlite
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+You can override the database path with:
 
-## License
+```bash
+DB_PATH=custom.sqlite
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+On PowerShell:
+
+```powershell
+$env:DB_PATH="custom.sqlite"
+npm run start
+```
+
+## Run Tests
+
+Unit tests:
+
+```bash
+npm test -- --runInBand
+```
+
+End-to-end tests:
+
+```bash
+npm run test:e2e -- --runInBand
+```
+
+Build:
+
+```bash
+npm run build
+```
+
+## API
+
+### Create a User
+
+`POST /users`
+
+Request body:
+
+```json
+{
+  "name": "Alice"
+}
+```
+
+### Create an Event
+
+`POST /events`
+
+Request body:
+
+```json
+{
+  "title": "Planning",
+  "description": "Sprint planning",
+  "status": "TODO",
+  "startTime": "2026-03-13T14:00:00.000Z",
+  "endTime": "2026-03-13T15:00:00.000Z",
+  "inviteeIds": [1, 2]
+}
+```
+
+### Get an Event by Id
+
+`GET /events/:id`
+
+### Delete an Event by Id
+
+`DELETE /events/:id`
+
+### Merge All Overlapping Events for a User
+
+`POST /users/:id/events/merge-all`
+
+This endpoint finds all events linked to the target user, merges overlapping groups, updates the database, and returns the user's updated event list.
+
+## Merge Rules
+
+### Overlap
+
+Only strictly overlapping events are merged.
+
+Examples:
+
+- `2:00 PM - 3:00 PM` and `2:45 PM - 4:00 PM` are merged
+- `2:00 PM - 3:00 PM` and `3:00 PM - 4:00 PM` are not merged
+
+### Merged Event Fields
+
+- `startTime`: earliest start time in the merged group
+- `endTime`: latest end time in the merged group
+- `invitees`: union of all invitees across the merged events, deduplicated by user id
+- `title`: unique titles joined with ` | `
+- `description`: unique non-empty descriptions joined with line breaks
+
+### Status Priority
+
+Merged event status uses this priority order:
+
+```text
+IN_PROGRESS > TODO > COMPLETED
+```
+
+That means:
+
+- if any event in the merged group is `IN_PROGRESS`, the merged status is `IN_PROGRESS`
+- otherwise, if any event is `TODO`, the merged status is `TODO`
+- otherwise, the merged status is `COMPLETED`
+
+## Database Update Behavior
+
+`POST /users/:id/events/merge-all` performs real persistence changes:
+
+- overlapping source events are deleted
+- merged replacement events are created
+- many-to-many user/event relations are updated through TypeORM
+
+## Test Coverage
+
+The test suite covers:
+
+- user creation
+- event creation
+- event retrieval
+- event deletion
+- invitee relation creation and response payloads
+- merge-all behavior with and without overlap
+- continuous overlap chain merging
+- adjacent non-overlapping events
+- missing user handling
+
+## Notes
+
+- Validation is enabled globally with NestJS `ValidationPipe`
+- DTO validation is implemented with `class-validator`
+- Test runs use a separate SQLite database file
