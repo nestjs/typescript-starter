@@ -398,3 +398,5 @@ Temporary Items
 dist
 .webpack
 .serverless/**/*.zip
+# local sqlite db (default dev database)
+*.sqlite

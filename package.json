@@ -26,8 +26,14 @@
     "@nestjs/common": "^11.0.17",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.1.11",
+    "@nestjs/typeorm": "^11.0.3",
+    "better-sqlite3": "^12.11.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "pg": "^8.22.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^1.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -78,5 +84,12 @@
       "@nestjs/core",
       "@swc/core"
     ]
+  },
+  "allowScripts": {
+    "@nestjs/core@11.0.1": true,
+    "@swc/core@1.10.8": true,
+    "better-sqlite3@12.11.1": true,
+    "fsevents@2.3.3": true,
+    "nice-napi@1.0.2": true
   }
 }
