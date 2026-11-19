@@ -33,6 +33,10 @@ Code that passes its tests can still get these wrong:
 - `SwaggerModule.setup()` serves the document outside Nest's router, so the document doesn't list its own route. Add it to the document if the API contract lists every route.
 - A server you started stops by its PID, or by the process listening on its port (`lsof -ti tcp:3000 -sTCP:LISTEN`). `pkill -f nest` and `pkill -f "npm start"` also kill other projects' processes on the machine.
 
+An HS256 `accessToken.key` for `@nestjs/authentication` must be at least 32 bytes, and a shorter one stops the app at startup. Hashing or padding a shorter secret to fit signs tokens with a different key, so whatever verifies them with the configured secret rejects them: replace it with one of 32 bytes or more (`openssl rand -base64 32`), or, if the task sets the secret, say that it's too short.
+
+When a task says how to test, follow it. When it says nothing, cover the behaviour you change with focused tests rather than adding broad e2e suites.
+
 ## Production data: NestJS Observe
 
 This app reports its traces, errors, logs and metrics to [NestJS Observe](https://observe.nestjs.com) through `ObserveModule` in `src/app.module.ts`. Its key pair comes from `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in `.env`, which `npx @nestjs/observe link` writes.
