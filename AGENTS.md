@@ -29,7 +29,9 @@ Code that passes its tests can still get these wrong:
 
 - Sign-in assembled from `@nestjs/jwt` and bcrypt usually returns early for an unknown email, as in `if (!user || !(await bcrypt.compare(...))) throw`, so it answers faster for emails that aren't registered and its timing tells anyone which ones are. `@nestjs/authentication` replaces that assembly: its `PasswordHasher.verify(password, user?.passwordHash)` checks a dummy hash when there's no user or no stored hash, so both cases take the same time and give the same answer. Its global guard puts every route behind sign-in, and `@Public()` opens one.
 - `@Post()` answers 201 Created. A POST that creates nothing, such as sign-in, needs `@HttpCode(200)` or the code it means.
+- `ParseIntPipe` answers 400 to an id that isn't a number. Where the API treats a malformed id as not found, `new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_FOUND })` answers 404.
 - class-validator's `@IsOptional()` skips validation for `null` as well as for a missing field, so `{"title": null}` reaches the database and fails there with a 500. For a field that may be left out but not set to `null`, `@ValidateIf((_, value) => value !== undefined)` in place of `@IsOptional()` validates `null` and answers 400.
+- Nest runs `onModuleDestroy()`, `beforeApplicationShutdown()` and `onApplicationShutdown()` on SIGTERM only after `app.enableShutdownHooks()` in the bootstrap. Without it, a deploy or scale-down stops scheduled jobs and queue workers mid-work.
 - `SwaggerModule.setup()` serves the document outside Nest's router, so the document doesn't list its own route. Add it to the document if the API contract lists every route.
 - A server you started stops by its PID, or by the process listening on its port (`lsof -ti tcp:3000 -sTCP:LISTEN`). `pkill -f nest` and `pkill -f "npm start"` also kill other projects' processes on the machine.
 
