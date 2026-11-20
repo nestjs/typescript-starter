@@ -27,8 +27,6 @@ Nest's packages are ESM only, and this project is ESM too: relative imports end 
 
 In this project, `src/main.ts` creates the app and listens on `PORT` (3000 by default), `src/app.module.ts` is the root module that imports the others, and `AppController` and `AppService` are samples. Unit tests sit beside the code as `*.spec.ts` and the e2e test is in `test/`; Vitest runs them (`npm test`, `npm run test:e2e`).
 
-Code that passes its tests can still get these wrong:
-
 - Sign-in assembled from `@nestjs/jwt` and bcrypt usually returns early for an unknown email, as in `if (!user || !(await bcrypt.compare(...))) throw`, so it answers faster for emails that aren't registered and its timing tells anyone which ones are. `@nestjs/authentication` replaces that assembly: its `PasswordHasher.verify(password, user?.passwordHash)` checks a dummy hash when there's no user or no stored hash, so both cases take the same time and give the same answer. Its global guard puts every route behind sign-in, and `@Public()` opens one.
 - `@Post()` answers 201 Created. A POST that creates nothing, such as sign-in, needs `@HttpCode(200)` or the code it means.
 - Injecting `@Res()` makes the route send the response itself: the returned value, interceptors, `@HttpCode()` and `@Header()` stop applying. `@Res({ passthrough: true })` sets a cookie or header and leaves the rest to Nest.
