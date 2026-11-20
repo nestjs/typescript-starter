@@ -4,7 +4,7 @@
 
 This app's version of NestJS is likely newer than what you know. https://docs.nestjs.com/llms.txt indexes its documentation, with a markdown page per chapter.
 
-`.agents/skills/` and `.claude/skills/` hold the official NestJS agent skills, from `@nestjs/skills`: the mistakes agents make in Nest apps, with recipes checked on the released packages. An agent loads a skill when a task matches it; `npx @nestjs/skills add --agent agents,claude` updates them.
+`.agents/skills/` and `.claude/skills/` hold the official NestJS agent skills, installed with `npx @nestjs/skills add --agent agents,claude`, which also updates them: the mistakes agents make in Nest apps, with recipes checked on the released packages. An agent loads a skill when a task matches it.
 
 Nest has first-party packages for these, so check them before adding another library or writing your own:
 
