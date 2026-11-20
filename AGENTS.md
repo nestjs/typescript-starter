@@ -4,7 +4,7 @@
 
 This app's version of NestJS is likely newer than what you know. https://docs.nestjs.com/llms.txt indexes its documentation, with a markdown page per chapter.
 
-`.agents/skills/` and `.claude/skills/` hold the official NestJS agent skills, installed with `npx @nestjs/skills add --agent agents,claude`, which also updates them: the mistakes agents make in Nest apps, with recipes checked on the released packages. An agent loads a skill when a task matches it.
+The official NestJS agent skills are installed with `npx @nestjs/skills add --agent all`, which also updates them: the mistakes agents make in Nest apps, with recipes checked on the released packages. An agent loads a skill when a task matches it.
 
 Nest has first-party packages for these, so check them before adding another library or writing your own:
 
@@ -28,8 +28,6 @@ A route handler can return a web `Response`, a `ReadableStream` or an async gene
 Nest's packages are ESM only, and this project is ESM too: relative imports end in `.js`, `__dirname` doesn't exist (use `import.meta.dirname`), and tests run on Vitest, so mocks are `vi.fn()`, not `jest.fn()`.
 
 In this project, `src/main.ts` creates the app and listens on `PORT` (3000 by default), `src/app.module.ts` is the root module that imports the others, and `AppController` and `AppService` are samples. Unit tests sit beside the code as `*.spec.ts` and the e2e test is in `test/`; Vitest runs them (`npm test`, `npm run test:e2e`).
-
-An HS256 `accessToken.key` for `@nestjs/authentication` must be at least 32 bytes, and a shorter one stops the app at startup. Hashing or padding a shorter secret to fit signs tokens with a different key, so whatever verifies them with the configured secret rejects them: replace it with one of 32 bytes or more (`openssl rand -base64 32`), or, if the task sets the secret, say that it's too short.
 
 When a task says how to test, follow it. When it says nothing, cover the behaviour you change with focused tests rather than adding broad e2e suites.
 
